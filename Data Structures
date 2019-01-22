@@ -1,0 +1,10 @@
+Class             Details                                                                 Data Structure
+
+
+Items -     Category decides order, fixed length, <key,value> <itemId,info>                 - Tree map
+
+Order -     Easy to add, ordered by time stamp (but not unique), ordered by OrderID,        - Tree map
+
+Customer -  need to add,                                                                    - some form of list 
+
+End of day report - item, quantity, total, timestamps, 
