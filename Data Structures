@@ -1,10 +1,18 @@
-Class             Details                                                                 Data Structure
+Class                  Variables                                                                
+
+Items                  (string) itemID, (string) itemName, (float) itemPrice, (string) itemCategories, (string) itemDescription
+
+Order                  (string) orderId, (string) orderItemId, (string) orderCustomerId, (Timestamp) timestamp
+
+Customer               (string) customerId, (string) name, (float) bill
 
 
-Items -     Category decides order, fixed length, <key,value> <itemId,info>                 - Tree map
+Datastructures          Details                                                                    Data Structure
 
-Order -     Easy to add, ordered by time stamp (but not unique), ordered by OrderID,        - Tree map
+Items                   Category decides order, fixed length from file, <key,value> <itemId,info>  -Tree map
 
-Customer -  need to add,                                                                    - some form of list 
+Order                   Easy to add, ordered by time stamp (but not unique) so ordered by OrderID  -Tree map
 
-End of day report - item, quantity, total, timestamps, 
+Customer                need to add easily                                                         -a list
+
+end of day report       item, quantity, total, timestamps?, fixed length                           -array?
