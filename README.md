@@ -1,6 +1,8 @@
 # adv_soft_eng
 
 
-Here is where we can upload any code, documents, ideas etc. 
+Master branch - Here is where we can upload any documents, ideas, notes etc. 
 
-I will create a file for 'notes' where we can add meeting notes etc, and maybe a file for tasks. Although we have these on the app already. - H
+Individual branches - We each need to make our own branch for uploading code, to then be combined once all is uploaded.
+
+

@@ -4,7 +4,7 @@ public class Item {
 	private String itemId;
     private String itemName;
 	private float itemPrice;
-	private float itemQuantity;
+	private int itemQuantity;
 	private String itemCategory;
 	private String itemDescription;
 
@@ -48,11 +48,11 @@ public class Item {
     	return itemDescription;
     }
     
-    public float getQuantity() {
+    public int getQuantity() {
     	return itemQuantity;
     }
     
-    public void setQuantity(float itemQuantity) {
+    public void setQuantity(int itemQuantity) {
     	this.itemQuantity = itemQuantity;
     }
     
@@ -81,6 +81,21 @@ public class Item {
 itemPrice +String.format("%-10s", "") + String.format("%-15s", itemCategory)
                  + String.format("%-15s", itemDescription);
     }
+
+	public int compareToItemCategory(Item value) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int compareToItemName(Item value) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int compareToItemId(Item value) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
     
 	
 	

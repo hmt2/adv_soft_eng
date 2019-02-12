@@ -15,10 +15,8 @@ import javax.swing.*;
 */
 public class MenuGUI extends JFrame implements ActionListener
 {
-
-  private TreeMap <String,Item> menu;
+  private Menu menu;
   private Map<String, Integer> currentOrder = new LinkedHashMap<String, Integer>();
-  
   //GUI components
   Container contentPane;
   JPanel southPanel;
@@ -31,9 +29,11 @@ public class MenuGUI extends JFrame implements ActionListener
   JButton back;
   JButton clear;
  
-  public MenuGUI(TreeMap <String,Item> menu)
+  public MenuGUI()
   {
-      this.menu = menu;
+      menu = new Menu();
+      AllOrders allOrders = new AllOrders();
+      CustomerList customerList = new CustomerList();
       
       //set up window title
       setTitle("Menu GUI");
@@ -57,7 +57,7 @@ public class MenuGUI extends JFrame implements ActionListener
       contentPane.add(southPanel, BorderLayout.SOUTH);
 
       //set up item buttons
-      menuPanel = new JPanel(new GridLayout(menu.size(), 1));
+      menuPanel = new JPanel(new GridLayout(menu.getSize(), 1));
       //calls method which creates a button for each item in menu and adds it to menuPanel
       loadItemButtons();
       
@@ -93,10 +93,10 @@ public class MenuGUI extends JFrame implements ActionListener
   { 
 	  //for buttons which represent the item there ActionCommand is set to their itemId
 	  String command = e.getActionCommand();
-	  boolean isItem = menu.containsKey(command);
-	  
+	  Item isItem = menu.findItemId(command);
+
 	  //if button pressed is an item button
-	  if(isItem) {
+	  if(isItem != null) {
 		setQuantity(command);
 	  }
 	  
@@ -136,16 +136,16 @@ public class MenuGUI extends JFrame implements ActionListener
 		for(String key: keys){
 			if(currentOrder.get(key) > 1) {
 				currentItemQuantity = currentOrder.get(key);
-				billCurrentItem = currentItemQuantity*menu.get(key).getPrice();			
+				billCurrentItem = currentItemQuantity*menu.findItemId(key).getPrice();			
 			}
 			else {
 				currentItemQuantity = 1;
-				billCurrentItem = menu.get(key).getPrice();
+				billCurrentItem = menu.findItemId(key).getPrice();
 			}
 			totalBeforeDiscount += billCurrentItem;
 					
 			bill += String.format("%-2s %s",currentItemQuantity,"x  ");
-			bill += String.format("%-20s %s",menu.get(key).getName(),"£",billCurrentItem);
+			bill += String.format("%-20s %s",menu.findItemId(key).getName(),"£",billCurrentItem);
 			bill += String.format("%-10s",billCurrentItem);
 			bill += "\n";
 		}
@@ -155,9 +155,9 @@ public class MenuGUI extends JFrame implements ActionListener
   }
   
   private void loadItemButtons() {
-	  Set<String> keys = menu.keySet();
+	  Set<String> keys = menu.getKeySet();
 		for(String key: keys){
-			JButton button = new JButton(String.format("%30s%16s",menu.get(key).getName(),"£" + menu.get(key).getPrice()));
+			JButton button = new JButton(String.format("%30s%16s",menu.findItemId(key).getName(),"£" + menu.findItemId(key).getPrice()));
 			button.addActionListener(this);
 		    menuPanel.add(button);
 			button.setActionCommand(key);
@@ -192,7 +192,7 @@ public class MenuGUI extends JFrame implements ActionListener
   }
   
   private void setQuantity(String command) {
-	  String val = JOptionPane.showInputDialog(this,"Number of " + menu.get(command).getName());
+	  String val = JOptionPane.showInputDialog(this,"Number of " + menu.findItemId(command).getName());
 		 
 	  //if val is null then cancel has been selected
 	  if(val != null){
@@ -219,8 +219,10 @@ public class MenuGUI extends JFrame implements ActionListener
 	  }
   }
   
+  //need to update quanities
   private void placeOrder() {
 	  if(!currentOrder.isEmpty()) {
+		  updateItemQuantity();
 		  JOptionPane.showMessageDialog(this, "Order placed");
 		  currentOrder.clear();
 		  switchMenu(); 
@@ -228,6 +230,17 @@ public class MenuGUI extends JFrame implements ActionListener
 	  else {
 		  JOptionPane.showMessageDialog(this, "Unable to place order as no items selected");
 	  }
+  }
+  
+  //
+  private void updateItemQuantity() {
+	  Set<String> keys = currentOrder.keySet();
+		for(String key: keys){
+			int quantityToAdd = currentOrder.get(key);
+			int currentQuantity = menu.findItemId(key).getQuantity();
+			int quantity = currentQuantity + quantityToAdd;
+			menu.findItemId(key).setQuantity(quantity);
+		}
   }
 
   
