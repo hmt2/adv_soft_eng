@@ -3,6 +3,7 @@ package coffeShop;
 //import all the GUI classes
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -32,9 +33,9 @@ public class MenuGUI extends JFrame implements ActionListener
   public MenuGUI()
   {
       menu = new Menu();
-      AllOrders allOrders = new AllOrders();
-      CustomerList customerList = new CustomerList();
-      
+      //CustomerList customerList = new CustomerList();
+      //CustomerList list = new CustomerList();
+      //have customer.add which returns the id
       //set up window title
       setTitle("Menu GUI");
       //ensure program ends when window closes
@@ -97,7 +98,7 @@ public class MenuGUI extends JFrame implements ActionListener
 
 	  //if button pressed is an item button
 	  if(isItem != null) {
-		setQuantity(command);
+		getQuantityGUI(command);
 	  }
 	  
 	  //if checkout button is pressed then want to showing the Bill
@@ -131,6 +132,7 @@ public class MenuGUI extends JFrame implements ActionListener
 	  float billCurrentItem = 0;
 	  int currentItemQuantity = 0;
 	  float totalBeforeDiscount = 0;
+	  double totalAfterDiscount = 0;
 	  
 	  Set<String> keys = currentOrder.keySet();
 		for(String key: keys){
@@ -149,8 +151,16 @@ public class MenuGUI extends JFrame implements ActionListener
 			bill += String.format("%-10s",billCurrentItem);
 			bill += "\n";
 		}
-		bill += String.format("%-2s %s","Total bill: £",totalBeforeDiscount);
+		Discount dis = getDiscount(currentOrder);
+		if(dis != null)
+			totalAfterDiscount = dis.getPrice();
+		else
+			totalAfterDiscount = totalBeforeDiscount;
 		
+		bill += String.format("%-2s %s","Total bill before discount: £",totalBeforeDiscount);
+		bill += "\n";
+		bill += String.format("%-2s %s","Total bill after discount: £",totalAfterDiscount);
+				
 	  return bill;
   }
   
@@ -191,7 +201,25 @@ public class MenuGUI extends JFrame implements ActionListener
 	  updateGUI();   
   }
   
-  private void setQuantity(String command) {
+  private Discount getDiscount(Map<String, Integer> order) {
+	    AllDiscounts ad = new AllDiscounts();
+		ArrayList<Discount> discounts = ad.loadDiscounts();
+		ArrayList<String> itemIds = new ArrayList<String>();
+		
+		Set<String> keys = order.keySet();
+		for(String key: keys){
+			for(int i =0; i < order.get(key); i++) {
+				itemIds.add(key);
+			}
+		}
+		DiscountCheck dc = new DiscountCheck(discounts);
+		Discount custDiscount = dc.checkForDeals(itemIds);
+		return custDiscount;
+  }
+  
+
+  
+  private void getQuantityGUI(String command) {
 	  String val = JOptionPane.showInputDialog(this,"Number of " + menu.findItemId(command).getName());
 		 
 	  //if val is null then cancel has been selected
