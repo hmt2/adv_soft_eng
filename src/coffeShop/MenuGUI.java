@@ -18,6 +18,10 @@ public class MenuGUI extends JFrame implements ActionListener
 {
   private Menu menu;
   private Map<String, Integer> currentOrder = new LinkedHashMap<String, Integer>();
+  CustomerList customerList;
+  private float totalBeforeDiscount = 0;
+  private double totalAfterDiscount = 0;
+  
   //GUI components
   Container contentPane;
   JPanel southPanel;
@@ -29,11 +33,11 @@ public class MenuGUI extends JFrame implements ActionListener
   JButton buy;
   JButton back;
   JButton clear;
- 
+
   public MenuGUI()
   {
       menu = new Menu();
-      //CustomerList customerList = new CustomerList();
+      customerList = new CustomerList();
       //CustomerList list = new CustomerList();
       //have customer.add which returns the id
       //set up window title
@@ -112,14 +116,22 @@ public class MenuGUI extends JFrame implements ActionListener
 	  //need to create customer
 	  //need to create orders for each item with the newly created customer id
 	  if(e.getSource() == buy) {
-		 placeOrder();
+		 try {
+			placeOrder();
+		} catch (DuplicateIDException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (CalculationError e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	  }
 	  
 	  if(e.getSource() == clear) 
 		  clearOrder();
 
   } 
-  
+ 
   private void updateGUI() {
 	  revalidate();
 	  repaint();
@@ -127,12 +139,11 @@ public class MenuGUI extends JFrame implements ActionListener
   
   //need to add in bill after discount
   private String displayBill() {
+	  totalBeforeDiscount = 0;
 	  String bill = "CHECKOUT \n";
 	  
 	  float billCurrentItem = 0;
 	  int currentItemQuantity = 0;
-	  float totalBeforeDiscount = 0;
-	  double totalAfterDiscount = 0;
 	  
 	  Set<String> keys = currentOrder.keySet();
 		for(String key: keys){
@@ -201,10 +212,8 @@ public class MenuGUI extends JFrame implements ActionListener
 	  updateGUI();   
   }
   
-  private Discount getDiscount(Map<String, Integer> order) {
-	    AllDiscounts ad = new AllDiscounts();
-		ArrayList<Discount> discounts = ad.loadDiscounts();
-		ArrayList<String> itemIds = new ArrayList<String>();
+  ArrayList<String> toArrayList(Map<String, Integer> order){
+	  ArrayList<String> itemIds = new ArrayList<String>();
 		
 		Set<String> keys = order.keySet();
 		for(String key: keys){
@@ -212,13 +221,19 @@ public class MenuGUI extends JFrame implements ActionListener
 				itemIds.add(key);
 			}
 		}
+		return itemIds;
+  }
+  
+  private Discount getDiscount(Map<String, Integer> order) {
+	    AllDiscounts ad = new AllDiscounts();
+		ArrayList<Discount> discounts = ad.loadDiscounts();
+		ArrayList<String> itemIds = toArrayList(order);
 		DiscountCheck dc = new DiscountCheck(discounts);
 		Discount custDiscount = dc.checkForDeals(itemIds);
 		return custDiscount;
   }
   
 
-  
   private void getQuantityGUI(String command) {
 	  String val = JOptionPane.showInputDialog(this,"Number of " + menu.findItemId(command).getName());
 		 
@@ -248,9 +263,10 @@ public class MenuGUI extends JFrame implements ActionListener
   }
   
   //need to update quanities
-  private void placeOrder() {
+  private void placeOrder() throws DuplicateIDException, CalculationError {
 	  if(!currentOrder.isEmpty()) {
-		  updateItemQuantity();
+		  updateItemQuantity(currentOrder);
+		  customerList.addCustomer(toArrayList(currentOrder),totalBeforeDiscount,(float)totalAfterDiscount);
 		  JOptionPane.showMessageDialog(this, "Order placed");
 		  currentOrder.clear();
 		  switchMenu(); 
@@ -260,11 +276,11 @@ public class MenuGUI extends JFrame implements ActionListener
 	  }
   }
   
-  //
-  private void updateItemQuantity() {
-	  Set<String> keys = currentOrder.keySet();
+
+  private void updateItemQuantity(Map<String, Integer> order) {
+	  Set<String> keys = order.keySet();
 		for(String key: keys){
-			int quantityToAdd = currentOrder.get(key);
+			int quantityToAdd = order.get(key);
 			int currentQuantity = menu.findItemId(key).getQuantity();
 			int quantity = currentQuantity + quantityToAdd;
 			menu.findItemId(key).setQuantity(quantity);

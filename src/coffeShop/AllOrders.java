@@ -28,41 +28,7 @@ public class AllOrders {
 	public AllOrders() {
 		allOrders = new LinkedHashMap<Integer, Order>();
 	}
-	
-	public static void main (String arg[]) {
-		loadOrders();
-		System.out.println("Loaded");
-		System.out.println(" order id = 6 ");
-		System.out.println(findOrderId(6));
 		
-		Order o1 = findOrderId(9);
-		System.out.println(" order id = 9 ");
-		System.out.println(o1.getCustomerId());
-		ArrayList<Integer> list;
-		list = findCustomerOrders(o1.getCustomerId());
-		System.out.println(list);
-		System.out.println(" ");
-		
-		Order o2 = findOrderId(15);
-		System.out.println(o2.getCustomerId());
-		System.out.println(o1.compareToOrderId(o2)); //  o1.compareTo(o2) -1 o1 < o2 0 o1 = o2 1 o1 > o2	
-		
-		Order o3 = findOrderId(10);
-		System.out.println(o3.toString());
-		
-		System.out.println("list by Timestamp");
-		listByTimestamp();
-		
-		System.out.println("list by CustomerId");
-		listByCustomerId();
-		
-		System.out.println("list by ItemId");
-		listByItemId();
-		printAllOrders();
-//		listByOrderId();
-		
-	}
-	
 	/**
 	 * loads a text file of orders
 	 */
@@ -142,6 +108,7 @@ public class AllOrders {
 		}
 		
 	}
+	
 	
 //	/**
 //	 * checks if the customer is already created

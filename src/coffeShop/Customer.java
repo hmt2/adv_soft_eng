@@ -4,9 +4,20 @@ import java.util.ArrayList;
 public class Customer 
 {
 	private int customerId;
-    private float bill;
+    private float billBeforeDiscount;
+    private float billAfterDiscount;
     private boolean discount;
-	private ArrayList<Integer> orderIds;  
+	private ArrayList<String> itemIds;  
+	
+	public Customer(int customerId, float billBeforeDiscount, float billAfterDiscount,ArrayList<String> itemIds) 
+    {   
+		this.billAfterDiscount = billBeforeDiscount;
+		this.billAfterDiscount = billAfterDiscount;
+
+        this.customerId =customerId;
+        this.itemIds = itemIds;
+    }
+
 	public Customer(int customerId) 
     {   
        //Adjust the way customerId is created
@@ -16,10 +27,9 @@ public class Customer
 
         this.customerId =customerId;
 
-        this.orderIds = new ArrayList<>();
+        this.itemIds = new ArrayList<>();
 
     }
-
 	/**
      * @return The customer Id.
      */
@@ -32,30 +42,38 @@ public class Customer
 		this.customerId = customerId;
 	}
 	
+	public void setDiscount(boolean isDiscount) {
+		discount = isDiscount;
+	}
 	/**
      * @return The name of the customer.
      */
 	public boolean getDiscounts() {
 		return discount;
 	}
-	public ArrayList<Integer> getOrderIds() { 
-		return orderIds;
+	public ArrayList<String> getOrderIds() { 
+		return itemIds;
 	}
 
     //Not sure if this attribute is needed as we can findCustomerOrders in AllOrders class
-	public void setOrderIds(int orderId) { 
-		orderIds.add(orderId);
+	public void setOrderIds(String itemId) { 
+		itemIds.add(itemId);
 	}
 
 	
 	/**
      * @return The total cost of the orders / bill of the customer.
      */
-	public float getBill() {
+	public float getBillBeforeDiscount() {
 		
-		return bill;
+		return billBeforeDiscount;
 	}
-
+	
+	
+	public float getBillAfterDiscount() {
+			
+			return billAfterDiscount;
+		}
 	
 	/**
      * @return Add comments later
@@ -69,12 +87,12 @@ public class Customer
     {
     	String ordersString = "";
 
-    	for (Integer s : orderIds)
+    	for (String s : itemIds)
     	{
     	    ordersString += s + "\t";
     	}
         return String.format("%-5s", customerId ) + String.format("%-20s", ordersString ) + String.format("%-20s", String.valueOf(discount) ) +
-                 String.valueOf( bill) ;
+                 String.valueOf( billBeforeDiscount) ;
     }
 
 }

@@ -13,8 +13,21 @@ public class CustomerList {
     public CustomerList()
     {
        customerList = new HashMap <Integer, Customer>() ;
-       
     }
+    
+    public int addCustomer(ArrayList<String> itemIds, float beforeDiscount, float afterDiscount) throws DuplicateIDException, CalculationError  { 
+	    int customerId = counter.incrementAndGet();
+			if(customerList.containsKey(customerId)){ //as long as there is a copy change. 
+				throw new DuplicateIDException(customerId);  //or else repeat counter.incrementAndGet();
+			}
+			Customer newCustomer = new Customer(customerId,beforeDiscount,afterDiscount,itemIds); //it can be an Order object to
+			if(beforeDiscount != afterDiscount) {
+				newCustomer.setDiscount(true);
+			}
+			customerList.put(customerId, newCustomer);
+			return customerId;
+    }
+    
     //Whenever a new person makes an order, first a new customer is created by giving it a customerId
 	//Consecutively, the orders are updated
     public  void addCustomer(ArrayList<String> itemIds) throws DuplicateIDException, CalculationError  { 
@@ -50,20 +63,17 @@ public class CustomerList {
 	
 	
 	public Map listByCustomerId() { 
-    	
 		Map<Integer, Customer>sortedCust = new TreeMap<>(customerList);
     	return sortedCust;
-
-    	
 	}	
 	
 	public void displayBill(Customer c) { //in this method if there is a discount it won't show the previous bill. If we want that better to put this method inside Customer class
 		boolean discount = c.getDiscounts();
 		if (discount = true){
-			System.out.println("The bill for customer with id after discount " + c.getCustomerId() + " is: " + c.getBill()  );
+			System.out.println("The bill for customer with id after discount " + c.getCustomerId() + " is: " + c.getBillAfterDiscount()  );
 
 		}else{
-	        System.out.println("The bill for customer with id " + c.getCustomerId() + " is: " +c.getBill());
+	        System.out.println("The bill for customer with id " + c.getCustomerId() + " is: " +c.getBillBeforeDiscount());
 
 		}
 		
