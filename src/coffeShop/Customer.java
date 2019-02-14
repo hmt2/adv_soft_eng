@@ -11,9 +11,10 @@ public class Customer
 	
 	public Customer(int customerId, float billBeforeDiscount, float billAfterDiscount,ArrayList<String> itemIds) 
     {   
-		this.billAfterDiscount = billBeforeDiscount;
+		this.billBeforeDiscount = billBeforeDiscount;
 		this.billAfterDiscount = billAfterDiscount;
-
+		if(this.billBeforeDiscount != this.billAfterDiscount)
+			this.discount = true;
         this.customerId =customerId;
         this.itemIds = itemIds;
     }
@@ -56,8 +57,12 @@ public class Customer
 	}
 
     //Not sure if this attribute is needed as we can findCustomerOrders in AllOrders class
-	public void setOrderIds(String itemId) { 
+	public void addItemId(String itemId) { 
 		itemIds.add(itemId);
+	}
+	
+	public void setItemIds(ArrayList<String> itemIds) { 
+	  this.itemIds = itemIds;
 	}
 
 	

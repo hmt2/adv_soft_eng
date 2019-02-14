@@ -19,6 +19,7 @@ public class MenuGUI extends JFrame implements ActionListener
   private Menu menu;
   private Map<String, Integer> currentOrder = new LinkedHashMap<String, Integer>();
   CustomerList customerList;
+  AllOrders allorders;
   private float totalBeforeDiscount = 0;
   private double totalAfterDiscount = 0;
   
@@ -34,13 +35,13 @@ public class MenuGUI extends JFrame implements ActionListener
   JButton back;
   JButton clear;
 
-  public MenuGUI()
+  public MenuGUI() throws DuplicateIDException, CalculationError 
   {
       menu = new Menu();
+      allorders = new AllOrders();
       customerList = new CustomerList();
-      //CustomerList list = new CustomerList();
-      //have customer.add which returns the id
-      //set up window title
+      addPreviousOrders();
+      
       setTitle("Menu GUI");
       //ensure program ends when window closes
 	  setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -137,6 +138,7 @@ public class MenuGUI extends JFrame implements ActionListener
 	  repaint();
   }
   
+ 
   //need to add in bill after discount
   private String displayBill() {
 	  totalBeforeDiscount = 0;
@@ -162,7 +164,7 @@ public class MenuGUI extends JFrame implements ActionListener
 			bill += String.format("%-10s",billCurrentItem);
 			bill += "\n";
 		}
-		Discount dis = getDiscount(currentOrder);
+		Discount dis = getDiscount(toArrayList(currentOrder));
 		if(dis != null)
 			totalAfterDiscount = dis.getPrice();
 		else
@@ -197,6 +199,19 @@ public class MenuGUI extends JFrame implements ActionListener
 	  updateGUI();   
   }
   
+  private void addPreviousOrders() throws DuplicateIDException, CalculationError {
+	  TreeMap<Integer,ArrayList<String>> cust = allorders.loadOrders();
+      Set<Integer> keys = cust.keySet();
+		for(Integer key: keys){
+			float totalBeforeDiscount = calcBillBeforeDiscount(cust.get(key));
+			float totalAfterDiscount = totalBeforeDiscount;
+			Discount ds = getDiscount(cust.get(key));
+			if(ds != null)
+				totalAfterDiscount = (float) ds.getPrice();
+			customerList.addCustomer(cust.get(key), totalBeforeDiscount, totalAfterDiscount);
+		}
+  }
+  
   public void clearOrder() {
 	  currentOrder.clear();
 	  displayBill.setText(displayBill());
@@ -223,16 +238,25 @@ public class MenuGUI extends JFrame implements ActionListener
 		}
 		return itemIds;
   }
+   
   
-  private Discount getDiscount(Map<String, Integer> order) {
+  public Discount getDiscount(ArrayList<String> itemIds) {
 	    AllDiscounts ad = new AllDiscounts();
 		ArrayList<Discount> discounts = ad.loadDiscounts();
-		ArrayList<String> itemIds = toArrayList(order);
 		DiscountCheck dc = new DiscountCheck(discounts);
 		Discount custDiscount = dc.checkForDeals(itemIds);
 		return custDiscount;
-  }
+}
+
   
+   private float calcBillBeforeDiscount(ArrayList<String> itemIds) {
+  // while loop
+	  float billBeforeDiscount = 0;
+	  for(String itemid : itemIds) {
+	  	billBeforeDiscount += menu.findItemId(itemid).getPrice();
+	  }
+	  return billBeforeDiscount;
+   }
 
   private void getQuantityGUI(String command) {
 	  String val = JOptionPane.showInputDialog(this,"Number of " + menu.findItemId(command).getName());
@@ -266,7 +290,8 @@ public class MenuGUI extends JFrame implements ActionListener
   private void placeOrder() throws DuplicateIDException, CalculationError {
 	  if(!currentOrder.isEmpty()) {
 		  updateItemQuantity(currentOrder);
-		  customerList.addCustomer(toArrayList(currentOrder),totalBeforeDiscount,(float)totalAfterDiscount);
+		  int custId = customerList.addCustomer(toArrayList(currentOrder),totalBeforeDiscount,(float)totalAfterDiscount);
+		  //still need to add all orders
 		  JOptionPane.showMessageDialog(this, "Order placed");
 		  currentOrder.clear();
 		  switchMenu(); 

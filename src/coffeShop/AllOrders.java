@@ -18,6 +18,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.TreeMap;
+
+import javax.print.DocFlavor.URL;
 
 public class AllOrders {
 	
@@ -32,13 +35,15 @@ public class AllOrders {
 	/**
 	 * loads a text file of orders
 	 */
-	public static void loadOrders() {
+	public TreeMap<Integer,ArrayList<String>> loadOrders() {
+	 TreeMap<Integer,ArrayList<String>> customers = new TreeMap<Integer,ArrayList<String>>();
  	//initialise empty linkedhashmap of orders
      LinkedHashMap<Integer, Order> entries = new LinkedHashMap<Integer, Order>();
      BufferedReader buff = null;
  	String data [] = new String[4];
  	try {
-			buff = new BufferedReader(new FileReader("orders.txt"));
+ 		 java.net.URL url = getClass().getResource("orders.txt");
+			buff = new BufferedReader(new FileReader(url.getPath()));
 			String inputLine = null;
 
 			inputLine = buff.readLine();
@@ -57,6 +62,16 @@ public class AllOrders {
 //	    		System.out.println(data[2].trim());
 //	    		System.out.println(data[3].trim());
 	    		Order o = new Order(orderId, customerId, itemId, timestamp); //Integer String Integer timestamp
+	    		if(customers.containsKey(customerId)) {
+	    			ArrayList<String> currentItemIds = customers.get(customerId);
+	    			currentItemIds.add(itemId);
+	    			customers.put(customerId, currentItemIds);
+	    		}
+	    		else {
+	    			ArrayList<String> itemIds = new ArrayList<String>();
+	    			itemIds.add(itemId);
+	    			customers.put(customerId,itemIds);
+	    		}
 	    		//add to linkedhashmap
 	            entries.put(orderId, o);
 	            //read next line
@@ -81,12 +96,13 @@ public class AllOrders {
 	    	}
 	    }
  	allOrders = entries;
+ 	return customers;
 	}
 	
 	/**
 	 * adds an order (if more than one order, divides in a certain number of orders)
 	 */
-	public static void addOrder(int nb_orders, String data[]) {
+	public void addOrder(int nb_orders, String data[]) {
 		int i = 1;
 		while(i < nb_orders+1) {
 			for (int j = 0; j < nb_orders*4; j+=4) {
@@ -108,7 +124,6 @@ public class AllOrders {
 		}
 		
 	}
-	
 	
 //	/**
 //	 * checks if the customer is already created

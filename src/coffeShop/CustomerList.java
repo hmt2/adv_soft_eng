@@ -2,13 +2,14 @@ package coffeShop;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class CustomerList {
 	private   HashMap <Integer, Customer> customerList; 
-	private static AtomicInteger counter  = new AtomicInteger(100); //assume customerId starts from 100 and increments. Better check last customerId from orders.txt
+	private static AtomicInteger counter  = new AtomicInteger(99); //assume customerId starts from 100 and increments. Better check last customerId from orders.txt
 	
     public CustomerList()
     {
@@ -21,28 +22,10 @@ public class CustomerList {
 				throw new DuplicateIDException(customerId);  //or else repeat counter.incrementAndGet();
 			}
 			Customer newCustomer = new Customer(customerId,beforeDiscount,afterDiscount,itemIds); //it can be an Order object to
-			if(beforeDiscount != afterDiscount) {
-				newCustomer.setDiscount(true);
-			}
 			customerList.put(customerId, newCustomer);
 			return customerId;
     }
     
-    //Whenever a new person makes an order, first a new customer is created by giving it a customerId
-	//Consecutively, the orders are updated
-    public  void addCustomer(ArrayList<String> itemIds) throws DuplicateIDException, CalculationError  { 
-		    int customerId = counter.incrementAndGet();
-		    try{
-				if(customerList.containsKey(customerId)){ //as long as there is a copy change. 
-					throw new DuplicateIDException(customerId);  //or else repeat counter.incrementAndGet();
-				}
-				Customer newCustomer = new Customer(customerId); //it can be an Order object too
-				customerList.put(customerId, newCustomer);
-		    } catch (IllegalArgumentException | DuplicateIDException e){
-						addCustomer(itemIds);
-			}
-	}
-	
 	public void deleteCustomer(int customerId) { 
         //If the user inputs the wrong id no change will be made to the file, therefore it is necessary to notify the user. Custom designed exception better
 		if(!customerList.containsKey(customerId)){
@@ -60,8 +43,7 @@ public class CustomerList {
 			return c;
 		}		
 	}
-	
-	
+		
 	public Map listByCustomerId() { 
 		Map<Integer, Customer>sortedCust = new TreeMap<>(customerList);
     	return sortedCust;
@@ -74,7 +56,6 @@ public class CustomerList {
 
 		}else{
 	        System.out.println("The bill for customer with id " + c.getCustomerId() + " is: " +c.getBillBeforeDiscount());
-
 		}
 		
 	}
