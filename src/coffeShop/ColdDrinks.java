@@ -3,7 +3,7 @@ package coffeShop;
 
 public class ColdDrinks extends Item {
 
-	public ColdDrinks(String itemId, String itemName, float itemPrice, String itemCategory, String itemDescription) {
+	public ColdDrinks(String itemId, String itemName, float itemPrice, String itemCategory, String itemDescription) throws InvalidIdException {
 		super(itemId, itemName, itemPrice, itemCategory, itemDescription);
 	}
 

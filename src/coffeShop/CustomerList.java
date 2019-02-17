@@ -9,25 +9,24 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class CustomerList {
 	private   HashMap <Integer, Customer> customerList; 
-	private static AtomicInteger counter  = new AtomicInteger(99); //assume customerId starts from 100 and increments. Better check last customerId from orders.txt
+	private static AtomicInteger counter  = new AtomicInteger(99);  
 	
     public CustomerList()
     {
        customerList = new HashMap <Integer, Customer>() ;
     }
     
-    public int addCustomer(ArrayList<String> itemIds, float beforeDiscount, float afterDiscount) throws DuplicateIDException, CalculationError  { 
+    public int addCustomer(ArrayList<String> itemIds, float beforeDiscount, float afterDiscount) throws DuplicateIDException  { 
 	    int customerId = counter.incrementAndGet();
-			if(customerList.containsKey(customerId)){ //as long as there is a copy change. 
-				throw new DuplicateIDException(customerId);  //or else repeat counter.incrementAndGet();
+			if(customerList.containsKey(customerId)){ 
+				throw new DuplicateIDException(customerId);  
 			}
-			Customer newCustomer = new Customer(customerId,beforeDiscount,afterDiscount,itemIds); //it can be an Order object to
+			Customer newCustomer = new Customer(customerId,beforeDiscount,afterDiscount,itemIds); 
 			customerList.put(customerId, newCustomer);
 			return customerId;
     }
     
 	public void deleteCustomer(int customerId) { 
-        //If the user inputs the wrong id no change will be made to the file, therefore it is necessary to notify the user. Custom designed exception better
 		if(!customerList.containsKey(customerId)){
 			throw new IllegalArgumentException("Customer with id" + customerId + "does not exist"); 
 		}else{

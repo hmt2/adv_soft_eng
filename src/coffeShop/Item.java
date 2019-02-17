@@ -8,22 +8,49 @@ public class Item {
 	private String itemCategory;
 	private String itemDescription;
 
-	public Item(String itemId, String itemName, float itemPrice, String itemCategory, String itemDescription){
-		if( itemId.trim().length() ==0|| itemName.trim().length()== 0 || itemCategory.trim().length()== 0)    
+	public Item(String itemId, String itemName, float itemPrice, String itemCategory, String itemDescription) throws InvalidIdException{
+	
+		
+		if( itemId.length() ==0 || itemName.length()== 0 || itemCategory.length()== 0)    
         {
-          throw new IllegalStateException(
-             "Cannot have a blank id, name or category");
+          throw new IllegalStateException("Cannot have a blank id, name or category");
         }
 		if( itemPrice < 0) {
 			throw new IllegalStateException(
 		      "Cannot have a negative price");
 		}
+		String header = itemId.substring(0,3);
+		if (itemId.length()!= 6) {
+	
+				throw new InvalidIdException ("ItemId must contain a category header (DES, HOT, CLD, ADD, FOD) and a 3 digit number");
+
+		}
 		
-		this.itemId = itemId.trim();
-		this.itemName = itemName.trim();
+		else if(!(header.equals("DES") || header.equals("CLD") || header.equals("ADD") || header.equals("FOD") || header.equals("HOT")) ){
+             
+				throw new InvalidIdException ("ItemId must contain a category header (DES, HOT, CLD, ADD, FOD) and a 3 digit number");
+			
+	    }
+		
+		if (itemId.substring(3,6).length() == 3){
+			try
+		     {
+		         Integer.parseInt(itemId.substring(3,6));
+		         
+		     }
+		     catch(NumberFormatException e)
+		     {
+		
+						throw new InvalidIdException ("ItemId must contain a category header (DES, HOT, CLD, ADD, FOD) and a 3 digit number");
+
+		     }
+		}
+		
+		this.itemId = itemId;
+		this.itemName = itemName;
 		this.itemPrice = itemPrice;
 		this.itemQuantity = 0;
-		this.itemCategory = itemCategory.trim();
+		this.itemCategory = itemCategory;
 		this.itemDescription = itemDescription;
 	}
 	
@@ -69,10 +96,10 @@ public class Item {
     }
     
     //checks if 2 Item objects are the same by comparing ids
-    public int compareTo(Item otherDetails)
+    public int compareToItemId(Item otherDetails)
     {
         return itemId.compareTo(otherDetails.getId());
-    }    
+    }     
 
     //return a string containing the details of the Item object
     public String toString()
@@ -82,21 +109,18 @@ itemPrice +String.format("%-10s", "") + String.format("%-15s", itemCategory)
                  + String.format("%-15s", itemDescription);
     }
 
-	public int compareToItemCategory(Item value) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int compareToItemCategory(Item otherDetails) {
+		
+		return itemCategory.compareTo(otherDetails.getCategory());
 	}
 
-	public int compareToItemName(Item value) {
-		// TODO Auto-generated method stub
+	public int compareToItemName(Item otherDetails) {
+		
+		return itemName.compareTo(otherDetails.getName());
+	}
+	public int compareTo(Item arg0) {
 		return 0;
 	}
-
-	public int compareToItemId(Item value) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-    
 	
 	
 }
