@@ -38,12 +38,14 @@ public class MenuGUI extends JFrame implements ActionListener
   JButton back;
   JButton clear;
 
-  public MenuGUI() throws DuplicateIDException, CalculationError 
+  public MenuGUI() throws DuplicateIDException 
   {
       menu = new Menu();
       allorders = new AllOrders();
       customerList = new CustomerList();
+
       addPreviousOrders();
+    
       
       setTitle("Menu GUI");
       //ensure program ends when window closes
@@ -131,17 +133,16 @@ public class MenuGUI extends JFrame implements ActionListener
 	  if(e.getSource() == buy) {
 		 try {
 			placeOrder();
-		} catch (DuplicateIDException e1) {
+		} catch (DuplicateIDException | IllegalArgumentException e1) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (CalculationError e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+			JOptionPane.showMessageDialog(this, "System error, please retry");
+			switchMenu(); //maybe not necessary
+
 	  }
 	  
 	  if(e.getSource() == clear) 
 		  clearOrder();
+	  }
 
   } 
  
@@ -181,7 +182,11 @@ public class MenuGUI extends JFrame implements ActionListener
 			totalAfterDiscount = dis.getPrice();
 		else
 			totalAfterDiscount = totalBeforeDiscount;
-		
+		if (totalAfterDiscount < 0 || totalAfterDiscount > 100){
+			JOptionPane.showMessageDialog(this, "Bill not calculated properly, input items again");
+            switchMenu();
+			//throw new IllegalArgumentException("Bill not calculated properly");
+		}
 		bill += String.format("%-2s %s","Total bill before discount: £",totalBeforeDiscount);
 		bill += "\n";
 		bill += String.format("%-2s %s","Total bill after discount: £",totalAfterDiscount);
@@ -211,7 +216,7 @@ public class MenuGUI extends JFrame implements ActionListener
 	  updateGUI();   
   }
   
-  private void addPreviousOrders() throws DuplicateIDException, CalculationError {
+  private void addPreviousOrders() throws DuplicateIDException{
 	  TreeMap<Integer,ArrayList<String>> cust = allorders.loadOrders();
       Set<Integer> keys = cust.keySet();
 		for(Integer key: keys){
@@ -220,7 +225,14 @@ public class MenuGUI extends JFrame implements ActionListener
 			Discount ds = getDiscount(cust.get(key));
 			if(ds != null)
 				totalAfterDiscount = (float) ds.getPrice();
-			customerList.addCustomer(cust.get(key), totalBeforeDiscount, totalAfterDiscount);
+
+			try {
+				customerList.addCustomer(cust.get(key), totalBeforeDiscount, totalAfterDiscount);
+			} catch (DuplicateIDException | IllegalArgumentException e1) {
+				// TODO Auto-generated catch block
+				continue; //continue to process the next customer
+
+		  }
 		}
   }
   
@@ -265,8 +277,15 @@ public class MenuGUI extends JFrame implements ActionListener
   // while loop
 	  float billBeforeDiscount = 0;
 	  for(String itemid : itemIds) {
-	  	billBeforeDiscount += menu.findItemId(itemid).getPrice();
-	  }
+		  	billBeforeDiscount += menu.findItemId(itemid).getPrice();
+		  }
+		  
+	   if (billBeforeDiscount < 0 || billBeforeDiscount > 100){
+			JOptionPane.showMessageDialog(this, "Bill not calculated properly, input items again");
+            switchMenu();
+			//throw new IllegalArgumentException("Bill not calculated properly");
+		}
+
 	  return billBeforeDiscount;
    }
 
@@ -299,7 +318,7 @@ public class MenuGUI extends JFrame implements ActionListener
   }
   
   //need to update quanities
-  private void placeOrder() throws DuplicateIDException, CalculationError {
+  private void placeOrder() throws DuplicateIDException {
 	  if(!currentOrder.isEmpty()) {
 		  updateItemQuantity(currentOrder);
 		  int custId = customerList.addCustomer(toArrayList(currentOrder),totalBeforeDiscount,(float)totalAfterDiscount);

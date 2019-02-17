@@ -15,14 +15,17 @@ public class Customer
 		this.billAfterDiscount = billAfterDiscount;
 		if(this.billBeforeDiscount != this.billAfterDiscount)
 			this.discount = true;
+        if (customerId < 100){ 
+        	throw new IllegalArgumentException ("Not a valid customer id");
+        }
         this.customerId =customerId;
         this.itemIds = itemIds;
     }
 
 	public Customer(int customerId) 
     {   
-       //Adjust the way customerId is created
-        if (customerId < 100){ //we assume all customerId start from 100. However is better to check which is the last customerId from orders.txt or refresh the orders.txt every day
+      
+        if (customerId < 100){ 
         	throw new IllegalArgumentException ("Not a valid customer id");
         }
 
@@ -52,14 +55,11 @@ public class Customer
 	public boolean getDiscounts() {
 		return discount;
 	}
-	public ArrayList<String> getOrderIds() { 
+	public ArrayList<String> getItemIds() { 
 		return itemIds;
 	}
 
-    //Not sure if this attribute is needed as we can findCustomerOrders in AllOrders class
-	public void addItemId(String itemId) { 
-		itemIds.add(itemId);
-	}
+
 	
 	public void setItemIds(ArrayList<String> itemIds) { 
 	  this.itemIds = itemIds;

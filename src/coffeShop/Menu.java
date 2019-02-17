@@ -50,12 +50,18 @@ public class Menu {
 		    		String itemCategory = data[3].trim();
 		    		String itemDescription = data[4].trim();
 		    		// Composition of an Item : String String float float String String
-		    		Item i = new Item(itemId, itemName, itemPrice, itemCategory, itemDescription);
+		    		try {
+		    			Item i = new Item(itemId, itemName, itemPrice, itemCategory, itemDescription);
 		    		//add to LinkedHashMap
-		    		menu.put(itemId, i);
+		    			menu.put(itemId, i);
+		    			inputLine = buff.readLine();
 		            //menu.put(itemId, i);
 		            //read next line
-		            inputLine = buff.readLine();
+		    		}catch(InvalidIdException | IllegalStateException e){ //if any has an incorrect format just read the next line, it won't load it to the menu
+		    			    System.out.println (e.getMessage()+ "Processing next item");
+		    			    
+		    				inputLine = buff.readLine();
+		    		}
 		    	}
 	            
 		    }
