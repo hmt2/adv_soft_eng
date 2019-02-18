@@ -31,7 +31,7 @@ public class AllDiscounts {
 							(i < 10 ? "FOD00" : "FOD0")+i, 
 							cld,
 							des,
-							10)
+							9.0)
 					);
 		}
 
@@ -46,7 +46,7 @@ public class AllDiscounts {
 						2, 
 						"FOD006", 
 						secondaryItems, 
-						7.0)
+						6.5)
 				);
 
 		//Coffee and Cake deal
@@ -76,7 +76,7 @@ public class AllDiscounts {
 							3, 
 							h, 
 							secondaryItems, 
-							5.0)
+							4.5)
 					);
 		}
 

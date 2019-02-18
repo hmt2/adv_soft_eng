@@ -22,7 +22,8 @@ public class MenuGUI extends JFrame implements ActionListener
   AllOrders allorders;
   private float totalBeforeDiscount = 0;
   private double totalAfterDiscount = 0;
-  
+  boolean isStudentDiscount;
+
   private float totalAllItemsBeforeDiscount = 0;
   private float totalAllItemsAfterDiscount = 0;
   
@@ -37,6 +38,8 @@ public class MenuGUI extends JFrame implements ActionListener
   JButton buy;
   JButton back;
   JButton clear;
+  JButton studentDiscount;
+
 
   public MenuGUI() throws DuplicateIDException 
   {
@@ -67,12 +70,19 @@ public class MenuGUI extends JFrame implements ActionListener
       southPanel.setLayout(new GridLayout(1,1));
       southPanel.setBackground(Color.DARK_GRAY);
       
+    
+      //student discount button
+      studentDiscount = new JButton("student discount (10%)");
+      studentDiscount.addActionListener(this);
+      isStudentDiscount = false;
+      southPanel.add(studentDiscount);
+
       //set up checkout button
       checkout = new JButton("Checkout"); 
       //specify action when button is pressed
       checkout.addActionListener(this) ;
       southPanel.add(checkout);
-     
+
       //add south panel to the content pane (GUI)
       contentPane.add(southPanel, BorderLayout.SOUTH);
 
@@ -119,18 +129,24 @@ public class MenuGUI extends JFrame implements ActionListener
 	  if(isItem != null) {
 		getQuantityGUI(command);
 	  }
-	  
+
 	  //if checkout button is pressed then want to showing the Bill
-	  if(e.getSource() == checkout)
+	  if(e.getSource() == checkout) {
+		  studentDiscount.setEnabled(true);
 		  switchBill();
+	  }
+
 	  //if back button is pressed then want to return to showing the menu
-	  if(e.getSource() == back)
+	  if(e.getSource() == back) {
+		  isStudentDiscount = false;
 		  switchMenu();
-	  
+	  }
+
 	  //where link to other classes!
 	  //need to create customer
 	  //need to create orders for each item with the newly created customer id
 	  if(e.getSource() == buy) {
+		 isStudentDiscount = false;
 		 try {
 			placeOrder();
 		} catch (DuplicateIDException | IllegalArgumentException e1) {
@@ -140,8 +156,14 @@ public class MenuGUI extends JFrame implements ActionListener
 
 	  }
 	  
-	  if(e.getSource() == clear) 
+	  if(e.getSource() == clear)
+		  isStudentDiscount = false;
 		  clearOrder();
+	  }
+	  
+	  if(e.getSource() == studentDiscount) {
+		  isStudentDiscount = true;
+		  studentDiscount.setEnabled(false);
 	  }
 
   } 
@@ -151,7 +173,38 @@ public class MenuGUI extends JFrame implements ActionListener
 	  repaint();
   }
   
- 
+  private double calcAfterDiscount(Map<String, Integer> currentOrder) {
+	  return calcAfterDiscount(currentOrder, new ArrayList<String>());
+  }
+  
+  private double calcAfterDiscount(Map<String, Integer> currentOrder, ArrayList<String> discountNames) {
+	  ArrayList<String> itemIds = toArrayList(currentOrder);
+	  return calcAfterDiscount(itemIds, discountNames);
+  }
+  
+  private double calcAfterDiscount(ArrayList<String> itemIds) {
+	  return calcAfterDiscount(itemIds, new ArrayList<String>());
+  }
+  
+  private double calcAfterDiscount(ArrayList<String> itemIds, ArrayList<String> discountNames) {
+	  double totalAfterDiscount = 0;
+	  while(true) {
+		  Discount dis = getDiscount(itemIds);
+		  if(dis != null) {
+			  totalAfterDiscount += dis.getPrice();
+			  discountNames.add(dis.getName());
+			  for(String itemId : dis.getDiscountCodes()) {
+				  itemIds.remove(itemId);
+			  }
+		  } else {
+			  double price = calcBillBeforeDiscount(itemIds);
+			  totalAfterDiscount += isStudentDiscount ? price * 0.9 : price;
+			  break;
+		  }
+	  }
+	  return totalAfterDiscount;
+  }
+
   //need to add in bill after discount
   private String displayBill() {
 	  totalBeforeDiscount = 0;
@@ -177,18 +230,18 @@ public class MenuGUI extends JFrame implements ActionListener
 			bill += String.format("%-10s",billCurrentItem);
 			bill += "\n";
 		}
-		Discount dis = getDiscount(toArrayList(currentOrder));
-		if(dis != null)
-			totalAfterDiscount = dis.getPrice();
-		else
-			totalAfterDiscount = totalBeforeDiscount;
-		if (totalAfterDiscount < 0 || totalAfterDiscount > 100){
-			JOptionPane.showMessageDialog(this, "Bill not calculated properly, input items again");
-            switchMenu();
-			//throw new IllegalArgumentException("Bill not calculated properly");
-		}
+		
+		ArrayList<String> discountNames = new ArrayList<>();
+		totalAfterDiscount = calcAfterDiscount(currentOrder, discountNames);
+
 		bill += String.format("%-2s %s","Total bill before discount: £",totalBeforeDiscount);
 		bill += "\n";
+		if(!discountNames.isEmpty() || isStudentDiscount)
+			bill += "Applied discounts:\n";
+		if(isStudentDiscount)
+			bill += "\tStudent Discount: 10%\n";
+		for(String discountName : discountNames)
+			bill += "\t" + discountName + "\n"; 
 		bill += String.format("%-2s %s","Total bill after discount: £",totalAfterDiscount);
 				
 	  return bill;
@@ -224,8 +277,7 @@ public class MenuGUI extends JFrame implements ActionListener
 			float totalAfterDiscount = totalBeforeDiscount;
 			Discount ds = getDiscount(cust.get(key));
 			if(ds != null)
-				totalAfterDiscount = (float) ds.getPrice();
-
+				totalAfterDiscount = (float) calcAfterDiscount(cust.get(key));
 			try {
 				customerList.addCustomer(cust.get(key), totalBeforeDiscount, totalAfterDiscount);
 			} catch (DuplicateIDException | IllegalArgumentException e1) {
@@ -245,7 +297,8 @@ public class MenuGUI extends JFrame implements ActionListener
   private void switchMenu() {
 	  southPanel.removeAll();
 	  contentPane.add(menuList);
-	  contentPane.remove(billList);	    
+	  contentPane.remove(billList);
+	  southPanel.add(studentDiscount);
       southPanel.add(checkout);   
       
 	  updateGUI();   
