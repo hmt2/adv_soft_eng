@@ -20,8 +20,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 
-import javax.print.DocFlavor.URL;
-
 public class AllOrders {
 	
 	// Storage for a certain amount of orders
@@ -59,21 +57,27 @@ public class AllOrders {
 	    		String itemId = data[2].trim();
 	    		Timestamp timestamp = Timestamp.valueOf(data[3].trim());
 
-	    		Order o = new Order(orderId, customerId, itemId, timestamp); //Integer String Integer timestamp
-	    		if(customers.containsKey(customerId)) {
-	    			ArrayList<String> currentItemIds = customers.get(customerId);
-	    			currentItemIds.add(itemId);
-	    			customers.put(customerId, currentItemIds);
-	    		}
-	    		else {
-	    			ArrayList<String> itemIds = new ArrayList<String>();
-	    			itemIds.add(itemId);
-	    			customers.put(customerId,itemIds);
-	    		}
-	    		//add to linkedhashmap
-	            entries.put(orderId, o);
-	            //read next line
-	            inputLine = buff.readLine();	            
+	    		Order o;
+				try {
+					o = new Order(orderId, customerId, itemId, timestamp);
+					//Integer String Integer timestamp
+		    		if(customers.containsKey(customerId)) {
+		    			ArrayList<String> currentItemIds = customers.get(customerId);
+		    			currentItemIds.add(itemId);
+		    			customers.put(customerId, currentItemIds);
+		    		}
+		    		else {
+		    			ArrayList<String> itemIds = new ArrayList<String>();
+		    			itemIds.add(itemId);
+		    			customers.put(customerId,itemIds);
+		    		}
+		    		//add to linkedhashmap
+		            entries.put(orderId, o);
+		            //read next line
+		            inputLine = buff.readLine();
+				} catch (InvalidIdException e) {
+					e.printStackTrace();
+				}
 	    	}
          
 	    }

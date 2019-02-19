@@ -10,8 +10,14 @@ public class Order implements Comparable<Order>
 	private String itemId;
 	private Timestamp timestamp;
 	
-	public Order(Integer orderId, Integer customerId,  String itemId, Timestamp timestamp)
+	public Order(Integer orderId, Integer customerId,  String itemId, Timestamp timestamp) throws InvalidIdException
     {   
+		if(orderId.toString().length() == 0 || customerId.toString().length() == 0 || itemId.length() == 0 || timestamp.toString().length() == 0) {
+			throw new IllegalStateException("Cannot have a blank orderId, customerId, itemId or timestamp");
+		}
+		if (itemId.length()!= 6) {
+			throw new InvalidIdException ("ItemId must contain a category header (DES, HOT, CLD, ADD, FOD) and a 3 digit number");
+		}
         this.orderId = orderId;
         this.customerId = customerId;
         this.itemId = itemId.trim();
