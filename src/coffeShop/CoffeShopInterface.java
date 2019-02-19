@@ -30,7 +30,7 @@ public class CoffeShopInterface {
 	}
 	
 	public void generateReport(){
-   	 	SalesReport salrep = new SalesReport(menu,totalAllItemsAfterDiscount,totalAllItemsBeforeDiscount);
+   	 	SalesReport salrep = new SalesReport(menu,totalAllItemsBeforeDiscount,totalAllItemsAfterDiscount);
 
 	}
 	public void addPreviousOrders() throws DuplicateIDException{
@@ -145,7 +145,7 @@ public class CoffeShopInterface {
 	  			totalBeforeDiscount += billCurrentItem;
 	  					
 	  			bill += String.format("%-2s %s",currentItemQuantity,"x  ");
-	  			bill += String.format("%-20s %s",menu.findItemId(key).getName(),"£",billCurrentItem);
+	  			bill += String.format("%-20s %s",menu.findItemId(key).getName(),"Â£",billCurrentItem);
 	  			bill += String.format("%-10s",billCurrentItem);
 	  			bill += "\n";
 	  		}
@@ -157,7 +157,7 @@ public class CoffeShopInterface {
 	        
 				//throw new IllegalArgumentException("Bill not calculated properly");
 			}
-	  		bill += String.format("%-2s %s","Total bill before discount: £",totalBeforeDiscount);
+	  		bill += String.format("%-2s %s","Total bill before discount: Â£",totalBeforeDiscount);
 	  		bill += "\n";
 	  		if(!discountNames.isEmpty() || isStudentDiscount)
 	  			bill += "Applied discounts:\n";
@@ -165,7 +165,7 @@ public class CoffeShopInterface {
 	  			bill += "\tStudent Discount: 10%\n";
 	  		for(String discountName : discountNames)
 	  			bill += "\t" + discountName + "\n"; 
-	  		bill += String.format("%-2s %s","Total bill after discount: £",totalAfterDiscount);
+	  		bill += String.format("%-2s %s","Total bill after discount: Â£",totalAfterDiscount);
 	  				
 	  	  return bill;
 	  }
