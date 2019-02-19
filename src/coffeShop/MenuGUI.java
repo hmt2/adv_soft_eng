@@ -151,10 +151,10 @@ public void actionPerformed(ActionEvent e)
 			// TODO Auto-generated catch block
 			JOptionPane.showMessageDialog(this, "System error, please retry");
 			switchMenu(); //maybe not necessary
-
+	 	 }
 	  }
 	  
-	  if(e.getSource() == clear)
+	  if(e.getSource() == clear){
 		  isStudentDiscount = false;
 		  clearOrder();
 	  }
@@ -176,7 +176,7 @@ private void updateGUI() {
 private void loadItemButtons() {
 	  Set<String> keys = menu.getKeySet();
 		for(String key: keys){
-			JButton button = new JButton(String.format("%30s%16s",menu.findItemId(key).getName(),"£" + menu.findItemId(key).getPrice()));
+			JButton button = new JButton(String.format("%30s%16s",menu.findItemId(key).getName(),"Â£" + menu.findItemId(key).getPrice()));
 			button.addActionListener(this);
 		    menuPanel.add(button);
 			button.setActionCommand(key);
