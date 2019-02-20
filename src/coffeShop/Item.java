@@ -22,29 +22,28 @@ public class Item {
 		String header = itemId.substring(0,3);
 		if (itemId.length()!= 6) {
 	
-				throw new InvalidIdException ("ItemId must contain a category header (DES, HOT, CLD, ADD, FOD) and a 3 digit number");
+				throw new InvalidIdException ("ItemId must be 6 characters long");
 
 		}
 		
 		else if(!(header.equals("DES") || header.equals("CLD") || header.equals("ADD") || header.equals("FOD") || header.equals("HOT")) ){
              
-				throw new InvalidIdException ("ItemId must contain a category header (DES, HOT, CLD, ADD, FOD) and a 3 digit number");
+				throw new InvalidIdException ("ItemId must contain a category header (DES, HOT, CLD, ADD, FOD) ");
 			
 	    }
 		
-		if (itemId.substring(3,6).length() == 3){
-			try
+		try
 		     {
 		         Integer.parseInt(itemId.substring(3,6));
 		         
 		     }
-		     catch(NumberFormatException e)
+		catch(NumberFormatException | StringIndexOutOfBoundsException e)
 		     {
 		
-						throw new InvalidIdException ("ItemId must contain a category header (DES, HOT, CLD, ADD, FOD) and a 3 digit number");
+						throw new InvalidIdException ("ItemId must contain a 3 digit number");
 
 		     }
-		}
+		
 		
 		this.itemId = itemId;
 		this.itemName = itemName;

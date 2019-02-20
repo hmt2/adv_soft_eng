@@ -23,11 +23,10 @@ public class SalesReport {
 //Constructor that get the menu updated inside the GUI (with the new quantities)	
 	public SalesReport(Menu menu, float totalBillBeforeDiscount, float totalBillAfterDiscount) {
 		this.menu= menu; 
-		this.totalBillBeforeDiscount = totalBillBeforeDiscount;
+		this.totalBillBeforeDiscount =totalBillBeforeDiscount;
 		this.totalBillAfterDiscount =  totalBillAfterDiscount;
 		createSalesreport();
 	}
-	
 	
 	public String getDate() {
 		return date;
@@ -36,8 +35,6 @@ public class SalesReport {
 	public float getTotalBillBeforeDiscount() {
 		return totalBillBeforeDiscount;
 	}
-
-
 
 	public void setTotalBillBeforeDiscount(float totalBillBeforeDiscount) {
 		this.totalBillBeforeDiscount = totalBillBeforeDiscount;
@@ -59,7 +56,6 @@ public class SalesReport {
 		
 		String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm").format(new Date());
 		date = timeStamp;
-		
 		try(FileWriter fw = new FileWriter(timeStamp + ".csv", true);
 				
 			    BufferedWriter bw = new BufferedWriter(fw);

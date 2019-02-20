@@ -89,6 +89,10 @@ public class Menu {
     	return menu.entrySet();
     }
 	
+	public LinkedHashMap<String, Item> getLinkedHashMap() {
+		return menu;
+	}
+	
 	// method to find an item by its ID
 	public Item findItemId(String itemId) throws IdNotContainedException {
 		Item i ;
@@ -209,9 +213,6 @@ public class Menu {
 			}
 		
     	return listOutput(sortedMap);
-	}
-	
-	
-	
-		
+	}	
+
 }

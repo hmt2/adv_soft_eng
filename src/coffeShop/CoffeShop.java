@@ -18,15 +18,15 @@ public class CoffeShop
 	  menu = new Menu();
 	  
   }
-  public void showInterface() throws DuplicateIDException {
+  public void showInterface() throws DuplicateIDException, IdNotContainedException {
 	  interaction = new CoffeShopInterface(menu);
   }
-  public void showGUI() throws DuplicateIDException {
+  public void showGUI() throws DuplicateIDException, IdNotContainedException {
       gui = new MenuGUI(menu, interaction);
       gui.setVisible(true);
   }     
   
-  public static void main (String arg[]) throws DuplicateIDException  {
+  public static void main (String arg[]) throws DuplicateIDException, IdNotContainedException  {
      	//creates demo object, with a populated staff list
 	  
   	CoffeShop run = new CoffeShop();   

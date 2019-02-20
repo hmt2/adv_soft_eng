@@ -4,12 +4,9 @@ package coffeShop;
 //import all the GUI classes
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
-
 import javax.swing.*;
 
 /**
@@ -40,12 +37,14 @@ JButton clear;
 JButton studentDiscount;
 
 
-public MenuGUI( final Menu menu, final CoffeShopInterface interaction) throws DuplicateIDException 
+public MenuGUI( final Menu menu, final CoffeShopInterface interaction) throws DuplicateIDException, IdNotContainedException 
 {
     this.menu = menu;
     this.interaction = interaction;
 
 
+  
+    
     setTitle("Menu GUI");
     //ensure program ends when window closes
 	  setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -115,7 +114,7 @@ public MenuGUI( final Menu menu, final CoffeShopInterface interaction) throws Du
     setVisible(true);
 }
 
-public void actionPerformed(ActionEvent e) 
+public void actionPerformed(ActionEvent e)
 { 
 	  //for buttons which represent the item there ActionCommand is set to their itemId
 	  String command = e.getActionCommand();
@@ -154,8 +153,7 @@ public void actionPerformed(ActionEvent e)
 		 isStudentDiscount = false;
 		 try {
 			placeOrder();
-		} catch (DuplicateIDException | IllegalArgumentException e1) {
-			// TODO Auto-generated catch block
+		} catch (DuplicateIDException | IllegalArgumentException | IdNotContainedException e1) {
 			JOptionPane.showMessageDialog(this, "System error, please retry");
 			switchMenu(); //maybe not necessary
 	 	 }
@@ -165,9 +163,10 @@ public void actionPerformed(ActionEvent e)
 		  isStudentDiscount = false;
 		  try {
 			clearOrder();
-		} catch (IdNotContainedException e1) {
+		  } catch (IdNotContainedException e1) {
+			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}
+		  }
 	  }
 	  
 	  if(e.getSource() == studentDiscount) {
@@ -184,15 +183,10 @@ private void updateGUI() {
 
 
 
-private void loadItemButtons() {
+private void loadItemButtons() throws IdNotContainedException {
 	  Set<String> keys = menu.getKeySet();
 		for(String key: keys){
-			JButton button = null;
-			try {
-				button = new JButton(String.format("%30s%16s",menu.findItemId(key).getName(),"£" + menu.findItemId(key).getPrice()));
-			} catch (IdNotContainedException e) {
-				e.printStackTrace();
-			}
+			JButton button = new JButton(String.format("%30s%16s",menu.findItemId(key).getName(),"£" + menu.findItemId(key).getPrice()));
 			button.addActionListener(this);
 		    menuPanel.add(button);
 			button.setActionCommand(key);
@@ -244,14 +238,14 @@ private void switchMenu() {
 
 
 private void getQuantityGUI(String command) {
-	String val = null;
-	try {
-		val = JOptionPane.showInputDialog(this,"Number of " + menu.findItemId(command).getName());
-	} catch (HeadlessException e) {
-		e.printStackTrace();
-	} catch (IdNotContainedException e) {
-		e.printStackTrace();
-	}
+	  String val = null;
+	  try {
+		  val = JOptionPane.showInputDialog(this,"Number of " + menu.findItemId(command).getName());
+	  } catch (HeadlessException e) {
+		  e.printStackTrace();
+	  } catch (IdNotContainedException e) {
+		  e.printStackTrace();
+	  }
 		 
 	  //if val is null then cancel has been selected
 	  if(val != null){
@@ -279,7 +273,7 @@ private void getQuantityGUI(String command) {
 }
 
 //need to update quantities
-private void placeOrder() throws DuplicateIDException {
+private void placeOrder() throws DuplicateIDException, IdNotContainedException {
 	  if(!currentOrder.isEmpty()) {
         interaction.placeOrder(currentOrder);
 		  JOptionPane.showMessageDialog(this, "Order placed");
