@@ -18,6 +18,7 @@ public class SalesReport {
 	private float totalBillBeforeDiscount;
 	private float totalBillAfterDiscount;
 	CustomerList customerList;
+	String date;
 	
 //Constructor that get the menu updated inside the GUI (with the new quantities)	
 	public SalesReport(Menu menu, float totalBillBeforeDiscount, float totalBillAfterDiscount) {
@@ -27,6 +28,9 @@ public class SalesReport {
 		createSalesreport();
 	}
 	
+	public String getDate() {
+		return date;
+	}
 	
 	public float getTotalBillBeforeDiscount() {
 		return totalBillBeforeDiscount;
@@ -51,7 +55,7 @@ public class SalesReport {
 	public void createSalesreport() {
 		
 		String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm").format(new Date());
-		
+		date = timeStamp;
 		try(FileWriter fw = new FileWriter(timeStamp + ".csv", true);
 				
 			    BufferedWriter bw = new BufferedWriter(fw);

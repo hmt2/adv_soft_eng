@@ -4,12 +4,9 @@ package coffeShop;
 //import all the GUI classes
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
-
 import javax.swing.*;
 
 /**
@@ -40,7 +37,7 @@ JButton clear;
 JButton studentDiscount;
 
 
-public MenuGUI( final Menu menu, final CoffeShopInterface interaction) throws DuplicateIDException 
+public MenuGUI( final Menu menu, final CoffeShopInterface interaction) throws DuplicateIDException, IdNotContainedException 
 {
     this.menu = menu;
     this.interaction = interaction;
@@ -117,11 +114,16 @@ public MenuGUI( final Menu menu, final CoffeShopInterface interaction) throws Du
     setVisible(true);
 }
 
-public void actionPerformed(ActionEvent e) 
+public void actionPerformed(ActionEvent e)
 { 
 	  //for buttons which represent the item there ActionCommand is set to their itemId
 	  String command = e.getActionCommand();
-	  Item isItem = menu.findItemId(command);
+	  Item isItem = null;
+	  try {
+		  isItem = menu.findItemId(command);
+	  } catch (IdNotContainedException e2) {
+		  e2.printStackTrace();
+	  }
 
 	  //if button pressed is an item button
 	  if(isItem != null) {
@@ -131,7 +133,11 @@ public void actionPerformed(ActionEvent e)
 	  //if checkout button is pressed then want to showing the Bill
 	  if(e.getSource() == checkout) {
 		  studentDiscount.setEnabled(true);
-		  switchBill();
+		  try {
+			switchBill();
+		} catch (IdNotContainedException e1) {
+			e1.printStackTrace();
+		}
 	  }
 
 	  //if back button is pressed then want to return to showing the menu
@@ -147,8 +153,7 @@ public void actionPerformed(ActionEvent e)
 		 isStudentDiscount = false;
 		 try {
 			placeOrder();
-		} catch (DuplicateIDException | IllegalArgumentException e1) {
-			// TODO Auto-generated catch block
+		} catch (DuplicateIDException | IllegalArgumentException | IdNotContainedException e1) {
 			JOptionPane.showMessageDialog(this, "System error, please retry");
 			switchMenu(); //maybe not necessary
 	 	 }
@@ -156,7 +161,12 @@ public void actionPerformed(ActionEvent e)
 	  
 	  if(e.getSource() == clear){
 		  isStudentDiscount = false;
-		  clearOrder();
+		  try {
+			clearOrder();
+		  } catch (IdNotContainedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		  }
 	  }
 	  
 	  if(e.getSource() == studentDiscount) {
@@ -173,7 +183,7 @@ private void updateGUI() {
 
 
 
-private void loadItemButtons() {
+private void loadItemButtons() throws IdNotContainedException {
 	  Set<String> keys = menu.getKeySet();
 		for(String key: keys){
 			JButton button = new JButton(String.format("%30s%16s",menu.findItemId(key).getName(),"£" + menu.findItemId(key).getPrice()));
@@ -183,7 +193,7 @@ private void loadItemButtons() {
 		}
 }
 
-private void switchBill() {
+private void switchBill() throws IdNotContainedException {
 	  southPanel.removeAll();
     southPanel.add(buy);
     southPanel.add(back);
@@ -202,7 +212,7 @@ private void switchBill() {
 
 
 
-public void clearOrder() {
+public void clearOrder() throws IdNotContainedException {
 	  currentOrder.clear();
 
 	  try {
@@ -228,7 +238,14 @@ private void switchMenu() {
 
 
 private void getQuantityGUI(String command) {
-	  String val = JOptionPane.showInputDialog(this,"Number of " + menu.findItemId(command).getName());
+	  String val = null;
+	  try {
+		  val = JOptionPane.showInputDialog(this,"Number of " + menu.findItemId(command).getName());
+	  } catch (HeadlessException e) {
+		  e.printStackTrace();
+	  } catch (IdNotContainedException e) {
+		  e.printStackTrace();
+	  }
 		 
 	  //if val is null then cancel has been selected
 	  if(val != null){
@@ -255,8 +272,8 @@ private void getQuantityGUI(String command) {
 	  }
 }
 
-//need to update quanities
-private void placeOrder() throws DuplicateIDException {
+//need to update quantities
+private void placeOrder() throws DuplicateIDException, IdNotContainedException {
 	  if(!currentOrder.isEmpty()) {
         interaction.placeOrder(currentOrder);
 		  JOptionPane.showMessageDialog(this, "Order placed");

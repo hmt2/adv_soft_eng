@@ -42,7 +42,7 @@ public class DiscountCheck{ //extends Customer{
 			return itemIds;
 	  }
   
-	public  float calcBillBeforeDiscount(ArrayList<String> itemIds) {
+	public  float calcBillBeforeDiscount(ArrayList<String> itemIds) throws IdNotContainedException {
   // while loop
 	  float billBeforeDiscount = 0;
 	  for(String itemid : itemIds) {
@@ -53,20 +53,20 @@ public class DiscountCheck{ //extends Customer{
 	  return billBeforeDiscount;
    }	   
    
-   public double calcAfterDiscount(Map<String, Integer> currentOrder,boolean isStudentDiscount) {
+   public double calcAfterDiscount(Map<String, Integer> currentOrder,boolean isStudentDiscount) throws IdNotContainedException {
 		  return calcAfterDiscount(currentOrder, new ArrayList<String>(),isStudentDiscount);
 	  }
 	  
-   public double calcAfterDiscount(Map<String, Integer> currentOrder, ArrayList<String> discountNames,boolean isStudentDiscount) {
+   public double calcAfterDiscount(Map<String, Integer> currentOrder, ArrayList<String> discountNames,boolean isStudentDiscount) throws IdNotContainedException {
 		  ArrayList<String> itemIds = toArrayList(currentOrder);
 		  return calcAfterDiscount(itemIds, discountNames,isStudentDiscount);
 	  }
 	  
-   public double calcAfterDiscount(ArrayList<String> itemIds,boolean isStudentDiscount) {
+   public double calcAfterDiscount(ArrayList<String> itemIds,boolean isStudentDiscount) throws IdNotContainedException {
 		  return calcAfterDiscount(itemIds, new ArrayList<String>(),isStudentDiscount);
 	  }
 	  
-   public double calcAfterDiscount(ArrayList<String> itemIds, ArrayList<String> discountNames, boolean isStudentDiscount) {
+   public double calcAfterDiscount(ArrayList<String> itemIds, ArrayList<String> discountNames, boolean isStudentDiscount) throws IdNotContainedException {
 		  double totalAfterDiscount = 0;
 		  while(true) {
 			  Discount dis = getDiscount(itemIds);

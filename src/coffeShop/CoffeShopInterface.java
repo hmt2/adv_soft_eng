@@ -23,7 +23,7 @@ public class CoffeShopInterface {
 	  private float totalAllItemsBeforeDiscount = 0;
 	  private float totalAllItemsAfterDiscount = 0;
 	
-	public CoffeShopInterface(Menu menu) throws DuplicateIDException{
+	public CoffeShopInterface(Menu menu) throws DuplicateIDException, IdNotContainedException{
 		
 		this.menu = menu;
 	    allorders = new AllOrders();
@@ -37,7 +37,7 @@ public class CoffeShopInterface {
    	 	SalesReport salrep = new SalesReport(menu,totalAllItemsBeforeDiscount,totalAllItemsAfterDiscount);
 
 	}
-	public void addPreviousOrders() throws DuplicateIDException{
+	public void addPreviousOrders() throws DuplicateIDException, IdNotContainedException{
 		  TreeMap<Integer,ArrayList<String>> cust = allorders.loadOrders();
 	      Set<Integer> keys = cust.keySet();
 			for(Integer key: keys){
@@ -57,7 +57,7 @@ public class CoffeShopInterface {
 	  }
 		  
 	//need to add in bill after discount
-	  public String displayBill(Map<String, Integer> currentOrder, boolean isStudentDiscount) {
+	  public String displayBill(Map<String, Integer> currentOrder, boolean isStudentDiscount) throws IdNotContainedException {
 		  this.isStudentDiscount = isStudentDiscount;
 	  	  totalBeforeDiscount = 0;
 	  	  String bill = "CHECKOUT \n";
@@ -104,7 +104,7 @@ public class CoffeShopInterface {
 	  }
 	  
 	  //need to update quanities
-	  public void placeOrder(Map<String, Integer> currentOrder) throws DuplicateIDException {
+	  public void placeOrder(Map<String, Integer> currentOrder) throws DuplicateIDException, IdNotContainedException {
 			  updateItemQuantity(currentOrder);
 			  int custId = customerList.addCustomer(discountCheck.toArrayList(currentOrder),totalBeforeDiscount,(float)totalAfterDiscount);
 			  totalAllItemsBeforeDiscount += totalBeforeDiscount;
@@ -112,7 +112,7 @@ public class CoffeShopInterface {
 			  allorders.addOrder(custId, discountCheck.toArrayList(currentOrder));
 	  }
 	  
-	  public void updateItemQuantity(Map<String, Integer> order) {
+	  public void updateItemQuantity(Map<String, Integer> order) throws IdNotContainedException {
 		  Set<String> keys = order.keySet();
 			for(String key: keys){
 				int quantityToAdd = order.get(key);
