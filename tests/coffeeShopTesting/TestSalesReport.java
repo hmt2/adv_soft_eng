@@ -20,14 +20,6 @@ public class TestSalesReport {
 		menu = new Menu();
 	}	
 
-//	To test SalesReport
-//	String date;
-//	public String getDate() {
-//		return date;
-//	}
-//	
-//	in createSalesreport()
-//	date = timeStamp;
 	
 	@Test
 	public final void testSalesReport() {
@@ -42,8 +34,6 @@ public class TestSalesReport {
 		assertTrue(f.exists());
 	}
 
-	//To test setTotalBillBeforeDiscount() and setTotalBillAfterDiscount()
-	//createSalesReport in the constructor of SalesReport commented
 	@Test
 	public final void testSetTotalBillBeforeDiscount() {
 		float totalBillBeforeDiscount = 0, totalBillAfterDiscount = 0;

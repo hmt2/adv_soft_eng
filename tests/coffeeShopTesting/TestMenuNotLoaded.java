@@ -17,6 +17,7 @@ public class TestMenuNotLoaded {
 	@Before
 	public void setUp() throws Exception {
 		menu = new Menu();
+		menu.getLinkedHashMap().clear();
 	}
 
 	// MENU NOT LOADED
