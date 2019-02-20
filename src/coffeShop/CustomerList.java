@@ -35,6 +35,8 @@ public class CustomerList {
 			customerList.remove(customerId);
 		}
 	}
+	
+	
 	//Find the customer object that has the specified customer id
 	public Customer findCustomerId(int customerId) {
 		if(!customerList.containsKey(customerId)){
@@ -58,7 +60,7 @@ public class CustomerList {
 	
 	public void displayBill(Customer c) { 
 		boolean discount = c.getDiscounts();
-		if (discount = true){
+		if (discount == true){
 			System.out.println("The bill for customer with id after discount " + c.getCustomerId() + " is: " + c.getBillAfterDiscount()  );
 
 		}else{
@@ -80,5 +82,10 @@ public class CustomerList {
         }
         System.out.println(allEntries);
 	}
+	
+	//for testing
+    public HashMap<Integer,Customer> customers(){
+    	return customerList;
+    }
 
 }
