@@ -58,7 +58,7 @@ public class CustomerList {
 	
 	public void displayBill(Customer c) { 
 		boolean discount = c.getDiscounts();
-		if (discount = true){
+		if (discount == true){
 			System.out.println("The bill for customer with id after discount " + c.getCustomerId() + " is: " + c.getBillAfterDiscount()  );
 
 		}else{
