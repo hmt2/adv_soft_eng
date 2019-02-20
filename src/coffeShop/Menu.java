@@ -119,25 +119,18 @@ public class Menu {
 	
 
 	//method to find an item by its name
-	public Item findItemName(String itemName) throws IdNotContainedException {//need check
-		boolean checkItem;
-		checkItem = false;
+	public Item findItemId(String itemId) {
+		Item i ;
 		if(menu.isEmpty()) {
 			throw new NullPointerException("The menu is empty.");
 		}
-		
-		for (Item i : menu.values())
-    	{
-    		if (i.getName().equals(itemName))
-    		{
-    			checkItem = true;
-    			return i;
-    		}
-    	}
-		if (!checkItem) {
-			throw new IdNotContainedException(itemName);
+		if(menu.containsKey(itemId)) {
+			i  = menu.get(itemId);
 		}
-    	return null;
+		else {
+			return null;
+		}
+		return i;
 	}
 	
 	public Set<String> getKeySet(){
