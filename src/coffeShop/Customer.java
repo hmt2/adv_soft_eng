@@ -15,7 +15,7 @@ public class Customer
 		this.billAfterDiscount = billAfterDiscount;
 		if(this.billBeforeDiscount != this.billAfterDiscount)
 			this.discount = true;
-        if (customerId < 100){ 
+        if (customerId < 100){ //throws an exception if the customer id is below 100
         	throw new IllegalArgumentException ("Not a valid customer id");
         }
         this.customerId =customerId;
@@ -34,9 +34,7 @@ public class Customer
         this.itemIds = new ArrayList<>();
 
     }
-	/**
-     * @return The customer Id.
-     */
+	//Get and set methods
 	public int getCustomerId() {
 		return customerId;
 	}
@@ -49,9 +47,7 @@ public class Customer
 	public void setDiscount(boolean isDiscount) {
 		discount = isDiscount;
 	}
-	/**
-     * @return The name of the customer.
-     */
+
 	public boolean getDiscounts() {
 		return discount;
 	}
@@ -66,9 +62,7 @@ public class Customer
 	}
 
 	
-	/**
-     * @return The total cost of the orders / bill of the customer.
-     */
+
 	public float getBillBeforeDiscount() {
 		
 		return billBeforeDiscount;
@@ -80,13 +74,7 @@ public class Customer
 			return billAfterDiscount;
 		}
 	
-	/**
-     * @return Add comments later
-     */
 
-    /**
-     * @return A  string containing all details.
-     */
 
     public String toString()
     {

@@ -9,15 +9,16 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class CustomerList {
 	private   HashMap <Integer, Customer> customerList; 
-	private static AtomicInteger counter  = new AtomicInteger(99);  
+	private static AtomicInteger counter  = new AtomicInteger(99); //Initialize it by 99 so that customer ids start from 100 
 	
     public CustomerList()
     {
        customerList = new HashMap <Integer, Customer>() ;
     }
     
+    //Add a new customer to the customerList hashmap. If there is a duplicate id an exception is thrown
     public int addCustomer(ArrayList<String> itemIds, float beforeDiscount, float afterDiscount) throws DuplicateIDException  { 
-	    int customerId = counter.incrementAndGet();
+	    int customerId = counter.incrementAndGet(); //increments the customer id by one everytime a new one needs to be added
 			if(customerList.containsKey(customerId)){ 
 				throw new DuplicateIDException(customerId);  
 			}
@@ -26,6 +27,7 @@ public class CustomerList {
 			return customerId;
     }
     
+    //Delete a customer with a specific customer id. If the customerList does not contain such a customer an exception is thrown
 	public void deleteCustomer(int customerId) { 
 		if(!customerList.containsKey(customerId)){
 			throw new IllegalArgumentException("Customer with id" + customerId + "does not exist"); 
@@ -33,7 +35,7 @@ public class CustomerList {
 			customerList.remove(customerId);
 		}
 	}
-	
+	//Find the customer object that has the specified customer id
 	public Customer findCustomerId(int customerId) {
 		if(!customerList.containsKey(customerId)){
 			throw new IllegalArgumentException("Customer with id " + customerId + " does not exist");
@@ -48,13 +50,13 @@ public class CustomerList {
 	}
 	
 	
-		
+	
 	public Map listByCustomerId() { 
 		Map<Integer, Customer>sortedCust = new TreeMap<>(customerList);
     	return sortedCust;
 	}	
 	
-	public void displayBill(Customer c) { //in this method if there is a discount it won't show the previous bill. If we want that better to put this method inside Customer class
+	public void displayBill(Customer c) { 
 		boolean discount = c.getDiscounts();
 		if (discount = true){
 			System.out.println("The bill for customer with id after discount " + c.getCustomerId() + " is: " + c.getBillAfterDiscount()  );
@@ -64,6 +66,8 @@ public class CustomerList {
 		}
 		
 	}
+	
+	//Print all the customers ordered by the customer id
 	public void loadCustomers() { 
         Map<Integer, Customer>sortedCust = listByCustomerId(); 
         

@@ -30,7 +30,7 @@ public class DiscountCheck{ //extends Customer{
 }
 
 	
-	  ArrayList<String> toArrayList(Map<String, Integer> order){
+	  public ArrayList<String> toArrayList(Map<String, Integer> order){
 		  ArrayList<String> itemIds = new ArrayList<String>();
 			
 			Set<String> keys = order.keySet();
@@ -42,7 +42,7 @@ public class DiscountCheck{ //extends Customer{
 			return itemIds;
 	  }
   
-	public float calcBillBeforeDiscount(ArrayList<String> itemIds) {
+	public  float calcBillBeforeDiscount(ArrayList<String> itemIds) {
   // while loop
 	  float billBeforeDiscount = 0;
 	  for(String itemid : itemIds) {

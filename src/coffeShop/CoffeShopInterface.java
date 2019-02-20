@@ -109,7 +109,6 @@ public class CoffeShopInterface {
 			  int custId = customerList.addCustomer(discountCheck.toArrayList(currentOrder),totalBeforeDiscount,(float)totalAfterDiscount);
 			  totalAllItemsBeforeDiscount += totalBeforeDiscount;
 			  totalAllItemsAfterDiscount += (float)totalAfterDiscount;
-			  ArrayList<String> ord = discountCheck.toArrayList(currentOrder);
 			  allorders.addOrder(custId, discountCheck.toArrayList(currentOrder));
 	  }
 	  
@@ -121,5 +120,16 @@ public class CoffeShopInterface {
 				int quantity = currentQuantity + quantityToAdd;
 				menu.findItemId(key).setQuantity(quantity);
 			}
+	  }
+	  //Helps with the testing
+	  public CustomerList getCustomerList(){
+		  return customerList;
+	  }
+	  public Menu getMenu(){
+		  return menu;
+	  }
+	  
+	  public AllOrders getAllOrders(){
+		  return allorders;
 	  }
 }
