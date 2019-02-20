@@ -90,33 +90,56 @@ public class Menu {
     }
 	
 	// method to find an item by its ID
-	public Item findItemId(String itemId) {
-		
+	public Item findItemId(String itemId) throws IdNotContainedException {
 		Item i ;
-		i  = menu.get(itemId);
+		if(menu.isEmpty()) {
+			throw new NullPointerException("The menu is empty.");
+		}
+		if(menu.containsKey(itemId)) {
+			i  = menu.get(itemId);
+		}
+		else {
+			throw new IdNotContainedException(itemId);
+		}
+		
 		return i;
 		
 	}
 	
 	public int getSize() {
+		if(menu.isEmpty()) {
+			throw new NullPointerException("The menu is empty.");
+		}
 		return menu.size();
 	}
 	
 
 	//method to find an item by its name
-	public Item findItemName(String itemName) {//need check
+	public Item findItemName(String itemName) throws IdNotContainedException {//need check
+		boolean checkItem;
+		checkItem = false;
+		if(menu.isEmpty()) {
+			throw new NullPointerException("The menu is empty.");
+		}
 		
 		for (Item i : menu.values())
     	{
     		if (i.getName().equals(itemName))
     		{
+    			checkItem = true;
     			return i;
     		}
     	}
+		if (!checkItem) {
+			throw new IdNotContainedException(itemName);
+		}
     	return null;
 	}
 	
 	public Set<String> getKeySet(){
+		if(menu.isEmpty()) {
+			throw new NullPointerException("The menu is empty.");
+		}
 		return menu.keySet();
 	}
 	
@@ -133,6 +156,9 @@ public class Menu {
 	
 	
 	public String listByItemId() {
+		if(menu.isEmpty()) {
+			throw new NullPointerException("The menu is empty.");
+		}
 		List<Map.Entry<String, Item>> entries = new ArrayList<Map.Entry<String, Item>>(menu.entrySet());
 		Collections.sort(entries, new Comparator<Map.Entry<String, Item>>() {
 			  public int compare(Map.Entry<String, Item> i1, Map.Entry<String, Item> i2){
@@ -149,6 +175,9 @@ public class Menu {
 	
 	//we sort by the name of the product
 	public String listByItemName() {
+		if(menu.isEmpty()) {
+			throw new NullPointerException("The menu is empty.");
+		}
 		List<Map.Entry<String, Item>> entries = new ArrayList<Map.Entry<String, Item>>(menu.entrySet());
 		Collections.sort(entries, new Comparator<Map.Entry<String, Item>>() {
 			  public int compare(Map.Entry<String, Item> i1, Map.Entry<String, Item> i2){
@@ -165,6 +194,9 @@ public class Menu {
 	
 	//we sort by the category's name 
 	public String listByItemCategory() {
+		if(menu.isEmpty()) {
+			throw new NullPointerException("The menu is empty.");
+		}
 		List<Map.Entry<String, Item>> entries = new ArrayList<Map.Entry<String, Item>>(menu.entrySet());
 		Collections.sort(entries, new Comparator<Map.Entry<String, Item>>() {
 			  public int compare(Map.Entry<String, Item> i1, Map.Entry<String, Item> i2){

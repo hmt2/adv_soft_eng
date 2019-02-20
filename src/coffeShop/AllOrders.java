@@ -286,8 +286,4 @@ public class AllOrders {
      }
 	}
 	
-	public  int getNumOrders(){
-		return allOrders.size();
-	}
-	
 }
