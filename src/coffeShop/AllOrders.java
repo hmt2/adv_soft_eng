@@ -286,6 +286,8 @@ public class AllOrders {
      }
 	}
 	
+	
+	//For testing purposes
 	public  int getNumOrders(){
 		return allOrders.size();
 	}
