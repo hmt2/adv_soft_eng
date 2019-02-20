@@ -119,11 +119,8 @@ public void actionPerformed(ActionEvent e)
 	  //for buttons which represent the item there ActionCommand is set to their itemId
 	  String command = e.getActionCommand();
 	  Item isItem = null;
-	  try {
-		  isItem = menu.findItemId(command);
-	  } catch (IdNotContainedException e2) {
-		  e2.printStackTrace();
-	  }
+	  isItem = menu.findItemId(command);
+	   
 
 	  //if button pressed is an item button
 	  if(isItem != null) {
@@ -133,11 +130,14 @@ public void actionPerformed(ActionEvent e)
 	  //if checkout button is pressed then want to showing the Bill
 	  if(e.getSource() == checkout) {
 		  studentDiscount.setEnabled(true);
-		  try {
-			switchBill();
-		} catch (IdNotContainedException e1) {
-			e1.printStackTrace();
-		}
+		  
+			try {
+				switchBill();
+			} catch (IdNotContainedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		 
 	  }
 
 	  //if back button is pressed then want to return to showing the menu
@@ -243,9 +243,7 @@ private void getQuantityGUI(String command) {
 		  val = JOptionPane.showInputDialog(this,"Number of " + menu.findItemId(command).getName());
 	  } catch (HeadlessException e) {
 		  e.printStackTrace();
-	  } catch (IdNotContainedException e) {
-		  e.printStackTrace();
-	  }
+	  } 
 		 
 	  //if val is null then cancel has been selected
 	  if(val != null){
