@@ -117,20 +117,31 @@ public class Menu {
 		return menu.size();
 	}
 	
+	//method to find an item by its name
+		public boolean containsItemId(String itemName)  {
+			return menu.containsKey(itemName);
+		}
 
 	//method to find an item by its name
-	public Item findItemId(String itemId) {
-		Item i ;
+	public Item findItemName(String itemName) throws IdNotContainedException {//need check
+		boolean checkItem;
+		checkItem = false;
 		if(menu.isEmpty()) {
 			throw new NullPointerException("The menu is empty.");
 		}
-		if(menu.containsKey(itemId)) {
-			i  = menu.get(itemId);
+		
+		for (Item i : menu.values())
+    	{
+    		if (i.getName().equals(itemName))
+    		{
+    			checkItem = true;
+    			return i;
+    		}
+    	}
+		if (!checkItem) {
+			throw new IdNotContainedException(itemName);
 		}
-		else {
-			return null;
-		}
-		return i;
+    	return null;
 	}
 	
 	public Set<String> getKeySet(){
