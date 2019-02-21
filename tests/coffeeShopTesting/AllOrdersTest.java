@@ -49,16 +49,6 @@ public class AllOrdersTest {
 	}
 	
 	@Test
-	public void testFindCustomerOrders() {
-		ArrayList<String> items = new ArrayList<>();
-		items.add("FOD666");
-		Integer orderId = new Integer(666);
-		allOrders.addOrder(orderId, items);
-		ArrayList<Integer> order = AllOrders.findCustomerOrders(orderId);
-		assertTrue(order.get(0).equals(orderId));
-	}
-	
-	@Test
 	public void testListByOrderId() {
 		fail("Not yet implemented");
 	}
