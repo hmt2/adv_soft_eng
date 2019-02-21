@@ -77,7 +77,7 @@ public class Order implements Comparable<Order>
      */
 	public int compareToCustomerId(Order otherDetails)
     {
-		int compare = orderId.compareTo(otherDetails.getCustomerId());
+		int compare = customerId.compareTo(otherDetails.getCustomerId());
         return -compare;
     }  
 	
