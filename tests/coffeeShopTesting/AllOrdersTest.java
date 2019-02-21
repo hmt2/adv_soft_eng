@@ -1,17 +1,18 @@
 package coffeeShopTesting;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
+import java.io.File;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-import org.junit.jupiter.api.*;
+import org.junit.Before;
+import org.junit.Test;
 
-import coffeShop.AllOrders;
-import coffeShop.Order;
+import coffeShop.*;
 
-class AllOrdersTest {
 
+public class AllOrdersTest {
 	private static final Integer orderId = new Integer(7);
 	private static final Integer customerId = new Integer(110);
 	private static final String itemId = "FOD001";
@@ -20,36 +21,35 @@ class AllOrdersTest {
 	private AllOrders allOrders;
 	
 	
-	
-	@BeforeEach
-	void setup() {
+	@Before
+	public void setup() {
 		allOrders = new AllOrders();
 		AllOrders.loadOrders();
 	}
 	
 	@Test
-	void testAddOrders() {
+	public void testAddOrders() {
 		fail("Not yet implemented");
 	}
 
 	@Test
-	void testCheckOrderId() {
+	public void testCheckOrderId() {
 //		assertTrue(allOrders.containsKey(orderId));
 	}
 	
 	@Test
-	void testReturnAllOrder() {
+	public void testReturnAllOrder() {
 		fail("Not yet implemented");
 	}
 	
 	
 	@Test
-	void testFindOrderId() {
+	public void testFindOrderId() {
 		fail("Not yet implemented");
 	}
 	
 	@Test
-	void testFindCustomerOrders() {
+	public void testFindCustomerOrders() {
 		ArrayList<String> items = new ArrayList<>();
 		items.add("FOD666");
 		Integer orderId = new Integer(666);
@@ -59,32 +59,32 @@ class AllOrdersTest {
 	}
 	
 	@Test
-	void testListByOrderId() {
+	public void testListByOrderId() {
 		fail("Not yet implemented");
 	}
 	
 	@Test
-	void testListByTimestamp() {
+	public void testListByTimestamp() {
 		fail("Not yet implemented");
 	}
 	
 	@Test
-	void testListByCustomerId() {
+	public void testListByCustomerId() {
 		fail("Not yet implemented");
 	}
 	
 	@Test
-	void testListByItemId() {
+	public void testListByItemId() {
 		fail("Not yet implemented");
 	}
 	
 	@Test
-	void testPrintAllOrders() {
+	public void testPrintAllOrders() {
 		fail("Not yet implemented");
 	}
 	
 	@Test
-	void testGetNumOrders() {
+	public void testGetNumOrders() {
 		fail("Not yet implemented");
 	}
 	
