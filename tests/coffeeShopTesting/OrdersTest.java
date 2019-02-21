@@ -1,17 +1,21 @@
 package coffeeShopTesting;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-import org.junit.jupiter.api.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-import coffeShop.InvalidIdException;
-import coffeShop.Order;
+import coffeShop.*;
 
-class OrdersTest {
-	
+public class OrdersTest {
 	private static final Integer orderId = new Integer(7);
 	private static final Integer customerId = new Integer(110);
 	private static final String itemId = "FOD001";
@@ -20,8 +24,8 @@ class OrdersTest {
 	private Order order;
 	
 	
-	@BeforeEach
-	void setup() {
+	@Before
+	public void setup() {
 		try {
 			order = new Order(OrdersTest.orderId, OrdersTest.customerId, OrdersTest.itemId, OrdersTest.timestamp);
 		} catch (InvalidIdException e) {
@@ -31,48 +35,48 @@ class OrdersTest {
 	}
 
 	@Test
-	void testGetOrderId() {
+	public void testGetOrderId() {
 		assertTrue(OrdersTest.orderId.equals(order.getOrderId()));
 	}
 	
 	@Test
-	void testSetOrderId() {
+	public void testSetOrderId() {
 		Integer i = new Integer(6);
 		order.setOrderId(i);
 		assertTrue(i.equals(order.getOrderId()));
 	}
 	
 	@Test
-	void testGetCustomerId() {
+	public void testGetCustomerId() {
 		assertTrue(OrdersTest.customerId.equals(order.getCustomerId()));
 	}
 	
 	@Test
-	void testSetCustomerId() {
+	public void testSetCustomerId() {
 		Integer i = new Integer(101);
 		order.setCustomerId(i);
 		assertTrue(i.equals(order.getCustomerId()));
 	}
 	
 	@Test
-	void testGetItemId() {
+	public void testGetItemId() {
 		assertTrue(OrdersTest.itemId.equals(order.getItemId()));
 	}
 	
 	@Test
-	void testSetItemId() {
+	public void testSetItemId() {
 		String i = "FOD016";
 		order.setItemId(i);
 		assertTrue(i.equals(order.getItemId()));
 	}
 	
 	@Test
-	void testGetTimestamp() {
+	public void testGetTimestamp() {
 		assertTrue(OrdersTest.timestamp.equals(order.getTimestamp()));
 	}
 	
 	@Test
-	void testSetTimestamp() {
+	public void testSetTimestamp() {
 		Timestamp t = new Timestamp(Calendar.getInstance().getTimeInMillis());
 		order.setTimestamp(t);
 		assertTrue(t.equals(order.getTimestamp()));
@@ -80,7 +84,7 @@ class OrdersTest {
 	}
 	
 	@Test
-	void testCompareToCustomerId() {
+	public void testCompareToCustomerId() {
 		Order order = null;
 		try {
 			order = new Order(OrdersTest.orderId, new Integer(103), OrdersTest.itemId, OrdersTest.timestamp);
@@ -112,7 +116,7 @@ class OrdersTest {
 	
 	
 	@Test
-	void testCompareToTimestamp(){
+	public void testCompareToTimestamp(){
 		Order order = null;
 		try {
 			order = new Order(OrdersTest.orderId, OrdersTest.customerId, OrdersTest.itemId, Timestamp.valueOf("2018-11-13 01:03:02.123456789"));
@@ -146,7 +150,7 @@ class OrdersTest {
 	
 	
 	@Test
-	void testCompareToOrderId() {
+	public void testCompareToOrderId() {
 		Order order = null;
 		try {
 			order = new Order(new Integer(5), OrdersTest.customerId, OrdersTest.itemId, OrdersTest.timestamp);
@@ -176,4 +180,5 @@ class OrdersTest {
 		assertTrue(this.order.compareToOrderId(order) == 0);
 	}
 
+	
 }
