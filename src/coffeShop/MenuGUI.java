@@ -268,15 +268,17 @@ private void getQuantityGUI(String command) {
 
 //need to update quantities
 private void placeOrder() throws DuplicateIDException, IdNotContainedException {
-	  if(!currentOrder.isEmpty()) {
-        interaction.placeOrder(currentOrder);
+	  try {
+          interaction.placeOrder(currentOrder);
 		  JOptionPane.showMessageDialog(this, "Order placed");
-		  currentOrder.clear();
-		  switchMenu(); 
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(this, "Internal error, retry");
+
 	  }
-	  else {
-		  JOptionPane.showMessageDialog(this, "Unable to place order as no items selected");
-	  }
+	currentOrder.clear();
+	switchMenu(); 
 }
 
 
