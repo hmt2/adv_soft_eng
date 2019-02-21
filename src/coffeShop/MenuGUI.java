@@ -118,15 +118,9 @@ public void actionPerformed(ActionEvent e)
 { 
 	  //for buttons which represent the item there ActionCommand is set to their itemId
 	  String command = e.getActionCommand();
-	  Item isItem = null;
-	  try {
-		  isItem = menu.findItemId(command);
-	  } catch (IdNotContainedException e2) {
-		  e2.printStackTrace();
-	  }
 
 	  //if button pressed is an item button
-	  if(isItem != null) {
+	  if(menu.containsItemId(command)) {
 		getQuantityGUI(command);
 	  }
 
@@ -274,15 +268,17 @@ private void getQuantityGUI(String command) {
 
 //need to update quantities
 private void placeOrder() throws DuplicateIDException, IdNotContainedException {
-	  if(!currentOrder.isEmpty()) {
-        interaction.placeOrder(currentOrder);
+	  try {
+          interaction.placeOrder(currentOrder);
 		  JOptionPane.showMessageDialog(this, "Order placed");
-		  currentOrder.clear();
-		  switchMenu(); 
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(this, "Internal error, retry");
+
 	  }
-	  else {
-		  JOptionPane.showMessageDialog(this, "Unable to place order as no items selected");
-	  }
+	currentOrder.clear();
+	switchMenu(); 
 }
 
 

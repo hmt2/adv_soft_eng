@@ -19,7 +19,7 @@ public class CheckDiscountTest {
 	private Menu menu;
 	CoffeShopInterface coffeShopInterface;
 	@Before
-	public void setUp() throws DuplicateIDException { //this is to make sure that the test can add well! What to put in the setup method? one setup for all tests?
+	public void setUp() throws DuplicateIDException, IdNotContainedException { //this is to make sure that the test can add well! What to put in the setup method? one setup for all tests?
 		allDiscounts = new AllDiscounts();
 	    discountCheck = new DiscountCheck(allDiscounts.loadDiscounts());
 	    menu = new Menu();
@@ -27,7 +27,7 @@ public class CheckDiscountTest {
 	}
 	
 	@Test
-	public void testCalcBillBeforeDiscount() {
+	public void testCalcBillBeforeDiscount() throws IdNotContainedException {
 		 ArrayList<String> itemIds = new ArrayList<>();
 	     itemIds.add("HOT011");  
 		 itemIds.add("DES006");
@@ -44,7 +44,7 @@ public class CheckDiscountTest {
 	}
 	
 	@Test
-	public void testNoDiscountPresent() {
+	public void testNoDiscountPresent() throws IdNotContainedException {
 		 ArrayList<String> itemIds = new ArrayList<>();
 	     itemIds.add("DES006");  
 		 itemIds.add("DES006");
@@ -62,7 +62,7 @@ public class CheckDiscountTest {
 	}
 	
 	@Test
-	public void testDiscountPlusOtherItem() {
+	public void testDiscountPlusOtherItem() throws IdNotContainedException {
 		 ArrayList<String> itemIds = new ArrayList<>();
 	     itemIds.add("HOT005");  
 		 itemIds.add("DES006");
@@ -75,7 +75,7 @@ public class CheckDiscountTest {
 	}
 	
 	@Test
-	public void testSingleRegCoffeAndCakeDiscountPresent() {
+	public void testSingleRegCoffeAndCakeDiscountPresent() throws IdNotContainedException {
 		 ArrayList<String> itemIds = new ArrayList<>();
 	     itemIds.add("HOT005");  
 		 itemIds.add("DES006");
@@ -87,7 +87,7 @@ public class CheckDiscountTest {
 	}
 	
 	@Test
-	public void testMultipleSameDiscountPresent() {
+	public void testMultipleSameDiscountPresent() throws IdNotContainedException {
 		 ArrayList<String> itemIds = new ArrayList<>();
 	     itemIds.add("HOT005");  
 		 itemIds.add("DES006");
@@ -103,7 +103,7 @@ public class CheckDiscountTest {
 	}
 	
 	@Test
-	public void testSingleSoupSandwichDealPresent() {
+	public void testSingleSoupSandwichDealPresent() throws IdNotContainedException {
 		 ArrayList<String> itemIds = new ArrayList<>();
 	     itemIds.add("FOD006"); 
 	     itemIds.add("FOD001");
@@ -115,7 +115,7 @@ public class CheckDiscountTest {
 	}
 	
 	@Test
-	public void testSingleMealDealPresent() {
+	public void testSingleMealDealPresent() throws IdNotContainedException {
 		 ArrayList<String> itemIds = new ArrayList<>();
 	     itemIds.add("FOD005"); 
 	     itemIds.add("CLD010");
@@ -128,7 +128,7 @@ public class CheckDiscountTest {
 	}
 	
 	@Test
-	public void checkStudentDiscount() {
+	public void checkStudentDiscount() throws IdNotContainedException {
 		 ArrayList<String> itemIds = new ArrayList<>();
 	     itemIds.add("FOD005"); 
 		 itemIds.add("FOD005"); 
@@ -146,7 +146,7 @@ public class CheckDiscountTest {
 	}
 
 	@Test
-	public void testTakesMaxDiscountWhenConflictingDiscounts() {
+	public void testTakesMaxDiscountWhenConflictingDiscounts() throws IdNotContainedException {
 		 ArrayList<String> itemIds = new ArrayList<>(); 
 		 itemIds.add("HOT005"); 
 		 itemIds.add("DES006");
@@ -160,7 +160,7 @@ public class CheckDiscountTest {
 	}
 	
 	@Test
-	public void testAllowedDifferentDiscountsWithinOneOrder() {
+	public void testAllowedDifferentDiscountsWithinOneOrder() throws IdNotContainedException {
 		 ArrayList<String> itemIds = new ArrayList<>(); 
 		 itemIds.add("HOT005"); 
 		 itemIds.add("DES006");
@@ -179,7 +179,7 @@ public class CheckDiscountTest {
 	
 
 	@Test
-	public void checkStudentDiscountOnlyAppliedToNonDiscountDeals() {
+	public void checkStudentDiscountOnlyAppliedToNonDiscountDeals() throws IdNotContainedException {
 		 ArrayList<String> itemIds = new ArrayList<>();
 	     itemIds.add("HOT005");  
 		 itemIds.add("DES006");
@@ -192,7 +192,7 @@ public class CheckDiscountTest {
 	}
 	
 	@Test
-	public void testDisplayBill() {
+	public void testDisplayBill() throws IdNotContainedException {
 		 Map<String, Integer> currentOrder = new LinkedHashMap<String, Integer>();
 		 
 		 currentOrder.put("DES006", 2);

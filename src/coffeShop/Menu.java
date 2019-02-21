@@ -117,6 +117,10 @@ public class Menu {
 		return menu.size();
 	}
 	
+	//method to find an item by its name
+		public boolean containsItemId(String itemName)  {
+			return menu.containsKey(itemName);
+		}
 
 	//method to find an item by its name
 	public Item findItemName(String itemName) throws IdNotContainedException {//need check

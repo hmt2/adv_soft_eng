@@ -19,6 +19,7 @@ public class TestItem {
 	    String message=  "Failed for id = HOT012";
 	    assertEquals(message, expectedId, actualId);
 		}
+	
 	//Checkes whether the two items are equals or not
 	@Test
 	public void testEquals() throws InvalidIdException {
@@ -45,7 +46,7 @@ public class TestItem {
 
 		}
 		catch (InvalidIdException e) {
-			assertTrue(e.getMessage().contains("ItemId must contain a category header (DES, HOT, CLD, ADD, FOD) and a 3 digit number"));
+			assertTrue(e.getMessage().contains("ItemId must contain a category header (DES, HOT, CLD, ADD, FOD)"));
 		}
 
     }

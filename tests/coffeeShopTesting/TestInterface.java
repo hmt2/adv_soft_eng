@@ -39,7 +39,7 @@ public class TestInterface {
 	CustomerList customerList;
 
 	@Before
-	public void setUp() throws DuplicateIDException { //this is to make sure that the test can add well! What to put in the setup method? one setup for all tests?
+	public void setUp() throws DuplicateIDException, IdNotContainedException { //this is to make sure that the test can add well! What to put in the setup method? one setup for all tests?
 		shop = new CoffeShopInterface(new Menu());
 		customerList = shop.getCustomerList();
 		allorders = shop.getAllOrders();
@@ -47,33 +47,8 @@ public class TestInterface {
 		currentOrder = new LinkedHashMap<String, Integer>();
 		currentOrder.put("DES006", 2);
 
-		
-		
-		
-
 	}
 	
- 
-	//Test the display is shown in the right structure. 
-	
-	@Test
-	public void testDisplayBill() { 
-		 String bill = "CHECKOUT \n";
-		 bill += String.format("%-2s %s",2,"x  ");
-		 bill += String.format("%-20s %s","Blueberry Muffin" ,"£", 6.0);
-	     bill += String.format("%-10s",6.0);
-	     bill += "\n";
-		 bill += String.format("%-2s %s","Total bill before discount: £",6.0);
-		 bill += "\n";
-		 bill += String.format("%-2s %s","Total bill after discount: £",6.0);
-		 String actualDisplayBill = shop.displayBill(currentOrder, false); //not possible to send in currentOrders
-         String message = "Not same";
-         System.out.println(actualDisplayBill);
-         System.out.println(bill);
-		 assertEquals(message, bill, actualDisplayBill);
-
-
-	}
 	//Test that the right number of customers is created when adding the previous orders
 	@Test
 	public void testAddPreviousOrders() { 
@@ -87,7 +62,7 @@ public class TestInterface {
 	
 	//Test that one new customer is added and the expected number of orders in allorders is increased when placing an order
 	@Test
-	public void testPlaceOrder() throws DuplicateIDException {  
+	public void testPlaceOrder() throws DuplicateIDException, IdNotContainedException {  
 
 		currentOrder.put("DES001", 1);
 		shop.displayBill(currentOrder, false); //required in order to calculate the bills within the class CoffeShopInterface
@@ -109,7 +84,7 @@ public class TestInterface {
 	}
 	//Test that quantity of the item is updated correctly when an order is placed
 	@Test
-	public void testUpdateQuantity()  { 
+	public void testUpdateQuantity() throws IdNotContainedException  { 
 		int initialQuantity = menu.findItemId("DES006").getQuantity();
 	    int expectedQuantity = 2;
 	    shop.updateItemQuantity(currentOrder);
@@ -122,7 +97,7 @@ public class TestInterface {
 
 	
 	@After
-	public void tearDown() throws DuplicateIDException {
+	public void tearDown() throws DuplicateIDException, IdNotContainedException {
 		shop = new CoffeShopInterface(new Menu());
 	}
 	
