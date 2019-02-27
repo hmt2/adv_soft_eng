@@ -110,7 +110,7 @@ public class AllOrders {
 	}
 	
 	@SuppressWarnings("null")
-	public void addOrder(Integer CustomerId, ArrayList<String> currentOrder) {
+	public int[] addOrder(Integer CustomerId, ArrayList<String> currentOrder) {
 		int nb_orders = currentOrder.size();
 		boolean check;
 		int orderIds[] = new int[nb_orders];
@@ -144,6 +144,7 @@ public class AllOrders {
 			    //exception handling
 			}
 		loadOrders();
+		return orderIds;
 	}
 	
 	/**

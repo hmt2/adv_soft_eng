@@ -16,10 +16,12 @@ public class CoffeShopInterface {
 	  AllOrders allorders;
 	  DiscountCheck discountCheck;
 	  AllDiscounts allDiscounts;
+	  InStoreQueue instoreQueue;
+	  OnlineQueue onlineQueue;
 	  private float totalBeforeDiscount = 0;
 	  private double totalAfterDiscount = 0;
 	  boolean isStudentDiscount;
-
+	  
 	  private float totalAllItemsBeforeDiscount = 0;
 	  private float totalAllItemsAfterDiscount = 0;
 	
@@ -30,7 +32,10 @@ public class CoffeShopInterface {
 	    customerList = new CustomerList();
 	    allDiscounts = new AllDiscounts();
 	    discountCheck = new DiscountCheck(allDiscounts.loadDiscounts());
+	    instoreQueue =  new InStoreQueue();
+	    onlineQueue = new OnlineQueue(allorders);
 	    addPreviousOrders();
+	    onlineQueue.loadOnlineQueue();
 	}
 	
 	public void generateReport(){
@@ -103,13 +108,15 @@ public class CoffeShopInterface {
 	  	  return bill;
 	  }
 	  
-	  //need to update quanities
+	  //need to update quantities
 	  public void placeOrder(Map<String, Integer> currentOrder) throws DuplicateIDException, IdNotContainedException {
-			  updateItemQuantity(currentOrder);
+			  int[] orderIds;
+		  	  updateItemQuantity(currentOrder);
 			  int custId = customerList.addCustomer(discountCheck.toArrayList(currentOrder),totalBeforeDiscount,(float)totalAfterDiscount);
 			  totalAllItemsBeforeDiscount += totalBeforeDiscount;
 			  totalAllItemsAfterDiscount += (float)totalAfterDiscount;
-			  allorders.addOrder(custId, discountCheck.toArrayList(currentOrder));
+			  orderIds= allorders.addOrder(custId, discountCheck.toArrayList(currentOrder));
+			  instoreQueue.addInstoreQueue(orderIds);
 	  }
 	  
 	  public void updateItemQuantity(Map<String, Integer> order) throws IdNotContainedException {
