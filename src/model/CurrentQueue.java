@@ -10,7 +10,15 @@ import interfaces.Subject;
 
 import java.util.*;
 
-public class Display implements Subject {
+public class CurrentQueue implements Subject {
+	
+	Queue<Integer> q = new LinkedList<>(); 
+	
+	//need queue info here
+	public CurrentQueue() {
+		
+	}
+	
 	// OBSERVER PATTERN
 	// SUBJECT must be able to register, remove and notify observers
 	// list to hold any observers

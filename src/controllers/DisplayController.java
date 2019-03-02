@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import model.Display;
+import model.CurrentQueue;
 import views.DisplayGUI;
 
 
@@ -18,9 +18,9 @@ public class DisplayController {
 
 	private DisplayGUI view; // GUI to allow user to set the time
 
-	private Display display; // display model stores the time
+	private CurrentQueue display; // display model stores the time
 
-	public DisplayController(DisplayGUI view, Display display) {
+	public DisplayController(DisplayGUI view, CurrentQueue display) {
 		this.display = display;
 		this.view = view;
 		// specify the listener for the view

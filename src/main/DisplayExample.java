@@ -6,14 +6,14 @@
 package main;
 
 import controllers.DisplayController;
-import model.Display;
+import model.CurrentQueue;
 import views.DisplayGUI;
 
 public class DisplayExample {
 	public static void main(String[] args) {
 		
 		// ClockModel maintains the time and broadcasts changes
-		Display model = new Display();
+		CurrentQueue model = new CurrentQueue();
 
 		// This view displays the time, updating whenever changed
 		// AND incorporates the GUI to change the time

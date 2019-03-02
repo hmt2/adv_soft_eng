@@ -10,26 +10,28 @@ import interfaces.Observer;
 import java.awt.*;
 import javax.swing.*;
 
-import model.Display;
+import model.CurrentQueue;
 
 //using observer pattern
 public class DisplayServer extends JPanel implements Observer {
-	private Display displaydata;
-	private JTextField timeText = new JTextField(10);
+	private CurrentQueue displaydata;
+	private JTextField serverText = new JTextField(15);
 
 	// sets up general gui
-	public DisplayServer(Display display) {
+	public DisplayServer(CurrentQueue display) {
 		this.displaydata = display;
 		display.registerObserver(this);
-		this.add(timeText);
-		timeText.setEditable(false);
-		timeText.setHorizontalAlignment(JTextField.CENTER);
-		Font timeFont = new Font("SansSerif", Font.BOLD, 14);
-		timeText.setFont(timeFont);
+		this.add(serverText);
+		serverText.setEditable(false);
+		serverText.setHorizontalAlignment(JTextField.CENTER);
+		Font serverFont = new Font("SansSerif", Font.BOLD, 14);
+		serverText.setFont(serverFont);
 		update();
 	}
 
 	public void update() {
-
+		//String text = display.showQueue
+		String text = "Server ";
+		serverText.setText(text);
 	}
 }
