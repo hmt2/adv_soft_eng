@@ -24,10 +24,11 @@ public class DisplayGUI extends JFrame {
 		// object)
 		add(BorderLayout.NORTH, createSetClockPanel());
 
-		// the display classes DO need to know about the Clock object
-		// (to register as observers and to get the data)
-		// add analog display in the middle
-
+		// add queue display in the middle
+		add(new DisplayQueue(model), BorderLayout.CENTER);
+		// add server display at the bottom
+		add(BorderLayout.SOUTH, new DisplayServer(model));
+				
 		setSize(250, 300);
 		setVisible(true);
 	}
