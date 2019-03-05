@@ -54,20 +54,28 @@ public class Cook implements Runnable {
 				//YOUR CODE GOES HERE...
 
 				//get the customer currently up next
-				synchronized(Simulation.orderList){ //incoming online and instore queue
+				synchronized(Simulation.orderList){ //the Customers that are waiting to be served
 
-					while(Simulation.orderList.isEmpty()){
+					while(Simulation.orderList.isEmpty()){ //if there are no customers, wait
 						Simulation.orderList.wait();
 					}
-					currCustomer = Simulation.orderList.remove();
+					currCustomer = Simulation.orderList.remove(); //get the next customer in the queue
 					
-					ArrayList<String> itemsOrdered = currCustomer.getItemIds();
-					List<Item> orders = new ArrayList<Item>();
+					ArrayList<String> itemsOrdered = currCustomer.getItemIds(); //read the customer orders
+					List<String> itemsName = new ArrayList<String>(); //show the item names in log for each customer. It could be ids as well
 					for (String item : itemsOrdered){
-						orders.add(Simulation.menu.findItemId(item));
-						
+						itemsName.add(Simulation.menu.findItemId(item).getName());
+								
 					}
-					Simulation.logEvent(SimulationEvent.cookReceivedOrder(this, orders, currCustomer.getCustomerId()));
+					
+					//List<Item> orderItem = new ArrayList<Item>();
+					//	for (String item : itemsOrdered){
+				//		orders.add(Simulation.menu.findItemId(item));
+						
+				//	}
+					
+				
+					Simulation.logEvent(SimulationEvent.cookReceivedOrder(this, itemsName, currCustomer.getCustomerId()));
 					Simulation.orderList.notifyAll();
 				}
 				//sends food to specific machine
@@ -76,7 +84,8 @@ public class Cook implements Runnable {
 					Item currFood = Simulation.menu.findItemId(itemsOrdered.get(index));
 
 					Simulation.logEvent(SimulationEvent.cookStartedFood(this, currFood , currCustomer.getCustomerId()));
-					Thread.sleep(currFood.getItemDuration());
+				//	Thread.sleep(currFood.getItemDuration()); //to wait depending on item cooking time
+					Thread.sleep(5); //remove this later
 					Simulation.logEvent(SimulationEvent.cookFinishedFood(this, currFood,currCustomer.getCustomerId())); //must specify different threads for different staff, for now just one
 
 					synchronized(finishedFood){

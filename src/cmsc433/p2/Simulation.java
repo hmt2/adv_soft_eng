@@ -12,6 +12,9 @@ import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
 
+
+
+
 import cmsc433.p2.*;
 
 /**
@@ -21,6 +24,8 @@ import cmsc433.p2.*;
 public class Simulation {
 	// List to track simulation events during simulation
 	public static List<SimulationEvent> events;  
+    private static CoffeShopInterface interaction;
+	private static MenuGUI gui;
 	
 	public static Queue<Customer> orderList = new LinkedList<Customer>();
 	public static Queue<Customer> currCapacity = new LinkedList<Customer>();
@@ -60,6 +65,16 @@ public class Simulation {
 			}
 
 	  }
+
+	  public static void showInterface() throws DuplicateIDException, IdNotContainedException {
+		  interaction = new CoffeShopInterface(menu);
+	  }
+	  public static void showGUI() throws DuplicateIDException, IdNotContainedException {
+	      gui = new MenuGUI(menu, interaction);
+	      gui.setVisible(true);
+	  }     
+	  
+	  
 	public static void logEvent(SimulationEvent event) {
 		events.add(event);
 		System.out.println(event);
@@ -84,10 +99,7 @@ public class Simulation {
 	 */
 	public static List<SimulationEvent> runSimulation(
 			int numCustomers, int numCooks,
-			int numTables, 
-			int machineCapacity,
-			
-			boolean randomOrders
+	        int numTables
 			) throws IdNotContainedException {
 
 		//This method's signature MUST NOT CHANGE.  
@@ -103,9 +115,7 @@ public class Simulation {
 
 		// Start the simulation
 		logEvent(SimulationEvent.startSimulation(numCustomers,
-				numCooks,
-				numTables,
-				machineCapacity));
+				numCooks, numTables));
 
 
 
@@ -118,28 +128,33 @@ public class Simulation {
 		Thread[] cooks = new Thread[numCooks];
 		for(int index = 0; index < numCooks; index++){
 			cooks[index] = new Thread(
-					new Cook(index));
+					new Cook(index+1));
 		}
 		for(int index = 0; index < numCooks; index++){
 			cooks[index].start();
 		}
 
 
-		// Build the customers.
+		// Build the customers. It creates a customer thread for each customer. We want to create a thread based on the queue!
 		Thread[] customers = new Thread[numCustomers];
-		ArrayList<String> order = new ArrayList <String>();
-		String[] names ={"Emily Young", "Maria Lacie", "Rachael McDonalds", "Kallen Stadtfeld", "Josh Barren", "Sara Cyrus", "Bradley Cooper"} ;
-        
 		for(int i = 0; i < customers.length; i++) {
+			customers[i] = new Thread(customerList.findCustomerId(i+100)); //this is wrong as it creates a thread for each customer. We just need a thread for the orders
+		}
+		
+		
+	//	ArrayList<String> order = new ArrayList <String>();
+	//	String[] names ={"Emily Young", "Maria Lacie", "Rachael McDonalds", "Kallen Stadtfeld", "Josh Barren", "Sara Cyrus", "Bradley Cooper"} ;
+        
+	//	for(int i = 0; i < customers.length; i++) {
           
-				order.add("FOD002");
-				order.add("DES001");
-				order.add("CLD001");
-				customers[i] = new Thread(
-						new Customer (i+100, totalBeforeDiscount, totalAfterDiscount, order) //needs to be modified to suit
-						);
+		//		order.add("FOD002");
+		//		order.add("DES001");
+			//	order.add("CLD001");
+				//customers[i] = new Thread(
+					//	new Customer (i+100, totalBeforeDiscount, totalAfterDiscount, order) //needs to be modified to suit
+				//		);
 			
-			}
+		//	}
 		
 		
 
@@ -153,7 +168,7 @@ public class Simulation {
 			//      to do - one of these is waiting for an available
 			//      table...
 		}
-		System.out.println("hello");
+
 
 		try {
 			// Wait for customers to finish
@@ -171,10 +186,12 @@ public class Simulation {
 			// The easiest way to do this might be the following, where
 			// we interrupt their threads.  There are other approaches
 			// though, so you can change this if you want to.
-			for(int i = 0; i < cooks.length; i++)
-				cooks[i].interrupt();
-			for(int i = 0; i < cooks.length; i++)
-				cooks[i].join();
+			
+			//This if we want the simulation to have a fixed time and have the staff go home
+		//	for(int i = 0; i < cooks.length; i++)
+			//	cooks[i].interrupt();
+		//	for(int i = 0; i < cooks.length; i++)
+			//	cooks[i].join();
 
 		}
 		catch(InterruptedException e) {
@@ -184,7 +201,7 @@ public class Simulation {
 
 
 		// Done with simulation		
-		logEvent(SimulationEvent.endSimulation());
+		//logEvent(SimulationEvent.endSimulation());
 
 		return events;
 	}
@@ -221,21 +238,20 @@ public class Simulation {
 	    allDiscounts = new AllDiscounts();
 	    discountCheck = new DiscountCheck(allDiscounts.loadDiscounts());
 		
-		int numCooks = 20;
-		int numTables = 50;
-		int machineCapacity = 4;
-		boolean randomOrders = true;
+		int numCooks = 4;
+		int numTables = 2; //change this to adjust capacity
 		addPreviousOrders();
-		int numCustomers = customerList.size();
+		//int numCustomers = customerList.size(); //to initialise simulation with already existing orders
+		int numCustomers = 4;
+	  	showInterface();
+	  	showGUI();
 		
 		
 
 		// Run the simulation and then 
 		//   feed the result into the method to validate simulation.
 		runSimulation(
-								numCustomers, numCooks, 
-								numTables, machineCapacity,
-								randomOrders
+								numCustomers, numCooks, numTables
 								);
 			
 	}

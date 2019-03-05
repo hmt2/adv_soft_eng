@@ -120,38 +120,38 @@ public class Customer implements Runnable {
 		//YOUR CODE GOES HERE...
 		Simulation.logEvent(SimulationEvent.customerStarting(this));
 
-		synchronized(Simulation.currCapacity){
-			while(!(Simulation.currCapacity.size() < Simulation.events.get(0).simParams[2])){
+		synchronized(Simulation.currCapacity){ //the customers inside the store are compared to the number of tables
+			while(!(Simulation.currCapacity.size() < Simulation.events.get(0).simParams[2])){ //check the length of the inqueue. If it is less than the existing numberofcustomers, add
 				try {
-					Simulation.currCapacity.wait();
+					Simulation.currCapacity.wait(); //if there is no space inside keep looping until there is place
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
 			}
-			Simulation.currCapacity.add(this);
+			Simulation.currCapacity.add(this); //add customer to inqueue
 			Simulation.logEvent(SimulationEvent.customerEnteredCoffeeShop(this));
 			Simulation.currCapacity.notifyAll();
 		}
 		
-		List<Item> orders = new ArrayList<Item>();
+		List<String> orders = new ArrayList<String>();
 		for (String item : itemIds){
 			try {
-				orders.add(Simulation.menu.findItemId(item));
+				orders.add(Simulation.menu.findItemId(item).getName());
 			} catch (IdNotContainedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
 		}
-		synchronized(Simulation.orderList){
+		synchronized(Simulation.orderList){ //the outside queue of customers that want to served but whose order has not been processed
 			Simulation.orderList.add(this);
 			Simulation.logEvent(SimulationEvent.customerPlacedOrder(this, orders, this.itemIds.size()));
 			Simulation.orderList.notifyAll();
 		}
 		//initialize the persons order as not completed
-		synchronized(Simulation.completedOrder){
+		synchronized(Simulation.completedOrder){ //once a customer's order has been completed mark it as completed
 			Simulation.completedOrder.put(this, false);
 		}
 		

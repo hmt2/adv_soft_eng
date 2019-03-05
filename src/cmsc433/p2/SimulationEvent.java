@@ -34,15 +34,17 @@ public class SimulationEvent {
     public final Cook cook;
     public final Customer customer;
     public final Item food;
-    public final List<Item> orderFood;
+    public final List<String> orderFood;
     public final int customerId;
     public final int[] simParams;
+
+
 
     private SimulationEvent(EventType event, 
 			    Cook cook,
 			    Customer customer,
 			    Item currFood,
-			    List<Item> order,
+			    List<String> orderFood,
 			    int customerId,
 			    int[] simParams) {
 	this.event = event;
@@ -50,23 +52,22 @@ public class SimulationEvent {
 	this.customer = customer;
 
 	this.food = currFood;
-	this.orderFood = order;
+	this.orderFood = orderFood;
 	this.customerId = customerId;
 	this.simParams = simParams;
+
     }
 
     /* Factory methods */
 
     /* Simulation events */
     public static SimulationEvent startSimulation(int numCustomers,
-					   int numCooks,
-					   int numTables,
-					   int capacity) {
+					   int numCooks, int numTables) {
 	int[] params = new int[4];
 	params[0] = numCustomers;
 	params[1] = numCooks;
-	params[2] = numTables;
-	params[3] = capacity;
+	params[2]= numTables;
+
 	return new SimulationEvent(EventType.SimulationStarting,
 				   null,null,null,null,0,
 				   params);
@@ -89,28 +90,28 @@ public class SimulationEvent {
 	return new SimulationEvent(EventType.CustomerEnteredCoffeeShop,
 				   null,
 				   customer,
-				   null,null,0,null);
+				   null,null, 0,null);
     }
 
     public static SimulationEvent customerPlacedOrder(Customer customer,
-					    List<Item> order,
+					    List<String> orderFood,
 					    int customerId) {
 	return new SimulationEvent(EventType.CustomerPlacedOrder,
 				   null,
 				   customer,
 				  null,
-				   order, customerId,
+				   orderFood, customerId,
 				   null);
     }
 
     public static SimulationEvent customerReceivedOrder(Customer customer,
-					    List<Item> order,
+					    List<String> orderFood,
 					    int customerId) {
 	return new SimulationEvent(EventType.CustomerReceivedOrder,
 				   null,
 				   customer,
 				    null,
-				   order, customerId,
+				   orderFood, customerId,
 				   null);
     }
 
@@ -129,12 +130,12 @@ public class SimulationEvent {
     }
 
     public static SimulationEvent cookReceivedOrder(Cook cook,
-					     List<Item> order,
+					     List<String> orderFood,
 					     int customerId) {
 	return new SimulationEvent(EventType.CookReceivedOrder,
 				   cook,
 				   null, null,
-				   order, customerId,
+				   orderFood, customerId,
 				   null);
     }
 
@@ -182,30 +183,28 @@ public class SimulationEvent {
     	case SimulationStarting:
 	    int numCustomers = simParams[0];
 	    int numCooks = simParams[1];
-	    int numTables = simParams[2];
-	    int capacity = simParams[3];
+	    int numTables = simParams[2]; //the number of tables, but they may also be able to do takeaway
 	    return "Starting simulation: "+numCustomers+" customers; "+
-		numCooks+" cooks; "+numTables+" tables; "+
-		"machine capacity "+capacity+".";
+		numCooks+" cooks; "+numTables+" tables";
 	    
 	case SimulationEnded:
 	    return "Simulation ended.";
 
     	/* Customer events */
 	case CustomerStarting:
-	    return customer + " going to coffee shop.";
+	    return "Customer " + customer.getCustomerId() + " going to coffee shop.";
 
 	case CustomerEnteredCoffeeShop:
-	    return customer + " entered coffee shop.";
+	    return "Customer " + customer.getCustomerId()+ " entered coffee shop.";
 
 	case CustomerPlacedOrder:
-	    return customer + " with customer id " +  customerId +" placing order " + orderFood; 
+	    return "Customer " + customer.getCustomerId() +" placing order " + orderFood; 
 	    
 	case CustomerReceivedOrder:
-	    return customer  + " with customer id " + customerId + " received order "+ orderFood;
+	    return "Customer " + customer.getCustomerId() + " received order "+ orderFood; //can be getName() too
 
 	case CustomerLeavingCoffeeShop:
-	    return customer + " leaving coffee shop.";
+	    return "Customer " +customer.getCustomerId() + " leaving coffee shop.";
 
     	/* Cook Events */
 	case CookStarting:
