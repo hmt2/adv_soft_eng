@@ -7,8 +7,9 @@ public class Item {
 	private int itemQuantity;
 	private String itemCategory;
 	private String itemDescription;
+	private long itemDuration;
 
-	public Item(String itemId, String itemName, float itemPrice, String itemCategory, String itemDescription) throws InvalidIdException{
+	public Item(String itemId, String itemName, float itemPrice, String itemCategory, String itemDescription, long itemDuration2) throws InvalidIdException{
 	
 		
 		if( itemId.length() ==0 || itemName.length()== 0 || itemCategory.length()== 0)    
@@ -51,6 +52,7 @@ public class Item {
 		this.itemQuantity = 0;
 		this.itemCategory = itemCategory;
 		this.itemDescription = itemDescription;
+		this.itemDuration = itemDuration2;
 	}
 	
 	//getter methods
@@ -76,6 +78,10 @@ public class Item {
     
     public int getQuantity() {
     	return itemQuantity;
+    }
+    
+    public long getItemDuration() {
+    	return itemDuration;
     }
     
     public void setQuantity(int itemQuantity) {
