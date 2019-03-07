@@ -67,8 +67,7 @@ public class DiscountCheck{ //extends Customer{
 	  }
 	  
    public double calcAfterDiscount(ArrayList<String> itemIds, ArrayList<String> discountNames, boolean isStudentDiscount) throws IdNotContainedException {
-		ArrayList<String> itemIdsBuffer =new ArrayList<>();  
-	   	double totalAfterDiscount = 0;
+		  double totalAfterDiscount = 0;
 		  while(true) {
 			  Discount dis = getDiscount(itemIds);
 			  if(dis != null) {
@@ -76,7 +75,6 @@ public class DiscountCheck{ //extends Customer{
 				  discountNames.add(dis.getName());
 				  for(String itemId : dis.getDiscountCodes()) {
 					  itemIds.remove(itemId);
-					  itemIdsBuffer.add(itemId);
 				  }
 			  } else {
 				  double price = calcBillBeforeDiscount(itemIds);
@@ -87,9 +85,6 @@ public class DiscountCheck{ //extends Customer{
 				  totalAfterDiscount += isStudentDiscount ? price * 0.9 : price;
 				  break;
 			  }
-		  }
-		  for(String itemId : itemIdsBuffer) {
-			  itemIds.add(itemId);
 		  }
 		  return totalAfterDiscount;
 	  }
