@@ -49,9 +49,10 @@ public class Menu {
 		    		float itemPrice = Float.parseFloat(data[2].trim());
 		    		String itemCategory = data[3].trim();
 		    		String itemDescription = data[4].trim();
+		    		long itemDuration= 2; //should be retrieved
 		    		// Composition of an Item : String String float float String String
 		    		try {
-		    			Item i = new Item(itemId, itemName, itemPrice, itemCategory, itemDescription);
+		    			Item i = new Item(itemId, itemName, itemPrice, itemCategory, itemDescription, itemDuration);
 		    		//add to LinkedHashMap
 		    			menu.put(itemId, i);
 		    			inputLine = buff.readLine();
