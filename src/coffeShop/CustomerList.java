@@ -10,12 +10,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class CustomerList {
 	private   HashMap <Integer, Customer> customerList; 
 	private static AtomicInteger counter  = new AtomicInteger(99); //Initialize it by 99 so that customer ids start from 100 
-	private AllOrders allOrders;
 	
     public CustomerList()
     {
        customerList = new HashMap <Integer, Customer>() ;
-       this.allOrders = allOrders;
     }
     
     //Add a new customer to the customerList hashmap. If there is a duplicate id an exception is thrown
