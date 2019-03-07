@@ -16,10 +16,12 @@ public class CoffeShopInterface {
 	  AllOrders allorders;
 	  DiscountCheck discountCheck;
 	  AllDiscounts allDiscounts;
+	  InStoreQueue instoreQueue;
+	  OnlineQueue onlineQueue;
 	  private float totalBeforeDiscount = 0;
 	  private double totalAfterDiscount = 0;
 	  boolean isStudentDiscount;
-
+	  
 	  private float totalAllItemsBeforeDiscount = 0;
 	  private float totalAllItemsAfterDiscount = 0;
 	
@@ -30,7 +32,10 @@ public class CoffeShopInterface {
 	    customerList = new CustomerList();
 	    allDiscounts = new AllDiscounts();
 	    discountCheck = new DiscountCheck(allDiscounts.loadDiscounts());
+	    instoreQueue =  new InStoreQueue();
+	    onlineQueue = new OnlineQueue(customerList);
 	    addPreviousOrders();
+	    onlineQueue.loadOnlineQueue();
 	}
 	
 	public void generateReport(){
@@ -38,22 +43,27 @@ public class CoffeShopInterface {
 
 	}
 	public void addPreviousOrders() throws DuplicateIDException, IdNotContainedException{
+		
 		  TreeMap<Integer,ArrayList<String>> cust = allorders.loadOrders();
-	      Set<Integer> keys = cust.keySet();
+		  Set<Integer> keys = cust.keySet();
+		  
 			for(Integer key: keys){
+				ArrayList<String> itemIdSave = cust.get(key);
 				float totalBeforeDiscount = discountCheck.calcBillBeforeDiscount(cust.get(key));
 				float totalAfterDiscount = totalBeforeDiscount;
 				Discount ds = discountCheck.getDiscount(cust.get(key));
 				if(ds != null)
 					totalAfterDiscount = (float) discountCheck.calcAfterDiscount(cust.get(key),isStudentDiscount); //assume for the previous cases student is false
 				try {
-					customerList.addCustomer(cust.get(key), totalBeforeDiscount, totalAfterDiscount);
+					customerList.addCustomer(itemIdSave, totalBeforeDiscount, totalAfterDiscount);
 				} catch (DuplicateIDException | IllegalArgumentException e1) {
 					// TODO Auto-generated catch block
 					continue; //continue to process the next customer
 
 			  }
 			}
+
+			
 	  }
 		  
 	//need to add in bill after discount
@@ -103,13 +113,15 @@ public class CoffeShopInterface {
 	  	  return bill;
 	  }
 	  
-	  //need to update quanities
+	  //need to update quantities
 	  public void placeOrder(Map<String, Integer> currentOrder) throws DuplicateIDException, IdNotContainedException {
-			  updateItemQuantity(currentOrder);
+			  
+		  	  updateItemQuantity(currentOrder);
 			  int custId = customerList.addCustomer(discountCheck.toArrayList(currentOrder),totalBeforeDiscount,(float)totalAfterDiscount);
 			  totalAllItemsBeforeDiscount += totalBeforeDiscount;
 			  totalAllItemsAfterDiscount += (float)totalAfterDiscount;
 			  allorders.addOrder(custId, discountCheck.toArrayList(currentOrder));
+        instoreQueue.addInstoreQueue(customerList.findCustomerId(custId));
 			  Thread customer = new Thread(customerList.findCustomerId(custId));
 			  customer.start();
 			   try {
@@ -117,6 +129,7 @@ public class CoffeShopInterface {
 				} catch(InterruptedException e) {
 					System.out.println("Simulation thread interrupted.");
 				}
+
 	  }
 	  
 	  public void updateItemQuantity(Map<String, Integer> order) throws IdNotContainedException {
