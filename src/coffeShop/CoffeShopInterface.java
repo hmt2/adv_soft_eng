@@ -19,6 +19,9 @@ public class CoffeShopInterface {
 	  private float totalBeforeDiscount = 0;
 	  private double totalAfterDiscount = 0;
 	  boolean isStudentDiscount;
+	  InStoreQueue instoreQueue;
+	  OnlineQueue onlineQueue;
+	  
 
 	  private float totalAllItemsBeforeDiscount = 0;
 	  private float totalAllItemsAfterDiscount = 0;
@@ -30,7 +33,10 @@ public class CoffeShopInterface {
 	    customerList = new CustomerList();
 	    allDiscounts = new AllDiscounts();
 	    discountCheck = new DiscountCheck(allDiscounts.loadDiscounts());
-	    addPreviousOrders();
+	    instoreQueue =  new InStoreQueue();
+		onlineQueue = new OnlineQueue(customerList);
+		addPreviousOrders();
+		onlineQueue.loadOnlineQueue();
 	}
 	
 	public void generateReport(){

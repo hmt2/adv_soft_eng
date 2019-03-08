@@ -29,6 +29,8 @@ public class Customer implements Runnable {
 			this.billBeforeDiscount = billBeforeDiscount;
 			this.billAfterDiscount = billAfterDiscount;
 			if(this.billBeforeDiscount != this.billAfterDiscount)
+				this.discount = true;
+			else
 				this.discount = false;
 	        if (customerId < 100){ //throws an exception if the customer id is below 100
 	        	throw new IllegalArgumentException ("Not a valid customer id");
