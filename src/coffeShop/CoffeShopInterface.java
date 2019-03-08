@@ -115,9 +115,19 @@ public class CoffeShopInterface {
 			  int custId = customerList.addCustomer(discountCheck.toArrayList(currentOrder),totalBeforeDiscount,(float)totalAfterDiscount);
 			  totalAllItemsBeforeDiscount += totalBeforeDiscount;
 			  totalAllItemsAfterDiscount += (float)totalAfterDiscount;
+
 			  orderIds= allorders.addOrder(custId, discountCheck.toArrayList(currentOrder));
 			  instoreQueue.addInstoreQueue(orderIds);
-	  }
+
+			  allorders.addOrder(custId, discountCheck.toArrayList(currentOrder));
+			  Thread customer = new Thread(customerList.findCustomerId(custId));
+			  customer.start();
+			   try {
+					customer.join();
+				} catch(InterruptedException e) {
+					System.out.println("Simulation thread interrupted.");
+				}
+  }
 	  
 	  public void updateItemQuantity(Map<String, Integer> order) throws IdNotContainedException {
 		  Set<String> keys = order.keySet();
