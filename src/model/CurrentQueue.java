@@ -11,25 +11,52 @@ import interfaces.Subject;
 import java.util.*;
 
 import coffeShop.Customer;
+import coffeShop.IdNotContainedException;
+import coffeShop.Menu;
 
 public class CurrentQueue implements Subject {
 	
-	Queue<Customer> queue;
+	private Queue<Customer> queue;
+	private Customer topQueue;
+	private Menu menu;
 	
 	//need queue info here
 	public CurrentQueue() {
 		 queue = new LinkedList<>(); 
+		 menu = new Menu();
 	}
 	
 	public void add(Customer cust) {
+		if(queue.isEmpty()) {
+			topQueue = cust;
+		}
 		queue.add(cust);
+	}
+	
+	public void removeTop(){
+		if(!queue.isEmpty()) {
+			Customer cust = queue.remove();
+			topQueue = cust;
+		}
+	}
+	
+	public Customer getTopOfQueue(){
+		return topQueue;
+	}
+	
+	public boolean isEmpty(){
+		return queue.isEmpty();
 	}
 	
 	public String printQueue() {
 		String text = "";
+		int count = 0;
 		if(!queue.isEmpty()) {
 			for(Customer cust: queue) {
 				text = text + "id: " + cust.getCustomerId() + "\n";
+				count++;
+				if(count > 7)
+					return text;
 			}
 		}
 		return text;
@@ -38,10 +65,21 @@ public class CurrentQueue implements Subject {
 	public String showCustomerBeingServed() {
 		String custString = "";
 		if(!queue.isEmpty()) {
-			Customer cust = queue.remove();
-			custString =  custString + "id: " + cust.getCustomerId() + "name: " + cust.getName() + "\n"
-					+ "items: " + cust.getItemIds() + "\n"
-			+ "total before discount" + cust.getBillBeforeDiscount() + "total after discount: " + cust.getBillAfterDiscount() + "\n";
+			Customer cust = topQueue;
+			custString =  custString + "id: " + cust.getCustomerId() + "\n"
+					+ "items: ";
+			ArrayList<String> itemIds = cust.getItemIds();
+			for(String item: itemIds) {
+				try {
+					custString += menu.findItemId(item).getName() + "\n";
+				} catch (IdNotContainedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			custString += "\n"
+			+ "\n total before discount" + cust.getBillBeforeDiscount() + 
+			"\n total after discount: " + cust.getBillAfterDiscount() + "\n";
 		}
 		return custString;
 	}
@@ -61,6 +99,7 @@ public class CurrentQueue implements Subject {
 	}
 
 	public void notifyObservers() {
+		
 		for (Observer obs : registeredObservers)
 			obs.update();
 	}
