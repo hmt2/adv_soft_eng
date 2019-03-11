@@ -31,7 +31,7 @@ public class DisplayQueue extends JPanel implements Observer {
 	}
 
 	public void update() {
-		String text = "Queue: \n\r" + modeldata.showQueue();
+		String text = "Queue: \n\r" + modeldata.printQueue();
 		queueText.setText(text);
 	}
 }

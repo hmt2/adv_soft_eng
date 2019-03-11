@@ -25,25 +25,25 @@ public class CurrentQueue implements Subject {
 		queue.add(cust);
 	}
 	
-	public String showQueue() {
-		if(!queue.isEmpty()){
-			String queueString = queue.toString();
-			return queueString;
+	public String printQueue() {
+		String text = "";
+		if(!queue.isEmpty()) {
+			for(Customer cust: queue) {
+				text = text + "id: " + cust.getCustomerId() + "\n";
+			}
 		}
-		else {
-			return "queue is empty /n/r";
-		}
+		return text;
 	}
 	
 	public String showCustomerBeingServed() {
+		String custString = "";
 		if(!queue.isEmpty()) {
 			Customer cust = queue.remove();
-			String custString = cust.toString();
-			return custString;
+			custString =  custString + "id: " + cust.getCustomerId() + "name: " + cust.getName() + "\n"
+					+ "items: " + cust.getItemIds() + "\n"
+			+ "total before discount" + cust.getBillBeforeDiscount() + "total after discount: " + cust.getBillAfterDiscount() + "\n";
 		}
-		else {
-			return "queue is empty /n/r";
-		}
+		return custString;
 	}
 	
 	// OBSERVER PATTERN

@@ -105,7 +105,7 @@ public class Customer implements Runnable {
 	    	{
 	    	    ordersString += s + "\t";
 	    	}
-	        return String.format("%-5s", customerId ) + String.format("%-20s", ordersString ) + String.format("%-20s", String.valueOf(discount) ) +
+	        return String.format("%-5s", customerId ) + String.format("%-10s", ordersString ) + String.format("%-10s", String.valueOf(discount) ) +
 	                 String.valueOf( billBeforeDiscount) ;
 	    }
 

@@ -6,6 +6,7 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import coffeShop.Customer;
 import controllers.DisplayController;
@@ -31,11 +32,21 @@ public class DisplayExample {
 	    itemIds.add("HOT003");
 	    itemIds.add("HOT005");
 		Customer cust1 = new Customer(101, 2, 2, itemIds);
-
 		Customer cust2 = new Customer(102, 3, 2, itemIds);
+		
 		controller.add(cust1);
 		controller.add(cust2);
 		controller.updateView();
+		
+		try {
+			TimeUnit.SECONDS.sleep(5);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		controller.updateView();
+		
 		// now all is displayed, wait for user to interact
 	}
 }
