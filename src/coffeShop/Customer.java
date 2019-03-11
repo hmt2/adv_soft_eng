@@ -15,8 +15,6 @@ public class Customer{// implements Runnable {
 	private int customerId;
 	private  String name;
 
-   
-	
 	private static int runningCounter = 0;
 
 	    private float billBeforeDiscount;
@@ -75,7 +73,6 @@ public class Customer{// implements Runnable {
 		public ArrayList<String> getItemIds() { 
 			return itemIds;
 		}
-
 
 		
 		public void setItemIds(ArrayList<String> itemIds) { 

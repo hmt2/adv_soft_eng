@@ -21,7 +21,7 @@ public class DisplayGUI extends JFrame {
 		// add server display at the bottom
 		add(BorderLayout.CENTER, new DisplayServer(model));
 				
-		setSize(500, 500);
+		setSize(600, 600);
 		setVisible(true);
 	}
 

@@ -11,15 +11,19 @@ import interfaces.Subject;
 import java.util.*;
 
 import coffeShop.Customer;
+import coffeShop.IdNotContainedException;
+import coffeShop.Menu;
 
 public class CurrentQueue implements Subject {
 	
-	Queue<Customer> queue;
-	Customer topQueue;
+	private Queue<Customer> queue;
+	private Customer topQueue;
+	private Menu menu;
 	
 	//need queue info here
 	public CurrentQueue() {
 		 queue = new LinkedList<>(); 
+		 menu = new Menu();
 	}
 	
 	public void add(Customer cust) {
@@ -62,9 +66,20 @@ public class CurrentQueue implements Subject {
 		String custString = "";
 		if(!queue.isEmpty()) {
 			Customer cust = topQueue;
-			custString =  custString + "id: " + cust.getCustomerId() + "name: " + cust.getName() + "\n"
-					+ "items: " + cust.getItemIds() + "\n"
-			+ "total before discount" + cust.getBillBeforeDiscount() + "total after discount: " + cust.getBillAfterDiscount() + "\n";
+			custString =  custString + "id: " + cust.getCustomerId() + "\n"
+					+ "items: ";
+			ArrayList<String> itemIds = cust.getItemIds();
+			for(String item: itemIds) {
+				try {
+					custString += menu.findItemId(item).getName() + "\n";
+				} catch (IdNotContainedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			custString += "\n"
+			+ "\n total before discount" + cust.getBillBeforeDiscount() + 
+			"\n total after discount: " + cust.getBillAfterDiscount() + "\n";
 		}
 		return custString;
 	}
