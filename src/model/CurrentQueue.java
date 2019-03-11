@@ -10,13 +10,40 @@ import interfaces.Subject;
 
 import java.util.*;
 
+import coffeShop.Customer;
+
 public class CurrentQueue implements Subject {
 	
-	Queue<Integer> q = new LinkedList<>(); 
+	Queue<Customer> queue;
 	
 	//need queue info here
 	public CurrentQueue() {
-		
+		 queue = new LinkedList<>(); 
+	}
+	
+	public void add(Customer cust) {
+		queue.add(cust);
+	}
+	
+	public String showQueue() {
+		if(!queue.isEmpty()){
+			String queueString = queue.toString();
+			return queueString;
+		}
+		else {
+			return "queue is empty /n/r";
+		}
+	}
+	
+	public String showCustomerBeingServed() {
+		if(!queue.isEmpty()) {
+			Customer cust = queue.remove();
+			String custString = cust.toString();
+			return custString;
+		}
+		else {
+			return "queue is empty /n/r";
+		}
 	}
 	
 	// OBSERVER PATTERN
