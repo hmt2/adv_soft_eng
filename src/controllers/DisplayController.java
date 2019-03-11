@@ -36,6 +36,14 @@ public class DisplayController {
 		}
 	}
 	
+	public Customer getTopOfQueue(){
+		return model.getTopOfQueue();
+	}
+	
+	public void removeTop(){
+		model.removeTop();
+	}
+	
 	public void add(Customer cust) {
 		model.add(cust);
 	}

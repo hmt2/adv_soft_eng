@@ -15,6 +15,7 @@ import coffeShop.Customer;
 public class CurrentQueue implements Subject {
 	
 	Queue<Customer> queue;
+	Customer topQueue;
 	
 	//need queue info here
 	public CurrentQueue() {
@@ -22,14 +23,32 @@ public class CurrentQueue implements Subject {
 	}
 	
 	public void add(Customer cust) {
+		if(queue.isEmpty()) {
+			topQueue = cust;
+		}
 		queue.add(cust);
+	}
+	
+	public void removeTop(){
+		if(!queue.isEmpty()) {
+			Customer cust = queue.remove();
+			topQueue = cust;
+		}
+	}
+	
+	public Customer getTopOfQueue(){
+		return topQueue;
 	}
 	
 	public String printQueue() {
 		String text = "";
+		int count = 0;
 		if(!queue.isEmpty()) {
 			for(Customer cust: queue) {
 				text = text + "id: " + cust.getCustomerId() + "\n";
+				count++;
+				if(count > 7)
+					return text;
 			}
 		}
 		return text;
@@ -38,7 +57,7 @@ public class CurrentQueue implements Subject {
 	public String showCustomerBeingServed() {
 		String custString = "";
 		if(!queue.isEmpty()) {
-			Customer cust = queue.remove();
+			Customer cust = topQueue;
 			custString =  custString + "id: " + cust.getCustomerId() + "name: " + cust.getName() + "\n"
 					+ "items: " + cust.getItemIds() + "\n"
 			+ "total before discount" + cust.getBillBeforeDiscount() + "total after discount: " + cust.getBillAfterDiscount() + "\n";
@@ -61,6 +80,7 @@ public class CurrentQueue implements Subject {
 	}
 
 	public void notifyObservers() {
+		
 		for (Observer obs : registeredObservers)
 			obs.update();
 	}

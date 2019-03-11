@@ -5,28 +5,25 @@ import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.Semaphore;
 
+import controllers.DisplayController;
+import model.CurrentQueue;
+import views.DisplayGUI;
+
 //import WaitingQueue.SingletonHelper;.*
 
 public class WaitingQueue extends CustomerList{
 
+	private CurrentQueue model = new CurrentQueue();
+
+	private DisplayGUI view = new DisplayGUI(model);
+
+	private DisplayController controller = new DisplayController(view, model);
+	
+	
 	//	private LinkedList<Integer, Order> MainQueue; //key orderId , value : Order
 	private Queue<Integer> mainQueue = new LinkedList<>();
 	//private static List<SimulationEvent> events;  
 	private static Map<Customer, Boolean> completedOrder = new HashMap<Customer,Boolean>();
-
-	//	private static Menu menu;
-	//	private static AllOrders allorders;
-	//	private static float totalBeforeDiscount = 0;
-	//	private static float totalAfterDiscount = 0;
-	//		private static CustomerList customerList;
-	//	private static DiscountCheck discountCheck;
-	//	private static AllDiscounts allDiscounts;
-	//	private static boolean isStudentDiscount;
-	//	private int numCustomers; 
-	//	private int numStaff;
-	//	private int numTables; 
-
-	//	private boolean randomOrders;
 
 	private static Object lock;
 
@@ -57,8 +54,9 @@ public class WaitingQueue extends CustomerList{
 				if(ds != null)
 					totalAfterDiscount = (float) discountCheck.calcAfterDiscount(cust.get(key),isStudentDiscount); //assume for the previous cases student is false
 				try {
+					Customer currentCust = new Customer(key, totalBeforeDiscount, totalAfterDiscount,cust.get(key));
 					int id = super.addCustomer(cust.get(key), totalBeforeDiscount, totalAfterDiscount);
-					mainQueue.add(id);
+					controller.add(currentCust);
 				} catch (DuplicateIDException | IllegalArgumentException e1) {
 					// TODO Auto-generated catch block
 					continue; //continue to process the next customer
@@ -67,6 +65,10 @@ public class WaitingQueue extends CustomerList{
 			}
 		}
 
+	}
+	
+	public void updateDisplay() {
+		controller.updateView();
 	}
 
 	public void addCustomer(ArrayList<String> itemIds, DiscountCheck discountCheck, boolean isStudentDiscount) throws DuplicateIDException, IdNotContainedException{
@@ -78,7 +80,8 @@ public class WaitingQueue extends CustomerList{
 				totalAfterDiscount = (float) discountCheck.calcAfterDiscount(itemIds,isStudentDiscount); //assume for the previous cases student is false
 			try {
 				int id = super.addCustomer(itemIds, totalBeforeDiscount, totalAfterDiscount);
-				mainQueue.add(id);
+				Customer currentCust = new Customer(id, totalBeforeDiscount, totalAfterDiscount,itemIds);
+				controller.add(currentCust);
 			} catch (DuplicateIDException | IllegalArgumentException e1) {
 				System.out.println(e1);
 			}
@@ -92,7 +95,8 @@ public class WaitingQueue extends CustomerList{
 		// TODO Auto-generated method stub
 		synchronized (lock) { // to make it thread safe
 			int id = super.addCustomer(itemIds, beforeDiscount, afterDiscount);
-			mainQueue.add(id);
+			Customer currentCust = new Customer(id, beforeDiscount, afterDiscount,itemIds);
+			controller.add(currentCust);
 			return id;
 		}
 	}
@@ -103,7 +107,7 @@ public class WaitingQueue extends CustomerList{
 		// TODO Auto-generated method stub
 		synchronized (lock) { // to make it thread safe
 			super.deleteCustomer(customerId);
-			mainQueue.remove(customerId);
+			controller.updateView();
 		}
 	}
 
@@ -163,11 +167,8 @@ public class WaitingQueue extends CustomerList{
 
 	public Customer dequeue() {
 		synchronized (lock) {
-			Integer id = mainQueue.poll();
-			if(id == null) {
-				return null;
-			}
-			return super.findCustomerId(id);			
+			controller.removeTop();
+			return controller.getTopOfQueue();
 		}
 	}
 	
