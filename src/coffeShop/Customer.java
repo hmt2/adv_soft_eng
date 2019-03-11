@@ -10,7 +10,7 @@ import java.util.List;
  * coffee shop has a free table), place its order, and then leave the 
  * coffee shop when the order is complete.
  */
-public class Customer implements Runnable {
+public class Customer{// implements Runnable {
 	//JUST ONE SET OF IDEAS ON HOW TO SET THINGS UP...
 	private int customerId;
 	private  String name;
@@ -110,7 +110,7 @@ public class Customer implements Runnable {
 	    }
 
 	
-	
+}
 
 	/** 
 	 * This method defines what an Customer does: The customer attempts to
@@ -118,62 +118,62 @@ public class Customer implements Runnable {
 	 * free table), place its order, and then leave the coffee shop
 	 * when the order is complete.
 	 */
-	public void run() {
-		//YOUR CODE GOES HERE...
-		Simulation.logEvent(SimulationEvent.customerStarting(this));
-
-		synchronized(Simulation.currCapacity){ //the customers inside the store are compared to the number of tables
-			while(!(Simulation.currCapacity.size() < Simulation.events.get(0).simParams[2])){ //check the length of the inqueue. If it is less than the existing numberofcustomers, add
-				try {
-					Simulation.currCapacity.wait(); //if there is no space inside keep looping until there is place
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-			}
-			Simulation.currCapacity.add(this); //add customer to inqueue
-			Simulation.logEvent(SimulationEvent.customerEnteredCoffeeShop(this));
-			Simulation.currCapacity.notifyAll();
-		}
-		
-		List<String> orders = new ArrayList<String>();
-		for (String item : itemIds){
-			try {
-				orders.add(Simulation.menu.findItemId(item).getName());
-			} catch (IdNotContainedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		}
-		synchronized(Simulation.orderList){ //the outside queue of customers that want to served but whose order has not been processed
-			Simulation.orderList.add(this);
-			Simulation.logEvent(SimulationEvent.customerPlacedOrder(this, orders, this.itemIds.size()));
-			Simulation.orderList.notifyAll();
-		}
-		//initialize the persons order as not completed
-		synchronized(Simulation.completedOrder){ //once a customer's order has been completed mark it as completed
-			Simulation.completedOrder.put(this, false);
-		}
-		
-		synchronized(Simulation.completedOrder){
-			while(!(Simulation.completedOrder.get(this))){
-				try {
-					Simulation.completedOrder.wait();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			
-			Simulation.logEvent(SimulationEvent.customerReceivedOrder(this, orders, this.itemIds.size()));
-			Simulation.completedOrder.notifyAll();
-		}
-		synchronized(Simulation.currCapacity){
-			Simulation.currCapacity.remove(this);
-			Simulation.logEvent(SimulationEvent.customerLeavingCoffeeShop(this));
-			Simulation.currCapacity.notifyAll();
-		}
-	}
-}
+//	public void run() {
+//		//YOUR CODE GOES HERE...
+//		Simulation.logEvent(SimulationEvent.customerStarting(this));
+//
+//		synchronized(Simulation.currCapacity){ //the customers inside the store are compared to the number of tables
+//			while(!(Simulation.currCapacity.size() < Simulation.events.get(0).simParams[2])){ //check the length of the inqueue. If it is less than the existing numberofcustomers, add
+//				try {
+//					Simulation.currCapacity.wait(); //if there is no space inside keep looping until there is place
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//
+//			}
+//			Simulation.currCapacity.add(this); //add customer to inqueue
+//			Simulation.logEvent(SimulationEvent.customerEnteredCoffeeShop(this));
+//			Simulation.currCapacity.notifyAll();
+//		}
+//		
+//		List<String> orders = new ArrayList<String>();
+//		for (String item : itemIds){
+//			try {
+//				orders.add(Simulation.menu.findItemId(item).getName());
+//			} catch (IdNotContainedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			
+//		}
+//		synchronized(Simulation.orderList){ //the outside queue of customers that want to served but whose order has not been processed
+//			Simulation.orderList.add(this);
+//			Simulation.logEvent(SimulationEvent.customerPlacedOrder(this, orders, this.itemIds.size()));
+//			Simulation.orderList.notifyAll();
+//		}
+//		//initialize the persons order as not completed
+//		synchronized(Simulation.completedOrder){ //once a customer's order has been completed mark it as completed
+//			Simulation.completedOrder.put(this, false);
+//		}
+//		
+//		synchronized(Simulation.completedOrder){
+//			while(!(Simulation.completedOrder.get(this))){
+//				try {
+//					Simulation.completedOrder.wait();
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			}
+//			
+//			Simulation.logEvent(SimulationEvent.customerReceivedOrder(this, orders, this.itemIds.size()));
+//			Simulation.completedOrder.notifyAll();
+//		}
+//		synchronized(Simulation.currCapacity){
+//			Simulation.currCapacity.remove(this);
+//			Simulation.logEvent(SimulationEvent.customerLeavingCoffeeShop(this));
+//			Simulation.currCapacity.notifyAll();
+//		}
+//	}
+//}
