@@ -1,8 +1,8 @@
 /**
- * The MVC clock example from the MVC lecture.
+/* * The MVC clock example from the MVC lecture.
  * This class sets up the Model, View and Controller.
  */
-
+/*
 package main;
 
 import java.util.ArrayList;
@@ -49,4 +49,4 @@ public class DisplayExample {
 		
 		// now all is displayed, wait for user to interact
 	}
-}
+}*/

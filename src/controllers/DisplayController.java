@@ -25,15 +25,6 @@ public class DisplayController {
 		this.model = model;
 		this.view = vieww;
 		// specify the listener for the view
-		view.addSetListener(new SetListener());
-	}
-
-	//may not need as user input isn't updating gui....
-	// inner class SetListener responds when change
-	public class SetListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-
-		}
 	}
 	
 	public Customer getTopOfQueue(){
@@ -42,10 +33,16 @@ public class DisplayController {
 	
 	public void removeTop(){
 		model.removeTop();
+		updateView();
+	}
+	
+	public boolean isEmpty(){
+		return model.isEmpty();
 	}
 	
 	public void add(Customer cust) {
 		model.add(cust);
+		updateView();
 	}
 	
 	public void updateView(){				

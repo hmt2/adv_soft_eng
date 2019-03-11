@@ -40,6 +40,10 @@ public class CurrentQueue implements Subject {
 		return topQueue;
 	}
 	
+	public boolean isEmpty(){
+		return queue.isEmpty();
+	}
+	
 	public String printQueue() {
 		String text = "";
 		int count = 0;

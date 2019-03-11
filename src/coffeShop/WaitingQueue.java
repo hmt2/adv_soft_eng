@@ -13,9 +13,9 @@ import views.DisplayGUI;
 
 public class WaitingQueue extends CustomerList{
 
-	private CurrentQueue model = new CurrentQueue();
+	private static CurrentQueue model = new CurrentQueue();
 
-	private DisplayGUI view = new DisplayGUI(model);
+	private static DisplayGUI view = new DisplayGUI(model);
 
 	private DisplayController controller = new DisplayController(view, model);
 	
@@ -32,7 +32,6 @@ public class WaitingQueue extends CustomerList{
 		lock = new Object();
 
 	}
-
 
 	private static class SingletonHelper{
 		private static final WaitingQueue INSTANCE = new WaitingQueue();
@@ -67,9 +66,6 @@ public class WaitingQueue extends CustomerList{
 
 	}
 	
-	public void updateDisplay() {
-		controller.updateView();
-	}
 
 	public void addCustomer(ArrayList<String> itemIds, DiscountCheck discountCheck, boolean isStudentDiscount) throws DuplicateIDException, IdNotContainedException{
 		synchronized (lock) { // to make it thread safe
@@ -107,7 +103,6 @@ public class WaitingQueue extends CustomerList{
 		// TODO Auto-generated method stub
 		synchronized (lock) { // to make it thread safe
 			super.deleteCustomer(customerId);
-			controller.updateView();
 		}
 	}
 
@@ -173,7 +168,7 @@ public class WaitingQueue extends CustomerList{
 	}
 	
 	public boolean isEmpty() {
-		return mainQueue.isEmpty();
+		return controller.isEmpty();
 	}
 }
 

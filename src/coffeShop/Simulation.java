@@ -116,8 +116,7 @@ public class Simulation {
 	                items.add("FOD010");
 	                try {
 	                	System.out.println("Adding: new customer");
-	                	WaitingQueue.getInstance().updateDisplay();
-	                	
+	              
 						WaitingQueue.getInstance().addCustomer(items, discountCheck, new Random().nextBoolean());
 					} catch (DuplicateIDException | IdNotContainedException e) {
 						// TODO Auto-generated catch block
