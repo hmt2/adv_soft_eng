@@ -20,7 +20,7 @@ public class WaitingQueue extends CustomerList{
 
 	private DisplayController controller = new DisplayController(view, model);
 	
-	private Log log = new Log("test1.txt");
+	private Log log = new Log();
 	//	private LinkedList<Integer, Order> MainQueue; //key orderId , value : Order
 	private Queue<Integer> mainQueue = new LinkedList<>();
 	//private static List<SimulationEvent> events;  
@@ -55,17 +55,13 @@ public class WaitingQueue extends CustomerList{
 					totalAfterDiscount = (float) discountCheck.calcAfterDiscount(cust.get(key),isStudentDiscount); //assume for the previous cases student is false
 				try {
 					Customer currentCust = new Customer(key, totalBeforeDiscount, totalAfterDiscount,cust.get(key));
-					log.addCustomer(currentCust);
 					int id = super.addCustomer(cust.get(key), totalBeforeDiscount, totalAfterDiscount);
 					controller.add(currentCust);
 				} catch (DuplicateIDException | IllegalArgumentException e1) {
 					// TODO Auto-generated catch block
 					continue; //continue to process the next customer
 
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				} 
 			}
 		}
 
@@ -168,7 +164,8 @@ public class WaitingQueue extends CustomerList{
 	public Customer dequeue() {
 		synchronized (lock) {
 			controller.removeTop();
-			return controller.getTopOfQueue();
+			Customer cust = controller.getTopOfQueue();
+			return cust;
 		}
 	}
 	
