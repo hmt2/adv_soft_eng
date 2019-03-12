@@ -13,11 +13,11 @@ import java.util.Set;
 public class Log {
 	private String filepath;
 	
-	public Log(String path)  {
-		filepath = path;
-		createLogFile(path);
+	public Log()  {
+		String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm").format(new Date());
+		filepath = "log:" + timeStamp;
+		createLogFile(filepath);
 	}
-	
 	
 	public void createLogFile(String filepath) {
 		File file = new File(filepath);
@@ -26,9 +26,9 @@ public class Log {
 		try {
 			if (file.createNewFile())
 			{
-			    System.out.println("File is created!");
+			    System.out.println("Log file is created!");
 			} else {
-			    System.out.println("File already exists.");
+			    System.out.println("Log file already exists.");
 			}
 			
 			String str = "Start of file: \n";
@@ -42,12 +42,19 @@ public class Log {
 	}
 	
 	public void addCustomer(Customer cust) throws IOException {
-		String str = "World \n";
+		String timeStamp = new SimpleDateFormat("HH.mm.ss").format(new Date());
+		String str = timeStamp + "   Adding Customer ID to queue:  " +  cust.getCustomerId() + "\n";
 		BufferedWriter writer = new BufferedWriter(new FileWriter(filepath, true));
-	    writer.append(' ');
+		writer.append(str);
+		writer.close();   
+	}
+	
+	public void processingCustomer(Customer cust) throws IOException {
+		String timeStamp = new SimpleDateFormat("HH.mm.ss").format(new Date());
+		String str = timeStamp + "   Processing Customer ID: " + cust.getCustomerId() + "\n";
+		BufferedWriter writer = new BufferedWriter(new FileWriter(filepath, true));
 	    writer.append(str);
-	    writer.close();
-	   
+	    writer.close();   
 	}
 	
 }
