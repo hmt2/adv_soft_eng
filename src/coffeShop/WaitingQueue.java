@@ -1,6 +1,7 @@
 package coffeShop;
 
 
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.Semaphore;
@@ -19,7 +20,7 @@ public class WaitingQueue extends CustomerList{
 
 	private DisplayController controller = new DisplayController(view, model);
 	
-	
+	private Log log = new Log();
 	//	private LinkedList<Integer, Order> MainQueue; //key orderId , value : Order
 	private Queue<Integer> mainQueue = new LinkedList<>();
 	//private static List<SimulationEvent> events;  
@@ -60,7 +61,7 @@ public class WaitingQueue extends CustomerList{
 					// TODO Auto-generated catch block
 					continue; //continue to process the next customer
 
-				}
+				} 
 			}
 		}
 
@@ -163,7 +164,8 @@ public class WaitingQueue extends CustomerList{
 	public Customer dequeue() {
 		synchronized (lock) {
 			controller.removeTop();
-			return controller.getTopOfQueue();
+			Customer cust = controller.getTopOfQueue();
+			return cust;
 		}
 	}
 	
