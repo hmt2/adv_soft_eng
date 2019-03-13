@@ -13,7 +13,6 @@ import java.util.Queue;
  */
 public class Machine {
 	public final String name;
-	public final String food;
 	int maxAmount;
 	Queue<String> foodsPreparing;
 	//YOUR CODE GOES HERE...
@@ -27,65 +26,48 @@ public class Machine {
 	 * must add code to make use of this field (and do whatever
 	 * initialization etc. you need).
 	 */
-	public Machine(String name, String food, int maxAmount) {
+	public Machine(String name, int maxAmount) {
 		this.name = name;
-		this.food = food;
 		this.maxAmount = maxAmount;
-		this.foodsPreparing = new LinkedList<String>(); //should be type Food
-		//this.foodsPreparing = new LinkedList<Food>();
-		//YOUR CODE GOES HERE...
+		this.foodsPreparing = new LinkedList<String>(); 
 
 	}
 	
 
-	
-
-	/**
-	 * This method is called by a Cook in order to make the Machine's
-	 * food item.  You can extend this method however you like, e.g.,
-	 * you can have it take extra parameters or return something other
-	 * than Object.  It should block if the machine is currently at full
-	 * maxAmount.  If not, the method should return, so the Cook making
-	 * the call can proceed.  You will need to implement some means to
-	 * notify the calling Cook when the food item is finished.
-	 */
-	public void  makeFood(Server serverId, int customerId) throws InterruptedException {
+	public void  prepareFood(Server serverId, int customerId, String foodName) throws InterruptedException {
 		//YOUR CODE GOES HERE...
       
-		foodsPreparing.add(food); //technically should be item, and then we need to get time. For now just add
-		Thread curr = new Thread(new CookAnItem(serverId, customerId));
+		foodsPreparing.add(foodName); //technically should be item, and then we need to get time. For now just add
+		Thread curr = new Thread(new CookMachine(serverId, customerId, foodName));
 		curr.start();
 	}
 
-	//THIS MIGHT BE A USEFUL METHOD TO HAVE AND USE BUT IS JUST ONE serverIdEA
-	private class CookAnItem implements Runnable {
+	
+	private class CookMachine implements Runnable {
 		Server currentServer;
 		int customerId;
-		public CookAnItem(Server currentServer, int customerId){
+		String foodName;
+		public CookMachine(Server currentServer, int customerId, String foodName){
 			this.currentServer = currentServer;
 			this.customerId = customerId;
+			this.foodName = foodName;
 		}
+		
 	
 		public void run() {
 			try {
-				//YOUR CODE GOES HERE...	
-				//Simulation.logEvent(SimulationEvent.machineCookingFood(Machine.this, food));
-				    System.out.println(Machine.this + " has started preparing " + food); 
+				
+				    System.out.println(Machine.this.name + " has started preparing " + foodName); 
 				    Thread.sleep(2);
-				    System.out.println(Machine.this + " has finished " + food);
-				    System.out.println("Server " + currentServer.getServerId() + " has finished " + food + " for customer " + customerId);
+				    System.out.println(Machine.this.name + " has finished " + foodName);
+				    System.out.println("Server " + currentServer.getServerId() + " has finished " + foodName + " for customer " + customerId);
 				     
-				//Thread.sleep(food.cookTimeMS);
-					//Simulation.logEvent(SimulationEvent.machineDoneFood(Machine.this, food));
-					//Simulation.logEvent(SimulationEvent.cookFinishedFood(currentServer, food,customerId));
+                    
 					synchronized(foodsPreparing){
 						foodsPreparing.remove();
 						foodsPreparing.notifyAll();	
 					}
-					synchronized(currentServer.finishedFood){
-						currentServer.finishedFood.add(food);
-						currentServer.finishedFood.notifyAll();	
-					}
+
 				
 				
 			} catch(InterruptedException e) { }
@@ -93,7 +75,4 @@ public class Machine {
 	}
  
 
-	public String toString() {
-		return name;
-	}
 }
