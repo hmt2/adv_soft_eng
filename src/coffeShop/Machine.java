@@ -57,9 +57,9 @@ public class Machine {
 		public void run() {
 			try {
 				
-				    System.out.println(Machine.this.name + " has started preparing " + foodName); 
+				    System.out.println(Machine.this.name + " has started preparing " + foodName + " for customer " + customerId + " for server " + currentServer.getServerId()); 
 				    Thread.sleep(2);
-				    System.out.println(Machine.this.name + " has finished " + foodName);
+				    System.out.println(Machine.this.name + " has finished " + foodName + " for customer " + customerId + " for server " + currentServer.getServerId());
 				    System.out.println("Server " + currentServer.getServerId() + " has finished " + foodName + " for customer " + customerId);
 				     
                     
