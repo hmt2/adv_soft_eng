@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class Log {
-	private String filepath;
+	private static String filepath;
 	
 	public Log()  {
 		String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm").format(new Date());
@@ -52,6 +52,14 @@ public class Log {
 	public void processingCustomer(Customer cust) throws IOException {
 		String timeStamp = new SimpleDateFormat("HH.mm.ss").format(new Date());
 		String str = timeStamp + "   Processing Customer ID: " + cust.getCustomerId() + "\n";
+		BufferedWriter writer = new BufferedWriter(new FileWriter(filepath, true));
+	    writer.append(str);
+	    writer.close();   
+	}
+	
+	public static void writeToLog(String input) throws IOException {
+		String timeStamp = new SimpleDateFormat("HH.mm.ss").format(new Date());
+		String str = input + "\n";
 		BufferedWriter writer = new BufferedWriter(new FileWriter(filepath, true));
 	    writer.append(str);
 	    writer.close();   
