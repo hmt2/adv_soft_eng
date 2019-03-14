@@ -165,7 +165,6 @@ public class Simulation {
 		Map<Thread, Server> busy = new HashMap<>();
 		for(int i = 0; i < numServer; i++) {
 			servers.add(new Server(i+serverId));
-			serverId ++;
 		}
 		// Start up machines
 		toaster = new Machine("Toaster", 5);
@@ -173,26 +172,17 @@ public class Simulation {
 		coffeeMachine = new Machine("Coffee Machine", 5);
 		drinkDispenser = new Machine("Drink dispenser", 4);
 		while(true) {
-			while (WaitingQueue.getInstance().size() > servers.size()*2){ //if the customer queue is double the staff size add another member. Can be an if too instead of while
-                servers.add(new Server(serverId));		
-                serverId ++;
-			}
-			while (WaitingQueue.getInstance().size() < servers.size()/2){ //if the number of customers is less than half of the existing staff, remove
-				servers.poll();
-			}
-
-		
 			if(!servers.isEmpty() && !WaitingQueue.getInstance().isEmpty()) {
 				Server s = servers.poll();
+				servers.add(s);
 				Customer c = WaitingQueue.getInstance().dequeue();
 				if(c != null && s != null) {
 					s.serveCustomer(c);
 					Thread t = new Thread(s);
 					t.start();
 					busy.put(t, s);
-					
-
 				}
+
 			} else {
 				Iterator<Map.Entry<Thread, Server>> it = busy.entrySet().iterator();
 				while(it.hasNext()) {
