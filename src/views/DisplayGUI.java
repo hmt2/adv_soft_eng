@@ -12,11 +12,12 @@ public class DisplayGUI extends JFrame {
 		setLayout(new BorderLayout());
 
 		// add queue display in the middle
-		add(new DisplayQueue(model), BorderLayout.NORTH);
+		add(new DisplayWaitingQueue(model), BorderLayout.NORTH);
+		add(new DisplayCollectionQueue(model), BorderLayout.SOUTH);
 		// add server display at the bottom
 		add(BorderLayout.CENTER, new DisplayServer(model));
 
-		setSize(600, 600);
+		setSize(1500, 1000);
 		setVisible(true);
 	}
 
