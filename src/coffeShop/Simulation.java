@@ -240,7 +240,7 @@ public class Simulation {
 	            }
 	        }
 	    };*/
-	    new Timer().schedule(task, 0, 1000);
+	    //new Timer().schedule(task, 0, 1000);
 
 		try {
 			runSimulation(numServer);
