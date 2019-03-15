@@ -16,11 +16,6 @@ import java.io.IOException;
 import java.util.*;
 
 
-
-
-
-
-
 class Server implements Runnable {
 	private Customer customer;
 	private int serverId;
@@ -223,7 +218,7 @@ public class Simulation {
 			e.printStackTrace();
 		}
 		
-		TimerTask task = new TimerTask() {
+/*		TimerTask task = new TimerTask() {
 	        private final int MAX_SECONDS = 2;
 	        private int seconds = 0;
 	        @Override
@@ -244,7 +239,7 @@ public class Simulation {
 	            	seconds++;
 	            }
 	        }
-	    };
+	    };*/
 	    new Timer().schedule(task, 0, 1000);
 
 		try {
