@@ -12,6 +12,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import coffeShop.*;
+import discounts.AllDiscounts;
+import discounts.Discount;
+import discounts.DiscountCheck;
+import exceptions.DuplicateIDException;
+import exceptions.IdNotContainedException;
 
 public class CheckDiscountTest {
 	private AllDiscounts allDiscounts;

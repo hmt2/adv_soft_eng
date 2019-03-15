@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 
 import coffeShop.*;
+import exceptions.DuplicateIDException;
 
 public class CustomerListTest {
 
@@ -16,7 +17,7 @@ public class CustomerListTest {
 
 	//Check the double ID exception
 	@Test
-	public void checkDoubleIdExceptions() throws coffeShop.DuplicateIDException {
+	public void checkDoubleIdExceptions() throws exceptions.DuplicateIDException {
 
 		ArrayList<String> itemIds = new ArrayList<String>();
 		itemIds.add("HOT011");

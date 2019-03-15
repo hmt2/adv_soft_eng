@@ -30,6 +30,8 @@ import org.junit.Test;
 
 
 import coffeShop.*;
+import exceptions.DuplicateIDException;
+import exceptions.IdNotContainedException;
 
 public class TestInterface {
 	private CoffeShopInterface shop;

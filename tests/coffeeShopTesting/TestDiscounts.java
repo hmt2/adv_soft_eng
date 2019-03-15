@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import coffeShop.*;
+import discounts.Discount;
 
 public class TestDiscounts {
 	Discount ds;

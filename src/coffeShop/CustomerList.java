@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import exceptions.DuplicateIDException;
+
 public class CustomerList {
 	private   HashMap <Integer, Customer> customerList; 
 	private static AtomicInteger counter  = new AtomicInteger(99); 

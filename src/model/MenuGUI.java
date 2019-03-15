@@ -1,4 +1,4 @@
-package coffeShop;
+package model;
 
 
 import java.awt.*;
@@ -7,6 +7,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import javax.swing.*;
+
+import coffeShop.CoffeShopInterface;
+import coffeShop.Menu;
+import exceptions.DuplicateIDException;
+import exceptions.IdNotContainedException;
 
 /**
  * Simple GUI for StaffList application

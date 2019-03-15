@@ -14,6 +14,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Map.Entry;
 
+import exceptions.IdNotContainedException;
+import exceptions.InvalidIdException;
+
 public class Menu {
 	private LinkedHashMap<String, Item> menu;
 	//private LinkedHashMap<String,Item> menu;

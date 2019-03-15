@@ -1,8 +1,11 @@
-package coffeShop;
+package discounts;
 
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
+
+import coffeShop.Menu;
+import exceptions.IdNotContainedException;
 
 public class DiscountCheck{
 
