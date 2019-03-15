@@ -5,7 +5,7 @@ package interfaces;
  * All classes implementing this interface MUST have this method.
  */
 public interface Observer {
-	
+
 	/**
 	 * Tell Observer to update itself
 	 */

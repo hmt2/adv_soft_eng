@@ -1,8 +1,3 @@
-/**
- * The MVC display example from the MVC lecture.
- * This class sets up the DigitalDisplay, one of the Views.
- */
-
 package views;
 
 import interfaces.Observer;

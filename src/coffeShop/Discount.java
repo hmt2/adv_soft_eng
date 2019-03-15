@@ -8,7 +8,7 @@ public class Discount {
 	private int id;
 	private ArrayList<String> discountCodes;
 	private double price;
-	
+
 	public Discount(String name, int id, ArrayList<String> discountCodes, double price) {
 		this.name = name;
 		this.id = id;
@@ -47,7 +47,7 @@ public class Discount {
 	public void setPrice(double price) {
 		this.price = price;
 	}
-	
+
 	@Override
 	public String toString() {
 		return name + '\n' + Integer.toString(id) + '\n' + Double.toString(price);

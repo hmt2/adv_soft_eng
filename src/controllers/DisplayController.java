@@ -17,36 +17,38 @@ import views.DisplayGUI;
 
 public class DisplayController {
 
-	private DisplayGUI view; // GUI to allow user to set the time
+	// GUI to allow user to set the time
+	private DisplayGUI view; 
 
-	private CurrentQueue model; // display model stores the time
+	// display model stores the time
+	private CurrentQueue model; 
 
 	public DisplayController(DisplayGUI vieww, CurrentQueue model) {
 		this.model = model;
 		this.view = vieww;
 		// specify the listener for the view
 	}
-	
+
 	public Customer getTopOfQueue(){
 		return model.getTopOfQueue();
 	}
-	
+
 	public void removeTop(){
 		model.removeTop();
 		updateView();
 	}
-	
+
 	public boolean isEmpty(){
 		return model.isEmpty();
 	}
-	
+
 	public void add(Customer cust) {
 		model.add(cust);
 		updateView();
 	}
-	
+
 	public void updateView(){				
-	    model.notifyObservers();
+		model.notifyObservers();
 	}
-	
+
 }

@@ -10,8 +10,6 @@ import controllers.DisplayController;
 import model.CurrentQueue;
 import views.DisplayGUI;
 
-//import WaitingQueue.SingletonHelper;.*
-
 public class WaitingQueue extends CustomerList{
 
 	private static CurrentQueue model = new CurrentQueue();
@@ -19,11 +17,9 @@ public class WaitingQueue extends CustomerList{
 	private static DisplayGUI view = new DisplayGUI(model);
 
 	private DisplayController controller = new DisplayController(view, model);
-	
+
 	private Log log = new Log();
-	//	private LinkedList<Integer, Order> MainQueue; //key orderId , value : Order
 	private Queue<Integer> mainQueue = new LinkedList<>();
-	//private static List<SimulationEvent> events;  
 	private static Map<Customer, Boolean> completedOrder = new HashMap<Customer,Boolean>();
 
 	private static Object lock;
@@ -66,7 +62,7 @@ public class WaitingQueue extends CustomerList{
 		}
 
 	}
-	
+
 
 	public void addCustomer(ArrayList<String> itemIds, DiscountCheck discountCheck, boolean isStudentDiscount) throws DuplicateIDException, IdNotContainedException{
 		synchronized (lock) { // to make it thread safe
@@ -168,11 +164,11 @@ public class WaitingQueue extends CustomerList{
 			return cust;
 		}
 	}
-	
+
 	public boolean isEmpty() {
 		return controller.isEmpty();
 	}
-	
+
 	public void displayQueue() {
 		synchronized (lock) { // to make it thread safe
 			System.out.print(mainQueue.peek());
