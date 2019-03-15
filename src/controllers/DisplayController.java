@@ -35,11 +35,17 @@ public class DisplayController {
 	
 	public void setServerCustomer(int i, Customer cust) {
 		model.setServerCustomer(i, cust); 
+		updateView();
 	}
+	
 
 	public void removeTopWaitingQueue(){
 		model.removeTopWaitingQueue();
 		updateView();
+	}
+	
+	public void clearServer(int i) {
+		model.clearServer(i);
 	}
 
 	public boolean isEmpty(){

@@ -34,6 +34,10 @@ public class WaitingQueue extends CustomerList{
 		lock = new Object();
 
 	}
+	
+	public void clearServer(int i) {
+		controller.clearServer(i);
+	}
 
 	private static class SingletonHelper{
 		private static final WaitingQueue INSTANCE = new WaitingQueue();

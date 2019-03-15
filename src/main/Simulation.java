@@ -55,7 +55,6 @@ public class Simulation {
 				servers.add(s);
 				Customer c = WaitingQueue.getInstance().dequeue();
 				if(c != null && s != null) {
-					WaitingQueue.getInstance().setServer(s.getServerId()-1, c);
 					s.serveCustomer(c);
 					Thread t = new Thread(s);
 					t.start();
@@ -72,7 +71,7 @@ public class Simulation {
 					}
 				}
 			}
-			pause(500);
+			pause(5000);
 		}
 	}
 

@@ -35,6 +35,7 @@ public class Server implements Runnable {
 
 	@Override
 	public void run() {
+		WaitingQueue.getInstance().setServer(this.serverId-1, customer);
 		System.out.println("Server " + this.serverId + " is processing customer " + customer.getCustomerId());
 		try {
 			Log.writeToLog("Server " + this.serverId + " is processing customer " + customer.getCustomerId());
@@ -101,6 +102,7 @@ public class Server implements Runnable {
 			}
 
 			System.out.println("Server " + this.serverId + " has finished the order for customer " + customer.getCustomerId());
+			WaitingQueue.getInstance().clearServer(this.serverId-1);
 			WaitingQueue.getInstance().addCollectionQueue(customer);
 			if(WaitingQueue.getInstance().getSizeCollectionQueue() > 1) {
 				WaitingQueue.getInstance().removeTopCollectionQueue();

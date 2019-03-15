@@ -82,16 +82,22 @@ public class CurrentQueue implements Subject {
 	public String printCollectionQueue() {
 		return printQueue(collectionQueue);
 	}
+	
+	public void clearServer(int i) {
+		serverCust[i] = null;
+	}
 
 	public String printQueue(Queue<Customer> queue) {
 		String text = "";
 		int count = 0;
 		if(!queue.isEmpty()) {
 			for(Customer cust: queue) {
-				text = text + "Customer id: " + cust.getCustomerId() + "\n";
-				count++;
-				if(count > 7)
-					return text;
+				if(cust != null) {
+					text = text + "Customer id: " + cust.getCustomerId() + "\n";
+					count++;
+					if(count > 7)
+						return text;
+				}
 			}
 		}
 		return text;
@@ -106,7 +112,6 @@ public class CurrentQueue implements Subject {
 						+ "items: ";
 				ArrayList<String> itemIds = cust.getItemIds();
 				for(String item: itemIds) {
-				
 						try {
 							custString += menu.findItemId(item).getName() + "\n";
 						} catch (exceptions.IdNotContainedException e) {
