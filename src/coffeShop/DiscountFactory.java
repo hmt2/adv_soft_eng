@@ -3,7 +3,7 @@ package coffeShop;
 import java.util.ArrayList;
 
 public class DiscountFactory {
-	
+
 	public ArrayList<Discount> createTwoItemDiscounts(String name, int id, String mainItem, ArrayList<String> secondaryItems, double price) {
 		ArrayList<Discount> result = new ArrayList<>();
 		for(String si : secondaryItems) {
@@ -13,7 +13,7 @@ public class DiscountFactory {
 		}
 		return result;
 	}
-	
+
 	public ArrayList<Discount> createThreeItemDiscounts(String name, int id, String mainItem, ArrayList<String> secondaryItems, ArrayList<String> thirdsItems, double price) {
 		ArrayList<Discount> result = new ArrayList<>();
 		for(String si : secondaryItems) {

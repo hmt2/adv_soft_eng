@@ -15,39 +15,38 @@ import coffeShop.IdNotContainedException;
 import coffeShop.Menu;
 
 public class CurrentQueue implements Subject {
-	
+
 	private Queue<Customer> queue;
 	private Customer topQueue;
 	private Menu menu;
-	
-	//need queue info here
+
 	public CurrentQueue() {
-		 queue = new LinkedList<>(); 
-		 menu = new Menu();
+		queue = new LinkedList<>(); 
+		menu = new Menu();
 	}
-	
+
 	public void add(Customer cust) {
 		if(queue.isEmpty()) {
 			topQueue = cust;
 		}
 		queue.add(cust);
 	}
-	
+
 	public void removeTop(){
 		if(!queue.isEmpty()) {
 			Customer cust = queue.remove();
 			topQueue = cust;
 		}
 	}
-	
+
 	public Customer getTopOfQueue(){
 		return topQueue;
 	}
-	
+
 	public boolean isEmpty(){
 		return queue.isEmpty();
 	}
-	
+
 	public String printQueue() {
 		String text = "";
 		int count = 0;
@@ -61,7 +60,7 @@ public class CurrentQueue implements Subject {
 		}
 		return text;
 	}
-	
+
 	public String showCustomerBeingServed() {
 		String custString = "";
 		if(!queue.isEmpty()) {
@@ -78,12 +77,12 @@ public class CurrentQueue implements Subject {
 				}
 			}
 			custString += "\n"
-			+ "\n total before discount" + cust.getBillBeforeDiscount() + 
-			"\n total after discount: " + cust.getBillAfterDiscount() + "\n";
+					+ "\n total before discount" + cust.getBillBeforeDiscount() + 
+					"\n total after discount: " + cust.getBillAfterDiscount() + "\n";
 		}
 		return custString;
 	}
-	
+
 	// OBSERVER PATTERN
 	// SUBJECT must be able to register, remove and notify observers
 	// list to hold any observers
@@ -99,7 +98,7 @@ public class CurrentQueue implements Subject {
 	}
 
 	public void notifyObservers() {
-		
+
 		for (Observer obs : registeredObservers)
 			obs.update();
 	}

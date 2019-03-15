@@ -5,7 +5,7 @@ package interfaces;
  * All classes implementing this interface MUST have these methods.
  */
 public interface Subject {
-	
+
 	/**
 	 * Register an observer with this subject
 	 */

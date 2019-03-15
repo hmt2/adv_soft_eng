@@ -9,11 +9,10 @@ public class AllDiscounts {
 		discounts = new ArrayList<>();
 	}
 
-
 	public ArrayList<Discount> loadDiscounts() {
 		DiscountFactory df = new DiscountFactory();
 		//three item deals
-		
+
 		//meal deal
 		ArrayList<String> cld = new ArrayList<>();
 		for (int i = 1; i <= 10; i++) {
@@ -36,7 +35,7 @@ public class AllDiscounts {
 		}
 
 		//two item deals
-		
+
 		//Soup and Sandwich deal
 		ArrayList<String> secondaryItems = new ArrayList<>();
 		secondaryItems.add("FOD001"); secondaryItems.add("FOD002");
@@ -79,11 +78,6 @@ public class AllDiscounts {
 							4.5)
 					);
 		}
-
 		return discounts;
-
 	}
-
-
-
 }

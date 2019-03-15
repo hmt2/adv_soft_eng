@@ -20,34 +20,34 @@ class Server implements Runnable {
 	private Customer customer;
 	private int serverId;
 	private ArrayList<String> sandwiches = new ArrayList<String>( 
-            Arrays.asList("FOOD001", "FOOD002","FOOD003", "FOOD004", "FOOD005")); 
+			Arrays.asList("FOOD001", "FOOD002","FOOD003", "FOOD004", "FOOD005")); 
 	public List<String> finishedFood = new LinkedList<String>();
 
 	public Server(int serverId) {
-         this.serverId = serverId;
-		
+		this.serverId = serverId;
+
 	}
 
 	public Server(Customer customer) { //do we need this?
 		this.customer = customer;
-		
+
 	}
 
 	public int getServerId() {
- 		return serverId;
- 	}
-	
+		return serverId;
+	}
+
 	public void serveCustomer(Customer customer) throws IdNotContainedException, IOException {
 		this.customer = customer;
-		
-		
+
+
 	}
-	
+
 
 	@Override
 	public void run() {
 		System.out.println("Server " + this.serverId + " is processing customer " + customer.getCustomerId());
-	    try {
+		try {
 			Log.writeToLog("Server " + this.serverId + " is processing customer " + customer.getCustomerId());
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
@@ -57,19 +57,19 @@ class Server implements Runnable {
 		System.out.println(itemsOrdered);
 		try {
 			for(int index = 0; index < itemsOrdered.size(); index++){
-				
+
 				try {
 					Item nextFood = Simulation.menu.findItemId(itemsOrdered.get(index));
 
 					if (nextFood.getCategory().equals("HotDrink")){
 						synchronized(Simulation.coffeeMachine.foodsPreparing){
 							while(!(Simulation.coffeeMachine.foodsPreparing.size() < Simulation.coffeeMachine.maxAmount)){
-									Simulation.coffeeMachine.foodsPreparing.wait();
+								Simulation.coffeeMachine.foodsPreparing.wait();
 							}
-		
-								Simulation.coffeeMachine.prepareFood(this, customer.getCustomerId(), nextFood.getName());
-							    Simulation.coffeeMachine.foodsPreparing.notifyAll();
-		
+
+							Simulation.coffeeMachine.prepareFood(this, customer.getCustomerId(), nextFood.getName());
+							Simulation.coffeeMachine.foodsPreparing.notifyAll();
+
 						}
 					}else if(nextFood.getCategory().equals("ColdDrink")){
 						synchronized(Simulation.drinkDispenser.foodsPreparing){
@@ -78,9 +78,9 @@ class Server implements Runnable {
 							}
 							Simulation.drinkDispenser.prepareFood(this,customer.getCustomerId(), nextFood.getName());
 							Simulation.drinkDispenser.foodsPreparing.notifyAll();
-							
+
 						}
-						
+
 					}else if(nextFood.equals("FOOD006") |  nextFood.equals("FOOD0010")){
 						synchronized(Simulation.hob.foodsPreparing){
 							while(!(Simulation.hob.foodsPreparing.size() < Simulation.hob.maxAmount)){
@@ -88,8 +88,8 @@ class Server implements Runnable {
 							}
 							Simulation.hob.prepareFood(this,customer.getCustomerId(), nextFood.getName());
 							Simulation.hob.foodsPreparing.notifyAll();
-							
-					}
+
+						}
 					}else if (sandwiches.contains(nextFood)){
 						synchronized(Simulation.toaster.foodsPreparing){
 							while(!(Simulation.toaster.foodsPreparing.size() < Simulation.hob.maxAmount)){
@@ -97,35 +97,35 @@ class Server implements Runnable {
 							}
 							Simulation.toaster.prepareFood(this,customer.getCustomerId(), nextFood.getName());
 							Simulation.toaster.foodsPreparing.notifyAll();
-						
+
+						}
+
+					}else{
+						Thread.sleep(nextFood.getItemDuration()*1000);
+						System.out.println("Server " + this.getServerId() + " has finished " + nextFood.getName() + " for customer " + customer.getCustomerId());
 					}
-					
-				}else{
-					Thread.sleep(nextFood.getItemDuration()*1000);
-					System.out.println("Server " + this.getServerId() + " has finished " + nextFood.getName() + " for customer " + customer.getCustomerId());
-				}
-					
+
 				} catch (IdNotContainedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
+
 			}
 
 			System.out.println("Server " + this.serverId + " has finished the order for customer " + customer.getCustomerId());
-			 try {
+			try {
 				Log.writeToLog("Server " + this.serverId + " has finished the order for customer " + customer.getCustomerId());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			}
-			
-		catch(InterruptedException e) {
-					e.printStackTrace();
-				}
 		}
 
-	
+		catch(InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+
 
 }
 
@@ -140,7 +140,7 @@ public class Simulation {
 	public static Machine toaster;
 	public static Machine coffeeMachine;
 	private static int serverId = 1;
-	
+
 
 	public static void showInterface() throws DuplicateIDException, IdNotContainedException {
 		interaction = new CoffeShopInterface(menu);
@@ -149,7 +149,7 @@ public class Simulation {
 		gui = new MenuGUI(menu, interaction);
 		gui.setVisible(true);
 	}
-	
+
 	private static void pause(long millis) {
 		long start = Calendar.getInstance().getTimeInMillis();
 		while(Calendar.getInstance().getTimeInMillis() - start < millis);
@@ -189,7 +189,7 @@ public class Simulation {
 				}
 			}
 			pause(500);
-	
+
 		}
 	}
 
@@ -217,8 +217,8 @@ public class Simulation {
 		} catch (DuplicateIDException | IdNotContainedException e) {
 			e.printStackTrace();
 		}
-		
-/*		TimerTask task = new TimerTask() {
+
+		/*		TimerTask task = new TimerTask() {
 	        private final int MAX_SECONDS = 2;
 	        private int seconds = 0;
 	        @Override
@@ -229,7 +229,7 @@ public class Simulation {
 	                items.add("FOD010");
 	                try {
 	                	System.out.println("Adding: new customer");
-	              
+
 						WaitingQueue.getInstance().addCustomer(items, discountCheck, new Random().nextBoolean());
 					} catch (DuplicateIDException | IdNotContainedException e) {
 						// TODO Auto-generated catch block
@@ -240,7 +240,7 @@ public class Simulation {
 	            }
 	        }
 	    };*/
-	    //new Timer().schedule(task, 0, 1000);
+		//new Timer().schedule(task, 0, 1000);
 
 		try {
 			runSimulation(numServer);
