@@ -269,7 +269,7 @@ private void getQuantityGUI(String command) {
 //need to update quantities
 private void placeOrder() throws DuplicateIDException, IdNotContainedException {
 	  try {
-          //interaction.placeOrder(currentOrder);
+          interaction.placeOrder(currentOrder);
 		  JOptionPane.showMessageDialog(this, "Order placed");
 
 		} catch (Exception e) {

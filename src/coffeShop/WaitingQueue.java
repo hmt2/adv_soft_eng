@@ -146,7 +146,7 @@ public class WaitingQueue extends CustomerList{
 
 	@Override
 	public void loadCustomers() {
-		// TODO Auto-generated method stub		
+		// TODO Auto-generated method stub
 		synchronized (lock) { // to make it thread safe
 			super.loadCustomers();
 		}
@@ -171,6 +171,12 @@ public class WaitingQueue extends CustomerList{
 	
 	public boolean isEmpty() {
 		return controller.isEmpty();
+	}
+	
+	public void displayQueue() {
+		synchronized (lock) { // to make it thread safe
+			System.out.print(mainQueue.peek());
+		}
 	}
 }
 
