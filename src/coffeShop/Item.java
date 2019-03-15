@@ -1,5 +1,7 @@
 package coffeShop;
 
+import exceptions.InvalidIdException;
+
 public class Item {
 	private String itemId;
 	private String itemName;

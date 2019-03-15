@@ -3,6 +3,8 @@ package coffeShop;
 
 import java.sql.Timestamp;
 
+import exceptions.InvalidIdException;
+
 public class Order implements Comparable<Order>
 {
 	private Integer orderId; 

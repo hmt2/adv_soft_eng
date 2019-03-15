@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import coffeShop.*;
+import exceptions.InvalidIdException;
 
 public class OrdersTest {
 	private static final Integer orderId = new Integer(7);

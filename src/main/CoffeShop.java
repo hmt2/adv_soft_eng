@@ -1,6 +1,12 @@
-package coffeShop;
+package main;
 
 import java.util.TreeMap;
+
+import coffeShop.CoffeShopInterface;
+import coffeShop.Menu;
+import exceptions.DuplicateIDException;
+import exceptions.IdNotContainedException;
+import model.MenuGUI;
 
 
 public class CoffeShop

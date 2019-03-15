@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import coffeShop.*;
+import exceptions.InvalidIdException;
 
 import org.junit.Test;
 

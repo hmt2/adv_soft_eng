@@ -1,4 +1,4 @@
-package coffeShop;
+package output;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -9,6 +9,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 import java.util.Set;
+
+import coffeShop.Customer;
 
 public class Log {
 	private static String filepath;

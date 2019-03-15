@@ -7,7 +7,12 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.Semaphore;
 
 import controllers.DisplayController;
+import discounts.Discount;
+import discounts.DiscountCheck;
+import exceptions.DuplicateIDException;
+import exceptions.IdNotContainedException;
 import model.CurrentQueue;
+import output.Log;
 import views.DisplayGUI;
 
 public class WaitingQueue extends CustomerList{

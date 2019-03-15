@@ -1,15 +1,12 @@
 package coffeeShopTesting;
 
 import coffeShop.*;
+import exceptions.IdNotContainedException;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import coffeShop.IdNotContainedException;
-import coffeShop.Item;
-import coffeShop.Menu;
 
 public class TestMenuNotLoaded {
 	private Menu menu;

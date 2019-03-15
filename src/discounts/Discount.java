@@ -1,4 +1,4 @@
-package coffeShop;
+package discounts;
 
 
 import java.util.ArrayList;

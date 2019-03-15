@@ -9,6 +9,13 @@ import java.util.TreeMap;
 
 import javax.swing.JOptionPane;
 
+import discounts.AllDiscounts;
+import discounts.Discount;
+import discounts.DiscountCheck;
+import exceptions.DuplicateIDException;
+import exceptions.IdNotContainedException;
+import output.SalesReport;
+
 
 public class CoffeShopInterface {
 	private Menu menu;

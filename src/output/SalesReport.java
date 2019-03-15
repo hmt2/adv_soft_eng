@@ -1,4 +1,4 @@
-package coffeShop;
+package output;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -9,6 +9,10 @@ import java.util.Date;
 
 import java.util.Map;
 import java.util.Set;
+
+import coffeShop.CustomerList;
+import coffeShop.Item;
+import coffeShop.Menu;
 
 
 
