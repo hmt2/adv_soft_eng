@@ -57,7 +57,7 @@ public class WaitingQueue extends CustomerList{
 				try {
 					Customer currentCust = new Customer(key, totalBeforeDiscount, totalAfterDiscount,cust.get(key));
 					int id = super.addCustomer(cust.get(key), totalBeforeDiscount, totalAfterDiscount);
-					controller.add(currentCust);
+					controller.addWaitingQueue(currentCust);
 				} catch (DuplicateIDException | IllegalArgumentException e1) {
 					// TODO Auto-generated catch block
 					continue; //continue to process the next customer
@@ -79,7 +79,7 @@ public class WaitingQueue extends CustomerList{
 			try {
 				int id = super.addCustomer(itemIds, totalBeforeDiscount, totalAfterDiscount);
 				Customer currentCust = new Customer(id, totalBeforeDiscount, totalAfterDiscount,itemIds);
-				controller.add(currentCust);
+				controller.addWaitingQueue(currentCust);
 			} catch (DuplicateIDException | IllegalArgumentException e1) {
 				System.out.println(e1);
 			}
@@ -94,7 +94,7 @@ public class WaitingQueue extends CustomerList{
 		synchronized (lock) { // to make it thread safe
 			int id = super.addCustomer(itemIds, beforeDiscount, afterDiscount);
 			Customer currentCust = new Customer(id, beforeDiscount, afterDiscount,itemIds);
-			controller.add(currentCust);
+			controller.addWaitingQueue(currentCust);
 			return id;
 		}
 	}
@@ -164,10 +164,26 @@ public class WaitingQueue extends CustomerList{
 
 	public Customer dequeue() {
 		synchronized (lock) {
-			controller.removeTop();
-			Customer cust = controller.getTopOfQueue();
+			controller.removeTopWaitingQueue();
+			Customer cust = controller.getTopOfWaitingQueue();
 			return cust;
 		}
+	}
+	
+	public void setServer(int i, Customer cust) {
+		controller.setServerCustomer(i, cust);
+	}
+	
+	public int getSizeCollectionQueue() {
+		return controller.getSizeCollectionQueue();
+	}
+	
+	public void addCollectionQueue(Customer cust) {
+		controller.addCollectionQueue(cust);
+	}
+	
+	public void removeTopCollectionQueue() {
+		controller.removeTopCollectionQueue();
 	}
 
 	public boolean isEmpty() {

@@ -55,6 +55,7 @@ public class Simulation {
 				servers.add(s);
 				Customer c = WaitingQueue.getInstance().dequeue();
 				if(c != null && s != null) {
+					WaitingQueue.getInstance().setServer(s.getServerId()-1, c);
 					s.serveCustomer(c);
 					Thread t = new Thread(s);
 					t.start();
@@ -99,30 +100,6 @@ public class Simulation {
 		} catch (DuplicateIDException | IdNotContainedException e) {
 			e.printStackTrace();
 		}
-
-		/*		TimerTask task = new TimerTask() {
-	        private final int MAX_SECONDS = 2;
-	        private int seconds = 0;
-	        @Override
-	        public void run() { 
-	            if (seconds > MAX_SECONDS) {
-	                seconds = 0;
-	                ArrayList<String> items = new ArrayList<>();
-	                items.add("FOD010");
-	                try {
-	                	System.out.println("Adding: new customer");
-
-						WaitingQueue.getInstance().addCustomer(items, discountCheck, new Random().nextBoolean());
-					} catch (DuplicateIDException | IdNotContainedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-	            } else {
-	            	seconds++;
-	            }
-	        }
-	    };*/
-		//new Timer().schedule(task, 0, 1000);
 
 		try {
 			runSimulation(numServer);

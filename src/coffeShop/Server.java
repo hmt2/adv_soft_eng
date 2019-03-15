@@ -101,6 +101,10 @@ public class Server implements Runnable {
 			}
 
 			System.out.println("Server " + this.serverId + " has finished the order for customer " + customer.getCustomerId());
+			WaitingQueue.getInstance().addCollectionQueue(customer);
+			if(WaitingQueue.getInstance().getSizeCollectionQueue() > 1) {
+				WaitingQueue.getInstance().removeTopCollectionQueue();
+			}
 			try {
 				Log.writeToLog("Server " + this.serverId + " has finished the order for customer " + customer.getCustomerId());
 			} catch (IOException e) {

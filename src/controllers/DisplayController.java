@@ -29,26 +29,43 @@ public class DisplayController {
 		// specify the listener for the view
 	}
 
-	public Customer getTopOfQueue(){
-		return model.getTopOfQueue();
+	public Customer getTopOfWaitingQueue(){
+		return model.getTopOfWaitingQueue();
+	}
+	
+	public void setServerCustomer(int i, Customer cust) {
+		model.setServerCustomer(i, cust); 
 	}
 
-	public void removeTop(){
-		model.removeTop();
+	public void removeTopWaitingQueue(){
+		model.removeTopWaitingQueue();
 		updateView();
 	}
 
 	public boolean isEmpty(){
-		return model.isEmpty();
+		return model.isWaitingQueueEmpty();
 	}
 
-	public void add(Customer cust) {
-		model.add(cust);
+	public void addWaitingQueue(Customer cust) {
+		model.addWaitingQueue(cust);
 		updateView();
 	}
 
 	public void updateView(){				
 		model.notifyObservers();
 	}
+	
+	public void addCollectionQueue(Customer cust) {
+		model.addCollectionQueue(cust);
+		updateView();
+	}
+	
+	public int getSizeCollectionQueue() {
+		return model.getSizeCollectionQueue();
+	}
 
+	public void removeTopCollectionQueue(){
+		model.removeTopCollectionQueue();
+		updateView();
+	}
 }

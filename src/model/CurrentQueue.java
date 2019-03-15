@@ -11,48 +11,84 @@ import interfaces.Subject;
 import java.util.*;
 
 import coffeShop.Customer;
+
 import coffeShop.Menu;
-import exceptions.IdNotContainedException;
 
 public class CurrentQueue implements Subject {
 
-	private Queue<Customer> queue;
+	private Queue<Customer> waitingQueue;
+	private Queue<Customer> collectionQueue;
 	private Customer topQueue;
+	Customer[] serverCust = new Customer[4];
+	
 	private Menu menu;
 
 	public CurrentQueue() {
-		queue = new LinkedList<>(); 
+		waitingQueue = new LinkedList<>(); 
+		collectionQueue = new LinkedList<>();
 		menu = new Menu();
 	}
 
-	public void add(Customer cust) {
-		if(queue.isEmpty()) {
+	public void addWaitingQueue(Customer cust) {
+		if(waitingQueue.isEmpty()) {
 			topQueue = cust;
 		}
-		queue.add(cust);
+		waitingQueue.add(cust);
 	}
+	
+	public void addCollectionQueue(Customer cust) {
+		collectionQueue.add(cust);
+	}
+	
+	public int getSizeCollectionQueue() {
+		return collectionQueue.size();
+	}
+	
+	public void removeTopCollectionQueue(){
+		if(!collectionQueue.isEmpty()) {
+			collectionQueue.remove();
+		}
+	}
+	
+	public void setServerCustomer(int i, Customer cust) {
+		serverCust[i] = cust;
+	}
+	
+	public Customer getServerCustomer(int i) {
+		return serverCust[i];
+	}
+	
+	
 
-	public void removeTop(){
-		if(!queue.isEmpty()) {
-			Customer cust = queue.remove();
+	public void removeTopWaitingQueue(){
+		if(!waitingQueue.isEmpty()) {
+			Customer cust = waitingQueue.remove();
 			topQueue = cust;
 		}
 	}
 
-	public Customer getTopOfQueue(){
+	public Customer getTopOfWaitingQueue(){
 		return topQueue;
 	}
 
-	public boolean isEmpty(){
-		return queue.isEmpty();
+	public boolean isWaitingQueueEmpty(){
+		return waitingQueue.isEmpty();
+	}
+	
+	public String printWaitingQueue() {
+		return printQueue(waitingQueue);
+	}
+	
+	public String printCollectionQueue() {
+		return printQueue(collectionQueue);
 	}
 
-	public String printQueue() {
+	public String printQueue(Queue<Customer> queue) {
 		String text = "";
 		int count = 0;
 		if(!queue.isEmpty()) {
 			for(Customer cust: queue) {
-				text = text + "id: " + cust.getCustomerId() + "\n";
+				text = text + "Customer id: " + cust.getCustomerId() + "\n";
 				count++;
 				if(count > 7)
 					return text;
@@ -61,24 +97,29 @@ public class CurrentQueue implements Subject {
 		return text;
 	}
 
-	public String showCustomerBeingServed() {
+	public String showCustomer(Customer custPres) {
 		String custString = "";
-		if(!queue.isEmpty()) {
-			Customer cust = topQueue;
-			custString =  custString + "id: " + cust.getCustomerId() + "\n"
-					+ "items: ";
-			ArrayList<String> itemIds = cust.getItemIds();
-			for(String item: itemIds) {
-				try {
-					custString += menu.findItemId(item).getName() + "\n";
-				} catch (IdNotContainedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+		if(!waitingQueue.isEmpty()) {
+			Customer cust = custPres;
+			if(cust != null) {
+				custString =  custString + "id: " + cust.getCustomerId() + "\n"
+						+ "items: ";
+				ArrayList<String> itemIds = cust.getItemIds();
+				for(String item: itemIds) {
+				
+						try {
+							custString += menu.findItemId(item).getName() + "\n";
+						} catch (exceptions.IdNotContainedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					
 				}
+				custString += "\n"
+						+ "\n total before discount: £" + cust.getBillBeforeDiscount() + 
+						"\n total after discount: £" + cust.getBillAfterDiscount() + "\n";
 			}
-			custString += "\n"
-					+ "\n total before discount" + cust.getBillBeforeDiscount() + 
-					"\n total after discount: " + cust.getBillAfterDiscount() + "\n";
+			
 		}
 		return custString;
 	}
