@@ -24,6 +24,7 @@ public class MenuGUI extends JFrame implements ActionListener
 
 
 	boolean isStudentDiscount;
+	boolean priority;
 
 
 
@@ -146,8 +147,9 @@ public class MenuGUI extends JFrame implements ActionListener
 		//need to create orders for each item with the newly created customer id
 		if(e.getSource() == buy) {
 			isStudentDiscount = false;
+			getPriority();
 			try {
-				placeOrder();
+				placeOrder(priority);
 			} catch (DuplicateIDException | IllegalArgumentException | IdNotContainedException e1) {
 				JOptionPane.showMessageDialog(this, "System error, please retry");
 				switchMenu(); //maybe not necessary
@@ -267,19 +269,37 @@ public class MenuGUI extends JFrame implements ActionListener
 		}
 	}
 
+	private void getPriority() {
+		  int val = -1;
+		  try {
+			  String[] options = {"Yes", "No"};
+			  val = JOptionPane.showOptionDialog(null, "Do you want to have your order in priority ?", "Priority", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+		  } catch (HeadlessException e) {
+			  e.printStackTrace();
+		  }
+			 
+		  //if val is null then cancel has been selected
+		  if(val == 0){
+			  priority = true;
+		  }
+		  else if (val == 1){
+			  priority = false;
+		  }
+		  System.out.println(priority);
+	}
+	
 	//need to update quantities
-	private void placeOrder() throws DuplicateIDException, IdNotContainedException {
+	private void placeOrder(boolean priority) throws DuplicateIDException, IdNotContainedException {
 		try {
-			interaction.placeOrder(currentOrder);
-			JOptionPane.showMessageDialog(this, "Order placed");
+	          interaction.placeOrder(currentOrder, priority);
+			  JOptionPane.showMessageDialog(this, "Order placed");
 
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			JOptionPane.showMessageDialog(this, "Internal error, retry");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				JOptionPane.showMessageDialog(this, "Internal error, retry");
 
-		}
+		  }
 		currentOrder.clear();
 		switchMenu(); 
 	}
-
 }
