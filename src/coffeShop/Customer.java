@@ -15,8 +15,9 @@ public class Customer{
 	private float billAfterDiscount;
 	private boolean discount;
 	private ArrayList<String> itemIds;  
+	private boolean priority;
 
-	public Customer(int customerId, float billBeforeDiscount, float billAfterDiscount,ArrayList<String> itemIds) 
+	public Customer(int customerId, float billBeforeDiscount, float billAfterDiscount,ArrayList<String> itemIds, boolean priority) 
 	{   
 		this.billBeforeDiscount = billBeforeDiscount;
 		this.billAfterDiscount = billAfterDiscount;
@@ -31,6 +32,7 @@ public class Customer{
 		this.customerId =customerId;
 		this.itemIds = itemIds;
 		this.name = name;
+		this.priority = priority;
 	}
 
 	public Customer(int customerId) 
@@ -41,8 +43,8 @@ public class Customer{
 		}
 
 		this.customerId =customerId;
-
 		this.itemIds = new ArrayList<>();
+		this.priority = false;
 
 	}
 	//Get and set methods
