@@ -56,6 +56,12 @@ public class DisplayController {
 		model.addWaitingQueue(cust);
 		updateView();
 	}
+	
+	public void addFirstWaitingQueue(Customer cust) {
+		model.addFirstWaitingQueue(cust);
+		updateView();
+		
+	}
 
 	public void updateView(){				
 		model.notifyObservers();
@@ -74,4 +80,6 @@ public class DisplayController {
 		model.removeTopCollectionQueue();
 		updateView();
 	}
+
+
 }
