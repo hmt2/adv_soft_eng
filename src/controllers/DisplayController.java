@@ -17,10 +17,8 @@ import views.DisplayGUI;
 
 public class DisplayController {
 
-	// GUI to allow user to set the time
 	private DisplayGUI view; 
 
-	// display model stores the time
 	private CurrentQueue model; 
 
 	public DisplayController(DisplayGUI vieww, CurrentQueue model) {
@@ -41,7 +39,6 @@ public class DisplayController {
 
 	public void removeTopWaitingQueue(){
 		model.removeTopWaitingQueue();
-		updateView();
 	}
 	
 	public void clearServer(int i) {
@@ -59,8 +56,6 @@ public class DisplayController {
 	
 	public void addFirstWaitingQueue(Customer cust) {
 		model.addFirstWaitingQueue(cust);
-		updateView();
-		
 	}
 
 	public void updateView(){				
@@ -69,7 +64,6 @@ public class DisplayController {
 	
 	public void addCollectionQueue(Customer cust) {
 		model.addCollectionQueue(cust);
-		updateView();
 	}
 	
 	public int getSizeCollectionQueue() {
@@ -78,7 +72,6 @@ public class DisplayController {
 
 	public void removeTopCollectionQueue(){
 		model.removeTopCollectionQueue();
-		updateView();
 	}
 
 
