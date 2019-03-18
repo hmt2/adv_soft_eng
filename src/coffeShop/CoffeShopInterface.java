@@ -118,13 +118,18 @@ public class CoffeShopInterface {
 	}
 
 	//need to update quantities
-	public void placeOrder(Map<String, Integer> currentOrder) throws DuplicateIDException, IdNotContainedException {
+	public void placeOrder(Map<String, Integer> currentOrder, boolean priority) throws DuplicateIDException, IdNotContainedException {
 		updateItemQuantity(currentOrder);
 		int custId = customerList.addCustomer(discountCheck.toArrayList(currentOrder),totalBeforeDiscount,(float)totalAfterDiscount);
 		totalAllItemsBeforeDiscount += totalBeforeDiscount;
 		totalAllItemsAfterDiscount += (float)totalAfterDiscount;
 		allorders.addOrder(custId, discountCheck.toArrayList(currentOrder));
-		WaitingQueue.getInstance().addCustomer(discountCheck.toArrayList(currentOrder), (float)totalBeforeDiscount, (float)totalAfterDiscount);
+        if(priority == false) {
+      	  WaitingQueue.getInstance().addCustomer(discountCheck.toArrayList(currentOrder), (float)totalBeforeDiscount, (float)totalAfterDiscount);
+        }
+        else {
+      	  WaitingQueue.getInstance().addFirstCustomer(discountCheck.toArrayList(currentOrder), (float)totalBeforeDiscount, (float)totalAfterDiscount);
+        }
 	}
 
 	public void updateItemQuantity(Map<String, Integer> order) throws IdNotContainedException {

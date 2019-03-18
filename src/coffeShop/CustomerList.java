@@ -25,10 +25,21 @@ public class CustomerList {
 		if(customerList.containsKey(customerId)){ 
 			throw new DuplicateIDException(customerId);  
 		}
-		Customer newCustomer = new Customer(customerId,beforeDiscount,afterDiscount,itemIds); 
+		Customer newCustomer = new Customer(customerId,beforeDiscount,afterDiscount,itemIds,false); 
 		customerList.put(customerId, newCustomer);
 		return customerId;
 	}
+	
+	//PRIORITY Add a new customer to the customerList hashmap. If there is a duplicate id an exception is thrown 
+    public int addFirstCustomer(ArrayList<String> itemIds, float beforeDiscount, float afterDiscount) throws DuplicateIDException  { 
+	    int customerId = counter.incrementAndGet(); //increments the customer id by one everytime a new one needs to be added
+			if(customerList.containsKey(customerId)){ 
+				throw new DuplicateIDException(customerId);  
+			}
+			Customer newCustomer = new Customer(customerId,beforeDiscount,afterDiscount,itemIds,true); 
+			customerList.put(customerId, newCustomer);
+			return customerId;
+    }
 
 	//Delete a customer with a specific customer id. If the customerList does not contain such a customer an exception is thrown
 	public void deleteCustomer(int customerId) { 

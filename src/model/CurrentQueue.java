@@ -16,8 +16,8 @@ import coffeShop.Menu;
 
 public class CurrentQueue implements Subject {
 
-	private Queue<Customer> waitingQueue;
-	private Queue<Customer> collectionQueue;
+	private Deque<Customer> waitingQueue;
+	private Deque<Customer> collectionQueue;
 	private Customer topQueue;
 	Customer[] serverCust = new Customer[4];
 	
@@ -35,6 +35,11 @@ public class CurrentQueue implements Subject {
 		}
 		waitingQueue.add(cust);
 	}
+	
+	public void addFirstWaitingQueue(Customer cust) {
+		waitingQueue.addFirst(cust);
+	}
+	
 	
 	public void addCollectionQueue(Customer cust) {
 		collectionQueue.add(cust);
