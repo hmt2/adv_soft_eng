@@ -47,19 +47,15 @@ public class DisplayServer extends JPanel implements Observer {
 	public void update() {
 		String server1text = "Server 1: \n\r" + modeldata.showCustomer(modeldata.getServerCustomer(0));
 		server1Text.setText(server1text);
-		System.out.print("GUI:  " + server1text);
 		
 		String server2text = "Server 2: \n\r" + modeldata.showCustomer(modeldata.getServerCustomer(1));
 		server2Text.setText(server2text);
-		System.out.print("GUI:  " + server2text);
 		
 		String server3text = "Server 3: \n\r" + modeldata.showCustomer(modeldata.getServerCustomer(2));
 		server3Text.setText(server3text);
-		System.out.print("GUI:  " + server3text);
 		
 		String server4text = "Server 4: \n\r" + modeldata.showCustomer(modeldata.getServerCustomer(3));
 		server4Text.setText(server4text);
-		System.out.print("GUI:  " + server4text);
 
 	}
 }
