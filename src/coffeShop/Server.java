@@ -15,7 +15,7 @@ public class Server implements Runnable {
 	private int serverId;
 	private ArrayList<String> sandwiches = new ArrayList<String>( 
 			Arrays.asList("FOOD001", "FOOD002","FOOD003", "FOOD004", "FOOD005")); 
-	public List<String> finishedFood = new LinkedList<String>();
+	public List<String> completedItem = new LinkedList<String>();
 
 	public Server(int serverId) {
 		this.serverId = serverId;
@@ -57,7 +57,7 @@ public class Server implements Runnable {
 								Simulation.coffeeMachine.getFoodsPreparing().wait();
 							}
 
-							Simulation.coffeeMachine.prepareFood(this, customer.getCustomerId(), nextFood.getName());
+							Simulation.coffeeMachine.prepareFood(this, customer.getCustomerId(), nextFood);
 							Simulation.coffeeMachine.getFoodsPreparing().notifyAll();
 
 						}
@@ -66,7 +66,7 @@ public class Server implements Runnable {
 							while(!(Simulation.drinkDispenser.getFoodsPreparing().size() < Simulation.drinkDispenser.maxAmount)){
 								Simulation.drinkDispenser.getFoodsPreparing().wait();
 							}
-							Simulation.drinkDispenser.prepareFood(this,customer.getCustomerId(), nextFood.getName());
+							Simulation.drinkDispenser.prepareFood(this,customer.getCustomerId(), nextFood);
 							Simulation.drinkDispenser.getFoodsPreparing().notifyAll();
 
 						}
@@ -76,7 +76,7 @@ public class Server implements Runnable {
 							while(!(Simulation.hob.getFoodsPreparing().size() < Simulation.hob.maxAmount)){
 								Simulation.hob.getFoodsPreparing().wait();
 							}
-							Simulation.hob.prepareFood(this,customer.getCustomerId(), nextFood.getName());
+							Simulation.hob.prepareFood(this,customer.getCustomerId(), nextFood);
 							Simulation.hob.getFoodsPreparing().notifyAll();
 
 						}
@@ -85,23 +85,39 @@ public class Server implements Runnable {
 							while(!(Simulation.toaster.getFoodsPreparing().size() < Simulation.hob.maxAmount)){
 								Simulation.toaster.getFoodsPreparing().wait();
 							}
-							Simulation.toaster.prepareFood(this,customer.getCustomerId(), nextFood.getName());
+							Simulation.toaster.prepareFood(this,customer.getCustomerId(), nextFood);
 							Simulation.toaster.getFoodsPreparing().notifyAll();
 
 						}
 
 					}else{
-						Thread.sleep(nextFood.getItemDuration()*1000);
-						System.out.println("Server " + this.getServerId() + " has finished " + nextFood.getName() + " for customer " + customer.getCustomerId());
+						System.out.println("Server " + serverId + " has started preparing " + nextFood.getName() + " for customer " + customer.getCustomerId()); 
+						Thread.sleep(2);
+						System.out.println("Server " + serverId + " has finished " + nextFood.getName()+ " for customer " + customer.getCustomerId());
+
+						completedItem.add(nextFood.getName());
 					}
+				
 
 				} catch (IdNotContainedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
+				
 			}
-
+			synchronized(completedItem){
+				while(!(completedItem.size() == customer.getItemIds().size())){
+					completedItem.wait();
+					completedItem.notifyAll();
+	
+			
+				}
+			}
 			System.out.println("Server " + this.serverId + " has finished the order for customer " + customer.getCustomerId());
+
+			completedItem = new LinkedList<String>();
+
 			WaitingQueue.getInstance().clearServer(this.serverId-1);
 			WaitingQueue.getInstance().addCollectionQueue(customer);
 			if(WaitingQueue.getInstance().getSizeCollectionQueue() > 1) {
