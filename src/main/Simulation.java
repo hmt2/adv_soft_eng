@@ -22,7 +22,6 @@ public class Simulation {
 	public static Machine drinkDispenser;
 	public static Machine toaster;
 	public static Machine coffeeMachine;
-	private static int serverId = 1;
 
 
 	public static void showInterface() throws DuplicateIDException, IdNotContainedException {
@@ -42,14 +41,15 @@ public class Simulation {
 		Queue<Server> servers = new LinkedList<>();
 		Map<Thread, Server> busy = new HashMap<>();
 		for(int i = 0; i < numServer; i++) {
-			servers.add(new Server(i+serverId));
+			servers.add(new Server(i+1));
 		}
-		// Start up machines
+	
 		toaster = new Machine("Toaster", 5);
 		hob = new Machine("Hob", 4);
 		coffeeMachine = new Machine("Coffee Machine", 5);
 		drinkDispenser = new Machine("Drink dispenser", 4);
 		while(true) {
+		    
 			if(!servers.isEmpty() && !WaitingQueue.getInstance().isEmpty()) {
 				Server s = servers.poll();
 				servers.add(s);
@@ -88,7 +88,6 @@ public class Simulation {
 			e.printStackTrace();
 		}
 		int numServer = 4;
-		int machinemaxAmount = 4;
 		try {
 			showInterface();
 		} catch (DuplicateIDException | IdNotContainedException e) {
