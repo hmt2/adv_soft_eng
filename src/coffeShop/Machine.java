@@ -47,7 +47,7 @@ public class Machine {
 			try {
 
 				System.out.println(Machine.this.name + " has started preparing " + item.getName() + " for customer " + customerId + " for server " + currentServer.getServerId()); 
-				Thread.sleep(item.getItemDuration());
+				Thread.sleep(item.getItemDuration()*1000);
 				System.out.println(Machine.this.name + " has finished " + item.getName() + " for customer " + customerId + " for server " + currentServer.getServerId());
 				System.out.println("Server " + currentServer.getServerId() + " has finished " + item.getName() + " for customer " + customerId);
 

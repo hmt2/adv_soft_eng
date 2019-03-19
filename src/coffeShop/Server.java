@@ -35,6 +35,7 @@ public class Server implements Runnable {
 
 	@Override
 	public void run() {
+		
 		WaitingQueue.getInstance().setServer(this.serverId-1, customer);
 		System.out.println("Server " + this.serverId + " is processing customer " + customer.getCustomerId());
 		try {
@@ -92,7 +93,7 @@ public class Server implements Runnable {
 
 					}else{
 						System.out.println("Server " + serverId + " has started preparing " + nextFood.getName() + " for customer " + customer.getCustomerId()); 
-						Thread.sleep(20000);
+						Thread.sleep(nextFood.getItemDuration()*1000);
 						System.out.println("Server " + serverId + " has finished " + nextFood.getName()+ " for customer " + customer.getCustomerId());
 
 						completedItem.add(nextFood.getName());
