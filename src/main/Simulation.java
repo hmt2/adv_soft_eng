@@ -37,7 +37,7 @@ public class Simulation {
 		while(Calendar.getInstance().getTimeInMillis() - start < millis);
 	}
 
-	public static void runSimulation(int numServer) throws IdNotContainedException, IOException {
+	public static void runSimulation(int numServer) throws IdNotContainedException, IOException, InterruptedException {
 		Queue<Server> servers = new LinkedList<>();
 		Map<Thread, Server> busy = new HashMap<>();
 		for(int i = 0; i < numServer; i++) {
@@ -59,6 +59,7 @@ public class Simulation {
 					Thread t = new Thread(s);
 					t.start();
 					busy.put(t, s);
+					Thread.sleep(1000);
 				}
 
 			} else {
@@ -71,11 +72,11 @@ public class Simulation {
 					}
 				}
 			}
-			pause(5000);
+			pause(5);
 		}
 	}
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, InterruptedException {
 		menu = new Menu();
 		AllOrders allorders = new AllOrders();
 		CustomerList customerList = new CustomerList();

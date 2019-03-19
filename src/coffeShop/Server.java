@@ -92,7 +92,7 @@ public class Server implements Runnable {
 
 					}else{
 						System.out.println("Server " + serverId + " has started preparing " + nextFood.getName() + " for customer " + customer.getCustomerId()); 
-						Thread.sleep(2);
+						Thread.sleep(20000);
 						System.out.println("Server " + serverId + " has finished " + nextFood.getName()+ " for customer " + customer.getCustomerId());
 
 						completedItem.add(nextFood.getName());
