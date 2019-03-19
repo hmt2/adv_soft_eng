@@ -40,12 +40,6 @@ public class CoffeShopInterface {
 		allDiscounts = new AllDiscounts();
 		discountCheck = new DiscountCheck(allDiscounts.loadDiscounts());
 		addPreviousOrders();
-
-		try {
-			WaitingQueue.getInstance().addPreviousOrders(discountCheck, true);
-		} catch (DuplicateIDException | IdNotContainedException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void generateReport(){
