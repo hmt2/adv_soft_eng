@@ -1,53 +1,53 @@
-﻿itemID,itemName,itemPrice,itemCategory,itemDescription
-HOT001,Breakfast Tea,2,HotDrink,Pot of English breakfast tea
-HOT002,Herbal Tea,2,HotDrink,Pot of Herbal tea
-HOT003,Espresso,2,HotDrink,Single shot of espresso
-HOT004,Double Espresso,3,HotDrink,Double shot espresso
-HOT005,Americano,2,HotDrink,Espresso with hot water
-HOT006,Reg Cappuccino,2.5,HotDrink,Espresso and foamed milk
-HOT007,Lrg Cappuccino,3,HotDrink,Double  espresso with foamed milk
-HOT008,Reg Latte ,2.5,HotDrink,Espresso with steamed milk
-HOT009,Lrg Latte,3,HotDrink,Double espresso with steamed milk
-HOT010,Reg Mocha,2.75,HotDrink,"Espresso, chocolate and foamed milk"
-HOT011,Lrg Mocha,3.25,HotDrink,"Double  espresso, chocolate and  foamed milk"
-HOT012,Reg Hot Chocolate,3,HotDrink,Regular hot chocolate
-HOT013,Lrg Hot Chocolate,3.5,HotDrink,Large hot chocolate
-HOT014,Childs Hot Choc,2,HotDrink,Small hot chocolate
-HOT015,Childs Hot Milk,1.5,HotDrink,Small warmed milk
-ADD001,Soya Milk,0.3,Add-on,Soya milk - dairy alternative
-ADD002,Oat Milk,0.3,Add-on,Oat milk - dairy alternative
-ADD003,Almond Milk,0.3,Add-on,Almond milk - dairy alternative
-ADD004,Syrup,0.3,Add-on,Variety of flavoured syrup shots
-ADD005,Whipped cream,0.25,Add-on,Whipped cream
-ADD006,Marshmallows,0.25,Add-on,Marshmallows
-ADD007,Extra shot of coffee,0.5,Add-on,Extra shot of espresso
-CLD001,Still water,1,ColdDrink,Bottled still water
-CLD002,Sparkling water,1,ColdDrink,Bottled sparkling water
-CLD003,Orange Juice,2.5,ColdDrink,Freshly squeezed orange juice
-CLD004,Berry smoothie,3.5,ColdDrink,"Mixed berries, banana and apple juice"
-CLD005,Milkshake,3,ColdDrink,Variety of flavoured milkshakes
-CLD006,Iced Coffee,2.5,ColdDrink,Iced americano
-CLD007,Iced Tea,2,ColdDrink,Iced tea
-CLD008,Lemonade,1.5,ColdDrink,Lemonade
-CLD009,Coke,1.5,ColdDrink,Coca-cola
-CLD010,Diet Coke,1.5,ColdDrink,Diet Coca-cola
-FOD001,Tuna sandwich,5,Food,Tuna and salad on white bread
-FOD002,Ham and Cheese sandwich,5,Food,"Ham, cheese and salad on white bread"
-FOD003,Mozzarella and Pesto Panini,6,Food,Mozzarella and pesto panini
-FOD004,Croque Monsieur Panini,6,Food,Toasted ham and cheese sandwich
-FOD005,Chicken salad wrap ,5,Food,Chicken and salad in a wrap
-FOD006,Soup,3.5,Food,Soup of the day with bread
-FOD007,Chicken Caesar Salad,5,Food,Classic chicken caesar salad
-FOD008,Italian Pasta Salad,5,Food,Pasta and vegetables in a classic italian sauce
-FOD009,Croissant,1.5,Food,Freshly baked croissant
-FOD010,Full Breakfast,6,Food,"Bacon, sausage, eggs, beans, toast"
-DES001,Pankcakes,5,Dessert,2 pancakes with syrup
-DES002,Chocolate Cake,3.5,Dessert,Chocolate Cake
-DES003,Carrot Cake,3.5,Dessert,Carrot Cake
-DES004,Lemon Drizzle Cake,3.5,Dessert,Lemon Drizzle Cake
-DES005,Chocolate Brownie,3.5,Dessert,Chocolate Brownie
-DES006,Blueberry Muffin,3,Dessert,Blueberry Muffin
-DES007,Caramel Shortbread,3,Dessert,Caramel Shortbread
-DES008,Fruit Scone,3,Dessert,Fruit Scone with jam and cream
-DES009,Lemon Meringue Tart,3.5,Dessert,Lemon Meringue Tart
-DES010,Ice Cream,3,Dessert,2 scoops of vanilla ice cream
+itemID,itemName,itemPrice,itemCategory,itemDescription,itemDuration
+HOT001,Breakfast Tea,2,HotDrink,Pot of English breakfast tea,3
+HOT002,Herbal Tea,2,HotDrink,Pot of Herbal tea,3
+HOT003,Espresso,2,HotDrink,Single shot of espresso,3
+HOT004,Double Espresso,3,HotDrink,Double shot espresso,3
+HOT005,Americano,2,HotDrink,Espresso with hot water,3
+HOT006,Reg Cappuccino,2.5,HotDrink,Espresso and foamed milk,3
+HOT007,Lrg Cappuccino,3,HotDrink,Double  espresso with foamed milk,3
+HOT008,Reg Latte ,2.5,HotDrink,Espresso with steamed milk,3
+HOT009,Lrg Latte,3,HotDrink,Double espresso with steamed milk,3
+HOT010,Reg Mocha,2.75,HotDrink,Espresso with chocolate and foamed milk,3
+HOT011,Lrg Mocha,3.25,HotDrink,Double  espresso with chocolate and  foamed milk,3
+HOT012,Reg Hot Chocolate,3,HotDrink,Regular hot chocolate,3
+HOT013,Lrg Hot Chocolate,3.5,HotDrink,Large hot chocolate,3
+HOT014,Childs Hot Choc,2,HotDrink,Small hot chocolate,3
+HOT015,Childs Hot Milk,1.5,HotDrink,Small warmed milk,3
+ADD001,Soya Milk,0.3,Add-on,Soya milk - dairy alternative,0
+ADD002,Oat Milk,0.3,Add-on,Oat milk - dairy alternative,0
+ADD003,Almond Milk,0.3,Add-on,Almond milk - dairy alternative,0
+ADD004,Syrup,0.3,Add-on,Variety of flavoured syrup shots,0
+ADD005,Whipped cream,0.25,Add-on,Whipped cream,0
+ADD006,Marshmallows,0.25,Add-on,Marshmallows,0
+ADD007,Extra shot of coffee,0.5,Add-on,Extra shot of espresso,0
+CLD001,Still water,1,ColdDrink,Bottled still water,1
+CLD002,Sparkling water,1,ColdDrink,Bottled sparkling water,1
+CLD003,Orange Juice,2.5,ColdDrink,Freshly squeezed orange juice,1
+CLD004,Berry smoothie,3.5,ColdDrink,Mixed berries with banana and apple juice,1
+CLD005,Milkshake,3,ColdDrink,Variety of flavoured milkshakes,1
+CLD006,Iced Coffee,2.5,ColdDrink,Iced americano,1
+CLD007,Iced Tea,2,ColdDrink,Iced tea,1
+CLD008,Lemonade,1.5,ColdDrink,Lemonade,1
+CLD009,Coke,1.5,ColdDrink,Coca-cola,1
+CLD010,Diet Coke,1.5,ColdDrink,Diet Coca-cola,1
+FOD001,Tuna sandwich,5,Food,Tuna and salad on white bread,10
+FOD002,Ham and Cheese sandwich,5,Food,Ham with cheese and salad on white bread,10
+FOD003,Mozzarella and Pesto Panini,6,Food,Mozzarella and pesto panini,10
+FOD004,Croque Monsieur Panini,6,Food,Toasted ham and cheese sandwich,10
+FOD005,Chicken salad wrap ,5,Food,Chicken and salad in a wrap,10
+FOD006,Soup,3.5,Food,Soup of the day with bread,10
+FOD007,Chicken Caesar Salad,5,Food,Classic chicken caesar salad,10
+FOD008,Italian Pasta Salad,5,Food,Pasta and vegetables in a classic italian sauce,10
+FOD009,Croissant,1.5,Food,Freshly baked croissant,10
+FOD010,Full Breakfast,6,Food,Bacon sausage eggs beans toast,10
+DES001,Pankcakes,5,Dessert,2 pancakes with syrup,10
+DES002,Chocolate Cake,3.5,Dessert,Chocolate Cake,5
+DES003,Carrot Cake,3.5,Dessert,Carrot Cake,5
+DES004,Lemon Drizzle Cake,3.5,Dessert,Lemon Drizzle Cake,5
+DES005,Chocolate Brownie,3.5,Dessert,Chocolate Brownie,5
+DES006,Blueberry Muffin,3,Dessert,Blueberry Muffin,5
+DES007,Caramel Shortbread,3,Dessert,Caramel Shortbread,5
+DES008,Fruit Scone,3,Dessert,Fruit Scone with jam and cream,5
+DES009,Lemon Meringue Tart,3.5,Dessert,Lemon Meringue Tart,5
+DES010,Ice Cream,3,Dessert,2 scoops of vanilla ice cream,5
