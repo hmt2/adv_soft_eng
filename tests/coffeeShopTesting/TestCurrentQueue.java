@@ -1,34 +1,34 @@
 package coffeeShopTesting;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import coffeShop.*;
 import interfaces.Observer;
 import model.CurrentQueue;
 import views.DisplayWaitingQueue; 
 
-class TestCurrentQueue {
+public class TestCurrentQueue {
 	
 	private CurrentQueue currentQueue;
 	private Customer[] serverCust = new Customer[4];
 	
 	private List<Observer> registeredObservers;
 
-	@BeforeEach
-	void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		currentQueue = new CurrentQueue();
 		registeredObservers = new LinkedList<Observer>();
 	}
 
 	@Test
-	final void testCurrentQueue() {
+	public void testCurrentQueue() {
 		int sizeWaitingQueue, sizeCollectionQueue = 0;
 		sizeWaitingQueue = currentQueue.getSizeWaitingQueue();
 		sizeCollectionQueue = currentQueue.getSizeCollectionQueue();
@@ -37,7 +37,7 @@ class TestCurrentQueue {
 	}
 
 	@Test
-	final void testAddWaitingQueue() {
+	public void testAddWaitingQueue() {
 		ArrayList<String> itemIds = new ArrayList<String>();
 		itemIds.add("HOT011");
 		itemIds.add("DES006");
@@ -49,7 +49,7 @@ class TestCurrentQueue {
 	}
 
 	@Test
-	final void testAddFirstWaitingQueue() {
+	public void testAddFirstWaitingQueue() {
 		ArrayList<String> itemIds = new ArrayList<String>();
 		itemIds.add("HOT011");
 		itemIds.add("DES006");
@@ -62,7 +62,7 @@ class TestCurrentQueue {
 	}
 
 	@Test
-	final void testAddCollectionQueue() {
+	public void testAddCollectionQueue() {
 		ArrayList<String> itemIds = new ArrayList<String>();
 		itemIds.add("HOT011");
 		itemIds.add("DES006");
@@ -74,7 +74,7 @@ class TestCurrentQueue {
 	}
 
 	@Test
-	final void testRemoveTopCollectionQueue() {
+	public void testRemoveTopCollectionQueue() {
 		ArrayList<String> itemIds = new ArrayList<String>();
 		itemIds.add("HOT011");
 		itemIds.add("DES006");
@@ -88,7 +88,7 @@ class TestCurrentQueue {
 	}
 
 	@Test
-	final void testSetAndGetServerCustomer() {
+	public void testSetAndGetServerCustomer() {
 		ArrayList<String> itemIds = new ArrayList<String>();
 		itemIds.add("HOT011");
 		itemIds.add("DES006");
@@ -97,7 +97,7 @@ class TestCurrentQueue {
 		assertEquals(currentQueue.getServerCustomer(2), customer1);
 	}
 	@Test
-	final void testEmptyCollectionQueue() {
+	public void testEmptyCollectionQueue() {
 		ArrayList<String> itemIds = new ArrayList<String>();
 		itemIds.add("HOT011");
 		itemIds.add("DES006");
@@ -114,7 +114,7 @@ class TestCurrentQueue {
 	} 
 
 	@Test
-	final void testRemoveTopWaitingQueue() {
+	public void testRemoveTopWaitingQueue() {
 		ArrayList<String> itemIds = new ArrayList<String>();
 		itemIds.add("HOT011");
 		itemIds.add("DES006");
@@ -128,7 +128,7 @@ class TestCurrentQueue {
 	}
 
 	@Test
-	final void testGetTopOfWaitingQueue() {
+	public void testGetTopOfWaitingQueue() {
 		ArrayList<String> itemIds = new ArrayList<String>();
 		itemIds.add("HOT011");
 		itemIds.add("DES006");
@@ -141,12 +141,12 @@ class TestCurrentQueue {
 	}
 
 	@Test
-	final void testIsWaitingQueueEmpty() {
+	public void testIsWaitingQueueEmpty() {
 		assertTrue(currentQueue.isWaitingQueueEmpty());
 	}
 
 	@Test
-	final void testPrintWaitingQueue() {
+	public void testPrintWaitingQueue() {
 		ArrayList<String> itemIds = new ArrayList<String>();
 		itemIds.add("HOT011");
 		itemIds.add("DES006");
@@ -158,7 +158,7 @@ class TestCurrentQueue {
 	}
 
 	@Test
-	final void testPrintCollectionQueue() {
+	public void testPrintCollectionQueue() {
 		ArrayList<String> itemIds = new ArrayList<String>();
 		itemIds.add("HOT011");
 		itemIds.add("DES006");
@@ -170,7 +170,7 @@ class TestCurrentQueue {
 	}
 
 	@Test
-	final void testClearServer() {
+	public void testClearServer() {
 		ArrayList<String> itemIds = new ArrayList<String>();
 		itemIds.add("HOT011");
 		itemIds.add("DES006");
@@ -182,7 +182,7 @@ class TestCurrentQueue {
 	}
 
 	@Test
-	final void testPrintQueue_Waiting() {
+	public void testPrintQueue_Waiting() {
 		ArrayList<String> itemIds = new ArrayList<String>();
 		itemIds.add("HOT011");
 		itemIds.add("DES006");
@@ -212,7 +212,7 @@ class TestCurrentQueue {
 	}
 
 	@Test
-	final void testPrintQueue_Collection() {
+	public void testPrintQueue_Collection() {
 		ArrayList<String> itemIds = new ArrayList<String>();
 		itemIds.add("HOT011");
 		itemIds.add("DES006");
@@ -242,7 +242,7 @@ class TestCurrentQueue {
 	}
 	
 	@Test
-	final void testShowCustomer() {
+	public void testShowCustomer() {
 		ArrayList<String> itemIds = new ArrayList<String>();
 		itemIds.add("HOT011");
 		itemIds.add("DES006");
@@ -255,17 +255,17 @@ class TestCurrentQueue {
 	}
 
 	@Test
-	final void testRegisterObserver() {
+	public void testRegisterObserver() {
 		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
-	final void testRemoveObserver() {
+	public void testRemoveObserver() {
 		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
-	final void testNotifyObservers() {
+	public void testNotifyObservers() {
 		fail("Not yet implemented"); // TODO
 	}
 
