@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Deque;
+import java.util.function.BooleanSupplier;
 
 import coffeShop.Customer;
 import model.CurrentQueue;
@@ -79,6 +81,67 @@ public class DisplayController {
 		model.notifyObservers();
 		
 	}
+	
+	/** getServerCustomer
+	 *  created for testing purposes
+	 * 
+	 * @param i
+	 * @return Customer
+	 */
+	public Customer getServerCustomer(int i) {
+		return model.getServerCustomer(i);
+	}
 
+	/** peekWaitingQueue : returns the first customer of WaitingQueue
+	 *  created for testing purposes
+	 * 
+	 * @return Customer
+	 */
+	public Customer peekWaitingQueue() {
+		return model.peekWaitingQueue();
+	}
+	
+	/** peekCollectionQueue : returns the first customer of CollectionQueue
+	 *  created for testing purposes
+	 *  
+	 * @return Customer
+	 */
+	public Customer peekCollectionQueue() {
+		return model.peekCollectionQueue();
+	}
+	
+	/** getWaitingQueue : returns the waitingQueue
+	 * 
+	 * @return Deque<Customer>
+	 */
+	public Deque<Customer> getWaitingQueue() {
+		return model.getWaitingQueue();
+	}
+	
+	/** getCollectionQueue : returns the collectionQueue
+	 * 
+	 * @return Deque<Customer>
+	 */
+	public Deque<Customer> getCollectionQueue() {
+		return model.getCollectionQueue();
+	}
+
+	/** isWaitingQueueEmpty : checks if the waitingQueue is empty
+	 *  created for testing purposes
+	 * 
+	 * @return Boolean
+	 */
+	public Boolean isWaitingQueueEmpty() {
+		return model.isWaitingQueueEmpty();
+	}
+
+	/** getSizeWaitingQueue : gets the size of the waitingQueue
+	 *  created for testing purposes
+	 * 
+	 * @return int
+	 */
+	public int getSizeWaitingQueue() {
+		return model.getSizeWaitingQueue();
+	}
 
 }
