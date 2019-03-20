@@ -14,7 +14,7 @@ public class Server implements Runnable {
 	private Customer customer;
 	private int serverId;
 	private ArrayList<String> sandwiches = new ArrayList<String>( 
-			Arrays.asList("FOOD001", "FOOD002","FOOD003", "FOOD004", "FOOD005")); 
+			Arrays.asList("FOD001", "FOD002","FOD003", "FOD004", "FOD005")); 
 	public List<String> completedItem = new LinkedList<String>(); //list of all the items that are ready for a particular customer
 
 	public Server(int serverId) {
@@ -64,7 +64,6 @@ public class Server implements Runnable {
 				try {
 					Item nextFood = Simulation.menu.findItemId(itemsOrdered.get(index));
                     //Depending on the type of item, it will be sent to a different machine
-					
 					//If it is a hot drink, it will be processed by the coffee machine. Cold drinks by drink dispenser,  sandwiches by toaster, fried food and soup by hob, and the remaining by the server himself
 					if (nextFood.getCategory().equals("HotDrink")){
 						synchronized(Simulation.coffeeMachine.getFoodsPreparing()){ //each coffee machine can process coffees from different servers (can handle multiple threads) which need to be synchronised
@@ -87,7 +86,7 @@ public class Server implements Runnable {
 
 						}
 
-					}else if(nextFood.equals("FOOD006") |  nextFood.equals("FOOD0010")){
+					}else if(nextFood.getId().equals("FOD006") |  nextFood.getId().equals("FOD010")){
 						synchronized(Simulation.hob.getFoodsPreparing()){
 							while(!(Simulation.hob.getFoodsPreparing().size() < Simulation.hob.maxAmount)){
 								Simulation.hob.getFoodsPreparing().wait();
@@ -96,7 +95,7 @@ public class Server implements Runnable {
 							Simulation.hob.getFoodsPreparing().notifyAll();
 
 						}
-					}else if (sandwiches.contains(nextFood)){
+					}else if (sandwiches.contains(nextFood.getId())){
 						synchronized(Simulation.toaster.getFoodsPreparing()){
 							while(!(Simulation.toaster.getFoodsPreparing().size() < Simulation.hob.maxAmount)){
 								Simulation.toaster.getFoodsPreparing().wait();
