@@ -12,7 +12,9 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Map.Entry;
+import java.io.InputStream;
 
 import exceptions.IdNotContainedException;
 import exceptions.InvalidIdException;
@@ -35,7 +37,11 @@ public class Menu {
 		BufferedReader buff = null;
 		String data [] = new String[5];
 		try {
-			buff = new BufferedReader(new FileReader("Menu.csv"));
+		    InputStream is = getClass().getResourceAsStream("Menu.csv");
+		    InputStreamReader isr = new InputStreamReader(is);
+
+			buff = new BufferedReader(isr);
+			
 			String inputLine = null;
 
 			inputLine = buff.readLine();
