@@ -11,7 +11,6 @@ import interfaces.Subject;
 import java.util.*;
 
 import coffeShop.Customer;
-
 import coffeShop.Menu;
 
 public class CurrentQueue implements Subject {
@@ -54,6 +53,15 @@ public class CurrentQueue implements Subject {
 		collectionQueue.add(cust);
 	}
 	
+	/** getSizeWaitingQueue : returns the size of waitingQueue
+	 *  created for testing purposes
+	 * 
+	 * @return int
+	 */
+	public int getSizeWaitingQueue() {
+		return waitingQueue.size();
+	}
+	
 	public int getSizeCollectionQueue() {
 		return collectionQueue.size();
 	}
@@ -75,7 +83,7 @@ public class CurrentQueue implements Subject {
 	
 	public void emptyCollectionQueue(){
 		while(!collectionQueue.isEmpty()) {
-			collectionQueue.remove();
+			collectionQueue.remove(); 
 		}
 	}
 	
@@ -106,7 +114,7 @@ public class CurrentQueue implements Subject {
 		serverCust[i] = null;
 	}
 
-	public String printQueue(Queue<Customer> queue) {
+	public String printQueue(Deque<Customer> queue) {
 		String text = "";
 		int count = 0;
 		if(!queue.isEmpty()) {
@@ -146,6 +154,40 @@ public class CurrentQueue implements Subject {
 			
 		}
 		return custString;
+	}
+	
+	/** peekWaitingQueue : returns the first customer of WaitingQueue
+	 *  created for testing purposes
+	 * 
+	 * @return Customer
+	 */
+	public Customer peekWaitingQueue() {
+		return waitingQueue.peek();
+	}
+	
+	/** peekCollectionQueue : returns the first customer of CollectionQueue
+	 *  created for testing purposes
+	 *  
+	 * @return Customer
+	 */
+	public Customer peekCollectionQueue() {
+		return collectionQueue.peek();
+	}
+	
+	/** getWaitingQueue : returns the waitingQueue
+	 * 
+	 * @return Deque<Customer>
+	 */
+	public Deque<Customer> getWaitingQueue() {
+		return waitingQueue;
+	}
+	
+	/** getCollectionQueue : returns the collectionQueue
+	 * 
+	 * @return Deque<Customer>
+	 */
+	public Deque<Customer> getCollectionQueue() {
+		return collectionQueue;
 	}
 
 	// OBSERVER PATTERN
