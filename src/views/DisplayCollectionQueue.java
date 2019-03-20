@@ -11,7 +11,7 @@ import model.CurrentQueue;
 //using observer pattern
 public class DisplayCollectionQueue extends JPanel implements Observer {
 	private CurrentQueue modeldata;
-	private JTextArea queueText = new JTextArea("",13,50);
+	private JTextArea queueText = new JTextArea("",7,15);
 
 	// sets up general gui
 	public DisplayCollectionQueue(CurrentQueue model) {

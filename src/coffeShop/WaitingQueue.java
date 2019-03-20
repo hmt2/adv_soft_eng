@@ -29,6 +29,7 @@ public class WaitingQueue extends CustomerList{
 
 	private static Object lock;
 
+	//create lock to apply in methods to make them thread safe
 	private WaitingQueue(){
 		super();
 		lock = new Object();
@@ -39,15 +40,17 @@ public class WaitingQueue extends CustomerList{
 		controller.clearServer(i);
 	}
 
+	//create instance of class with singleton design pattern
 	private static class SingletonHelper{
 		private static final WaitingQueue INSTANCE = new WaitingQueue();
 	}
 
+	//instance of class to be called, to make sure only one instance can exist at one time
 	public static WaitingQueue getInstance(){
 		return SingletonHelper.INSTANCE;
 	}
 
-
+	//method to gradually add previous orders from orders.txt to the main queue
 	public void addPreviousOrders(DiscountCheck discountCheck, boolean isStudentDiscount) throws DuplicateIDException, IdNotContainedException{
 		synchronized (lock) { // to make it thread safe
 			TreeMap<Integer,ArrayList<String>> cust = AllOrders.loadOrders();
@@ -72,7 +75,7 @@ public class WaitingQueue extends CustomerList{
 
 	}
 
-
+	//add new customer to the queue
 	public void addCustomer(ArrayList<String> itemIds, DiscountCheck discountCheck, boolean isStudentDiscount) throws DuplicateIDException, IdNotContainedException{
 		synchronized (lock) { // to make it thread safe
 			float totalBeforeDiscount = discountCheck.calcBillBeforeDiscount(itemIds);
