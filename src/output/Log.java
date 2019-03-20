@@ -17,20 +17,18 @@ public class Log {
 
 	public Log()  {
 		String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm").format(new Date());
-		filepath = "log:" + timeStamp + ".csv";
+		filepath = "Log-" + timeStamp + ".csv"; 
 		createLogFile(filepath);
 	}
 
 	public void createLogFile(String filepath) {
-		try {
+		try(
 			FileWriter fw = new FileWriter(filepath, true);
 			BufferedWriter bw = new BufferedWriter(fw);
-			PrintWriter out = new PrintWriter(bw);
-
-			out.println("Start of log: \n ");
-			out.close();
+			PrintWriter out = new PrintWriter(bw))
+		{
+			out.append("Start of log: \n ");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -38,9 +36,15 @@ public class Log {
 	public static void writeToLog(String input) throws IOException {
 		String timeStamp = new SimpleDateFormat("HH.mm.ss").format(new Date());
 		String str = timeStamp + ":  " + input + "\n";
-		BufferedWriter writer = new BufferedWriter(new FileWriter(filepath, true));
-		writer.append(str);
-		writer.close();   
+		try(FileWriter fw = new FileWriter(filepath, true);
+				BufferedWriter bw = new BufferedWriter(fw);
+				PrintWriter out = new PrintWriter(bw))
+		{
+			out.append(str);
+		}
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
 	}
-
 }
