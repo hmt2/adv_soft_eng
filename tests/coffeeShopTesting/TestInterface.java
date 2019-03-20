@@ -70,7 +70,7 @@ public class TestInterface {
 		shop.displayBill(currentOrder, false); //required in order to calculate the bills within the class CoffeShopInterface
 		int initialOrders= allorders.getNumOrders(); //initial size of allOrders
 		int inCustSize = customerList.size(); //initial customer size
-		shop.placeOrder(currentOrder);
+		shop.placeOrder(currentOrder, false);
 		int finCustSize = customerList.size(); //sizes of customerList and allorders after placing a new order
 		int finalOrders = allorders.getNumOrders();
 		int nOrdersExpected = 0;

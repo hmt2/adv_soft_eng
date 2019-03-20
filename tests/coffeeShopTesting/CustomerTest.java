@@ -19,7 +19,7 @@ public class CustomerTest {
 
 	@Test
 	public void testGetId() {
-		coffeShop.Customer customer1 = new Customer(120, 25.6f, 22.4f,itemIds) ;
+		coffeShop.Customer customer1 = new Customer(120, 25.6f, 22.4f,itemIds, false) ;
 	    int expectedId = 120;
 	    int actualId = customer1.getCustomerId();
 	    String message=  "Failed for id = 120";
@@ -30,7 +30,7 @@ public class CustomerTest {
 	public void test_fail_exception() {
 
 		try {
-			coffeShop.Customer customer = new Customer(93, 25.6f, 22.4f,itemIds);
+			coffeShop.Customer customer = new Customer(93, 25.6f, 22.4f,itemIds,false);
 		    fail("should throw exception");
 		  } catch(IllegalArgumentException e) {
 		    // expected
