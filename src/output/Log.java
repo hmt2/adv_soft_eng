@@ -17,51 +17,27 @@ public class Log {
 
 	public Log()  {
 		String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm").format(new Date());
-		filepath = "log:" + timeStamp;
+		filepath = "log:" + timeStamp + ".csv";
 		createLogFile(filepath);
 	}
 
 	public void createLogFile(String filepath) {
-		File file = new File(filepath);
-
-		//Create the file
 		try {
-			if (file.createNewFile())
-			{
-				System.out.println("Log file is created!");
-			} else {
-				System.out.println("Log file already exists.");
-			}
+			FileWriter fw = new FileWriter(filepath, true);
+			BufferedWriter bw = new BufferedWriter(fw);
+			PrintWriter out = new PrintWriter(bw);
 
-			String str = "Start of file: \n";
-			BufferedWriter writer = new BufferedWriter(new FileWriter(filepath));
-			writer.write(str);
-			writer.close();
-
+			out.println("Start of log: \n ");
+			out.close();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public void addCustomer(Customer cust) throws IOException {
-		String timeStamp = new SimpleDateFormat("HH.mm.ss").format(new Date());
-		String str = timeStamp + "   Adding Customer ID to queue:  " +  cust.getCustomerId() + "\n";
-		BufferedWriter writer = new BufferedWriter(new FileWriter(filepath, true));
-		writer.append(str);
-		writer.close();   
-	}
-
-	public void processingCustomer(Customer cust) throws IOException {
-		String timeStamp = new SimpleDateFormat("HH.mm.ss").format(new Date());
-		String str = timeStamp + "   Processing Customer ID: " + cust.getCustomerId() + "\n";
-		BufferedWriter writer = new BufferedWriter(new FileWriter(filepath, true));
-		writer.append(str);
-		writer.close();   
-	}
-
 	public static void writeToLog(String input) throws IOException {
 		String timeStamp = new SimpleDateFormat("HH.mm.ss").format(new Date());
-		String str = input + "\n";
+		String str = timeStamp + ":  " + input + "\n";
 		BufferedWriter writer = new BufferedWriter(new FileWriter(filepath, true));
 		writer.append(str);
 		writer.close();   
