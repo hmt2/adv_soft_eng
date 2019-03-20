@@ -23,32 +23,39 @@ import java.util.TreeMap;
 
 public class AllOrders {
 
-	// Storage for a certain amount of orders
+	/** Storage for a certain amount of orders
+	 *  LinkedHashMap to be able to sort the orders
+	 * 
+	 */
 	private static LinkedHashMap<Integer, Order> allOrders;
 
 	public AllOrders() {
 		allOrders = new LinkedHashMap<Integer, Order>();
 	}
 
-
+	/** loadOrders : read the orders.txt file and add each line as a new order, with a new customer
+	 *  as stated in the requirements, if a customer has ordered more than one item, it is divided in different orders
+	 *  it returns a TreeMap of customers
+	 *  @return TreeMap<Integer, ArrayList<String>>
+	 */
 	public static TreeMap<Integer,ArrayList<String>> loadOrders() {
+		// initialization : customers as a TreeMap and orders as a LinkedHashMap
 		TreeMap<Integer,ArrayList<String>> customers = new TreeMap<Integer,ArrayList<String>>();
-		//initialise empty linkedhashmap of orders
 		LinkedHashMap<Integer, Order> entries = new LinkedHashMap<Integer, Order>();
 		BufferedReader buff = null;
 		String data [] = new String[4];
 		try {
-			// java.net.URL url = AllOrders.class.getResource("orders.txt");
+			// try to open the file orders.txt
 			buff = new BufferedReader(new FileReader("orders.txt"));
 			String inputLine = null;
 
 			inputLine = buff.readLine();
-			//read first line
+			// read first line
 			while(inputLine != null){  
-				//split line into parts
+				// split line into parts
 				data  = inputLine.split(",");
 
-				//create Order object (orderId, customerId, itemId, timestamp)
+				// get the orderId, customerId, itemId, timestamp for one order
 				Integer orderId = Integer.parseInt(data[0].trim());
 				Integer customerId = Integer.parseInt(data[1].trim());
 				String itemId = data[2].trim();
@@ -56,21 +63,24 @@ public class AllOrders {
 
 				Order o;
 				try {
+					// create new Order with the orderId, customerId, itemId and timestamp we got
 					o = new Order(orderId, customerId, itemId, timestamp);
-					//Integer String Integer timestamp
+					// if the customers has already been created (the customer has ordered more than one item)
+					// we add the itemId to his ArrayList of items he has ordered in CustomerList
 					if(customers.containsKey(customerId)) {
 						ArrayList<String> currentItemIds = customers.get(customerId);
 						currentItemIds.add(itemId);
 						customers.put(customerId, currentItemIds);
 					}
 					else {
+						// if he has not been created yet, we create his ArrayList of items he has ordered
 						ArrayList<String> itemIds = new ArrayList<String>();
 						itemIds.add(itemId);
 						customers.put(customerId,itemIds);
 					}
-					//add to linkedhashmap
+					// we add the order to the allOrders LinkedHashMap
 					entries.put(orderId, o);
-					//read next line
+					// we read the next line
 					inputLine = buff.readLine();
 				} catch (InvalidIdException e) {
 					e.printStackTrace();
@@ -91,30 +101,46 @@ public class AllOrders {
 				buff.close();
 			}
 			catch (IOException ioe) {
-				//don't do anything
 			}
 		}
 		allOrders = entries;
 		return customers;
 	}
 
+	/** returnAllOrders : returns the LinkedHashMap allOrders
+	 * 
+	 * @return LinkedHashMap
+	 */
 	public LinkedHashMap<Integer, Order> returnAllOrders(){
 		return allOrders;
 	}
 
+	/** checkOrderId : checks if the LinkedHashMap allOrders already contains a certain key
+	 * 
+	 * @param orderId
+	 * @return boolean
+	 */
 	public static boolean checkOrderId(Integer orderId) {
 		return allOrders.containsKey(orderId);
 	}
 
+	/** addOrder : adds a new Order in the orders.txt 
+	 *  it also loads the allOrders LinkedHashMap again (it adds the new order to the LinkedHashMap)
+	 *  as stated in the requirements, if a customer has ordered more than one item, it is divided in different orders
+	 * 
+	 * @param CustomerId
+	 * @param currentOrder
+	 */
 	@SuppressWarnings("null")
 	public void addOrder(Integer CustomerId, ArrayList<String> currentOrder) {
+		loadOrders();
 		int nb_orders = currentOrder.size();
 		boolean check;
 		int orderIds[] = new int[nb_orders];
-		//generate order ids
+		// we generate the orderIds, we check if the key is already in the LinkedHashMap
 		int i = allOrders.size() + 1;
 		check = checkOrderId(i);
-		while(check) { //true : already in the linkedhashmap
+		while(check) {
 			i += 1;
 		}
 		if (check == false) {
@@ -123,81 +149,40 @@ public class AllOrders {
 		for(int j=1; j < nb_orders; j++) {
 			orderIds[j] = orderIds[0] + j;
 		}
-		// get the timestamp
+		// we get the timestamp
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
+		// we try to open the orders.txt file
 		try(FileWriter fw = new FileWriter("orders.txt", true);
 				BufferedWriter bw = new BufferedWriter(fw);
 				PrintWriter out = new PrintWriter(bw))
 		{
 			for (int l = 0; l < nb_orders; l++) {
-				//Order object (orderId, customerId, itemId, timestamp)
+				// Order object (orderId, customerId, itemId, timestamp)
 				Integer orderId = orderIds[l];
 				Integer customerId = CustomerId;
 				String itemId = currentOrder.get(l).trim();
+				// we add a line in the orders.txt
 				out.append("\n" + orderId.toString() + ", " + customerId.toString() + ", " + itemId.toString() + ", " + timestamp.toString());
 			}
 		} catch (IOException e) {
-			//exception handling
 		}
 		loadOrders();
 	}
 
-	/**
-	 * adds an order (if more than one order, divides in a certain number of orders)
-	 */
-	public void addOrder(int nb_orders, String data[]) {
-		int i = 1;
-
-		while(i < nb_orders+1) {
-			for (int j = 0; j < nb_orders*4; j+=4) {
-				//Order object (orderId, customerId, itemId, timestamp)
-				Integer orderId = Integer.parseInt(data[j].trim());
-				Integer customerId = Integer.parseInt(data[j+1].trim());
-				String itemId = data[j+2].trim();
-				Timestamp timestamp = Timestamp.valueOf(data[j+3]);
-				try(FileWriter fw = new FileWriter("orders.txt", true);
-						BufferedWriter bw = new BufferedWriter(fw);
-						PrintWriter out = new PrintWriter(bw))
-				{
-					out.println(orderId.toString() + "," + customerId.toString() + "," + itemId.toString() + "," + timestamp.toString());
-				} catch (IOException e) {
-					//exception handling
-				}
-				loadOrders();
-			}
-		}
-
-	}
-	/**
-	 * deletes an order 
-	 * if the customer ordered only one item, then it deletes also the customer
-	 * if the customer ordered several items, it will delete only this order
+	/** findOrderId : finds an order when we are given an Id
 	 * 
-	 * OR create a new text file without the item to delete?
-	 */
-	public void deleteOrder(Integer orderId) {
-		Order o = findOrderId(orderId);
-		ArrayList<Integer> list;
-		list = findCustomerOrders(o.getCustomerId());
-		System.out.println(list);
-		if(list.size() == 1)
-			//remove Customer
-			System.out.println("We remove the customer: there is only one order");
-		allOrders.remove(orderId);
-
-	}
-
-	/**
-	 * finds an order when we are given an Id
-	 * @return 
+	 * @param orderId
+	 * @return Order
 	 */
 	public static Order findOrderId(Integer orderId) {
 		return allOrders.get(orderId);
 	}
 
-	/**
-	 * finds all the orders of one customer when we are given a customerId
+	/** findCustomerOrders : find the itemIds for one customer
+	 * 
+	 * @param customerId
+	 * @return ArrayList<Integer>
 	 */
 	public static ArrayList<Integer> findCustomerOrders(Integer customerId) {
 		ArrayList<Integer> orderIds = new ArrayList<Integer>();
@@ -210,6 +195,9 @@ public class AllOrders {
 		return orderIds;	   
 	}
 
+	/** listByOrderId : list the allOrders LinkedHashMap by the OrderId
+	 *  
+	 */
 	public static void listByOrderId() {
 		List<Map.Entry<Integer, Order>> entries = new ArrayList<Map.Entry<Integer, Order>>(allOrders.entrySet());
 		Collections.sort(entries, new Comparator<Map.Entry<Integer, Order>>() {
@@ -224,6 +212,9 @@ public class AllOrders {
 		}
 	}
 
+	/** listByTimeStamp : list the allOrders LinkedHashMap by the TimeStamp
+	 *  
+	 */
 	public static void listByTimestamp() {
 		List<Map.Entry<Integer, Order>> entries = new ArrayList<Map.Entry<Integer, Order>>(allOrders.entrySet());
 		Collections.sort(entries, new Comparator<Map.Entry<Integer, Order>>() {
@@ -239,6 +230,9 @@ public class AllOrders {
 
 	}
 
+	/** listByCustomerId : list the allOrders LinkedHashMap by the CustomerId
+	 *  
+	 */
 	public static void listByCustomerId() {
 		List<Map.Entry<Integer, Order>> entries = new ArrayList<Map.Entry<Integer, Order>>(allOrders.entrySet());
 		Collections.sort(entries, new Comparator<Map.Entry<Integer, Order>>() {
@@ -253,6 +247,9 @@ public class AllOrders {
 
 	}
 
+	/** listByItemId : list the allOrders LinkedHashMap by the ItemId
+	 *  
+	 */
 	public static void listByItemId() {
 		List<Map.Entry<Integer, Order>> entries = new ArrayList<Map.Entry<Integer, Order>>(allOrders.entrySet());
 		Collections.sort(entries, new Comparator<Map.Entry<Integer, Order>>() {
@@ -267,6 +264,9 @@ public class AllOrders {
 
 	}
 
+	/** printAllOrders : print the list of all orders in the LinkedHashMap allOrders
+	 *  
+	 */
 	public static void printAllOrders() {
 		Set<Entry<Integer, Order>> mapset = allOrders.entrySet();
 		System.out.println(" PRINT ALL ORDERS ");
@@ -275,7 +275,11 @@ public class AllOrders {
 		}
 	}
 
-	//For testing purposes
+	/** getNumOrders : get the size of the LinkedHashMap allOrders
+	 * created for testing purposes
+	 * 
+	 * @return int
+	 */
 	public  int getNumOrders(){
 		return allOrders.size();
 	}

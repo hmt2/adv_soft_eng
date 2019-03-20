@@ -15,7 +15,7 @@ public class Customer{
 	private float billAfterDiscount;
 	private boolean discount;
 	private ArrayList<String> itemIds;  
-	private boolean priority;
+	private boolean priority; // if the customer has made an order in priority
 
 	public Customer(int customerId, float billBeforeDiscount, float billAfterDiscount,ArrayList<String> itemIds, boolean priority) 
 	{   
@@ -37,14 +37,12 @@ public class Customer{
 
 	public Customer(int customerId) 
 	{   
-
 		if (customerId < 100){ 
 			throw new IllegalArgumentException ("Not a valid customer id");
 		}
-
 		this.customerId =customerId;
 		this.itemIds = new ArrayList<>();
-		this.priority = false;
+		this.priority = false; // used for adding the previous orders so the customers have not ordered in priority
 
 	}
 	//Get and set methods

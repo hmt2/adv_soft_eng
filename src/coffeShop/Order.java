@@ -26,56 +26,62 @@ public class Order implements Comparable<Order>
 		this.timestamp = timestamp;
 	}
 
+	/** getters and setters for orderId, customerId, itemId and timestamp
+	 * 
+	 * 
+	 */
 	public Integer getOrderId() {
 		return orderId;
 	}
-
 
 	public void setOrderId(Integer orderId) {
 		this.orderId = orderId;
 	}
 
-
 	public Integer getCustomerId() {
 		return customerId;
 	}
-
 
 	public void setCustomerId(Integer customerId) {
 		this.customerId = customerId;
 	}
 
-
 	public String getItemId() {
 		return itemId;
 	}
-
 
 	public void setItemId(String itemId) {
 		this.itemId = itemId;
 	}
 
-
 	public Timestamp getTimestamp() {
 		return timestamp;
 	}
-
-
+	
 	public void setTimestamp(Timestamp timestamp) {
 		this.timestamp = timestamp;
 	}
 
-
-	/**
-	 * @return Add comments later
+	/** compareToOrderId :  compare two orderIds
+	 * 
+	 * @param otherDetails
+	 * @return int
+	 * 0 if this.orderId = otherDetails.getOrderId()
+	 * -1 if this.orderId < otherDetails.getOrderId()
+	 * 1 if this.orderId > otherDetails.getOrderId()
 	 */
 	public int compareToOrderId(Order otherDetails)
 	{
 		return orderId.compareTo(otherDetails.getOrderId());
 	}
 
-	/**
-	 * @return Add comments later
+	/** compareToCustomerId :  compare two customerIds
+	 * 
+	 * @param otherDetails
+	 * @return int
+	 * 0 if this.customerId = otherDetails.getCustomerId()
+	 * -1 if this.customerId < otherDetails.getCustomerId()
+	 * 1 if this.customerId > otherDetails.getCustomerId()
 	 */
 	public int compareToCustomerId(Order otherDetails)
 	{
@@ -83,6 +89,14 @@ public class Order implements Comparable<Order>
 		return -compare;
 	}  
 
+	/** compareToTimestamp :  compare two timestamps
+	 * 
+	 * @param otherDetails
+	 * @return int
+	 * 0 if this.timestamp = otherDetails.getTimestamp()
+	 * -1 if this.timestamp < otherDetails.getTimestamp()
+	 * 1 if this.timestamp > otherDetails.getTimestamp()
+	 */
 	public int compareToTimestamp(Order otherDetails)
 	{
 		if (timestamp.getTime() > otherDetails.getTimestamp().getTime()) { //if after otherDetails
@@ -94,8 +108,8 @@ public class Order implements Comparable<Order>
 		return 0;
 	} 
 
-	/**
-	 * @return A  string containing all details.
+	/** toString : get a string with the orderId, customerId, itemId and Timestamp
+	 * @return String
 	 */
 	public String toString()
 	{

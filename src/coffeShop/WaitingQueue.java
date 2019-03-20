@@ -103,35 +103,50 @@ public class WaitingQueue extends CustomerList{
 		}
 	}
 	
-	//PRIORITY
-		public void addFirstCustomer(ArrayList<String> itemIds, DiscountCheck discountCheck, boolean isStudentDiscount) throws DuplicateIDException, IdNotContainedException{
-			synchronized (lock) { // to make it thread safe
-				float totalBeforeDiscount = discountCheck.calcBillBeforeDiscount(itemIds);
-				float totalAfterDiscount = totalBeforeDiscount;
-				Discount ds = discountCheck.getDiscount(itemIds);
-				if(ds != null)
-					totalAfterDiscount = (float) discountCheck.calcAfterDiscount(itemIds,isStudentDiscount); //assume for the previous cases student is false
-				try {
-					int id = super.addFirstCustomer(itemIds, totalBeforeDiscount, totalAfterDiscount);
-					Customer currentCust = new Customer(id, totalBeforeDiscount, totalAfterDiscount,itemIds,true);
-					controller.addFirstWaitingQueue(currentCust);
-				} catch (DuplicateIDException | IllegalArgumentException e1) {
-					System.out.println(e1);
-				}
-			}
-		}
-		
-		@Override
-		public int addFirstCustomer(ArrayList<String> itemIds, float beforeDiscount, float afterDiscount)
-				throws DuplicateIDException {
-			// TODO Auto-generated method stub
-			synchronized (lock) { // to make it thread safe
-				int id = super.addFirstCustomer(itemIds, beforeDiscount, afterDiscount);
-				Customer currentCust = new Customer(id, beforeDiscount, afterDiscount,itemIds,true);
+	/** addFirstCustomer : adds a customer, which has made an order in priority
+	 * 	it also adds the customer to the waitingQueue at the head
+	 * 
+	 * @param itemIds
+	 * @param discountCheck
+	 * @param isStudentDiscount
+	 * @throws DuplicateIDException
+	 * @throws IdNotContainedException
+	 */
+	public void addFirstCustomer(ArrayList<String> itemIds, DiscountCheck discountCheck, boolean isStudentDiscount) throws DuplicateIDException, IdNotContainedException{
+		synchronized (lock) { // to make it thread safe
+			float totalBeforeDiscount = discountCheck.calcBillBeforeDiscount(itemIds);
+			float totalAfterDiscount = totalBeforeDiscount;
+			Discount ds = discountCheck.getDiscount(itemIds);
+			if(ds != null)
+				totalAfterDiscount = (float) discountCheck.calcAfterDiscount(itemIds,isStudentDiscount); //assume for the previous cases student is false
+			try {
+				int id = super.addFirstCustomer(itemIds, totalBeforeDiscount, totalAfterDiscount);
+				Customer currentCust = new Customer(id, totalBeforeDiscount, totalAfterDiscount,itemIds,true);
 				controller.addFirstWaitingQueue(currentCust);
-				return id;
+			} catch (DuplicateIDException | IllegalArgumentException e1) {
+				System.out.println(e1);
 			}
 		}
+	}
+	/** addFirstCustomer : adds a customer, which has made an order in priority
+	 *  it also adds the customer to the waitingQueue at the head
+	 * 
+	 * @param itemIds
+	 * @param beforeDiscount
+	 * @param afterDiscount
+	 * @throws DuplicateIDException
+	 */
+	@Override
+	public int addFirstCustomer(ArrayList<String> itemIds, float beforeDiscount, float afterDiscount)
+			throws DuplicateIDException {
+		// TODO Auto-generated method stub
+		synchronized (lock) { // to make it thread safe
+			int id = super.addFirstCustomer(itemIds, beforeDiscount, afterDiscount);
+			Customer currentCust = new Customer(id, beforeDiscount, afterDiscount,itemIds,true);
+			controller.addFirstWaitingQueue(currentCust);
+			return id;
+		}
+	}
 
 
 	@Override
