@@ -244,5 +244,10 @@ public class WaitingQueue extends CustomerList{
 			System.out.print(mainQueue.peek());
 		}
 	}
+
+	public void emptyCollectionQueue() {
+		controller.emptyCollectionQueue();
+		
+	}
 }
 
