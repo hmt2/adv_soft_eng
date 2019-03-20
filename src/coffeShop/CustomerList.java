@@ -30,7 +30,14 @@ public class CustomerList {
 		return customerId;
 	}
 	
-	//PRIORITY Add a new customer to the customerList hashmap. If there is a duplicate id an exception is thrown 
+	/** addFirstCustomer : adds a customer which has made an order in priority so priority is set as true
+	 * 
+	 * @param itemIds
+	 * @param beforeDiscount
+	 * @param afterDiscount
+	 * @return
+	 * @throws DuplicateIDException
+	 */
     public int addFirstCustomer(ArrayList<String> itemIds, float beforeDiscount, float afterDiscount) throws DuplicateIDException  { 
 	    int customerId = counter.incrementAndGet(); //increments the customer id by one everytime a new one needs to be added
 			if(customerList.containsKey(customerId)){ 
@@ -65,8 +72,6 @@ public class CustomerList {
 		return customerList.size();
 	}
 
-
-
 	public Map listByCustomerId() { 
 		Map<Integer, Customer>sortedCust = new TreeMap<>(customerList);
 		return sortedCust;
@@ -86,8 +91,6 @@ public class CustomerList {
 	//Print all the customers ordered by the customer id
 	public void loadCustomers() { 
 		Map<Integer, Customer>sortedCust = listByCustomerId(); 
-
-
 		StringBuffer allEntries = new StringBuffer();
 		for (Map.Entry<Integer, Customer> entry : sortedCust.entrySet()){
 			allEntries.append(entry.getValue().toString());

@@ -111,7 +111,14 @@ public class CoffeShopInterface {
 		return bill;
 	}
 
-	//need to update quantities
+	/** placeOrder : adds a customer and adds the order(s) associated to that customer
+	 *  it also adds the customer to the waitingQueue (at the head if priority is true and at the tail if false)
+	 * 
+	 * @param currentOrder
+	 * @param priority
+	 * @throws DuplicateIDException
+	 * @throws IdNotContainedException
+	 */
 	public void placeOrder(Map<String, Integer> currentOrder, boolean priority) throws DuplicateIDException, IdNotContainedException {
 		updateItemQuantity(currentOrder);
 		int custId = customerList.addCustomer(discountCheck.toArrayList(currentOrder),totalBeforeDiscount,(float)totalAfterDiscount);
