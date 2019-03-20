@@ -74,5 +74,11 @@ public class DisplayController {
 		model.removeTopCollectionQueue();
 	}
 
+	public void emptyCollectionQueue() {
+		model.emptyCollectionQueue();
+		model.notifyObservers();
+		
+	}
+
 
 }

@@ -73,7 +73,12 @@ public class CurrentQueue implements Subject {
 	}
 	
 	
-
+	public void emptyCollectionQueue(){
+		while(!collectionQueue.isEmpty()) {
+			collectionQueue.remove();
+		}
+	}
+	
 	public void removeTopWaitingQueue(){
 		if(!waitingQueue.isEmpty()) {
 			Customer cust = waitingQueue.remove();
