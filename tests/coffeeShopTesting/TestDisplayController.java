@@ -1,31 +1,31 @@
 package coffeeShopTesting;
 
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import coffeShop.*;
 import controllers.DisplayController;
 import model.CurrentQueue;
 import views.DisplayGUI; 
 
-class TestDisplayController {
-	
+public class TestDisplayController {
 	
 	private CurrentQueue model = new CurrentQueue(); 
 	private DisplayGUI view = new DisplayGUI(model); 
 	private DisplayController displayController;
 
-	@BeforeEach
-	void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		displayController = new DisplayController(view, model);
 	}
 
 	@Test
-	final void testGetTopOfWaitingQueue() {
+	public void testGetTopOfWaitingQueue() {
 		ArrayList<String> itemIds = new ArrayList<String>();
 		itemIds.add("HOT011");
 		itemIds.add("DES006");
@@ -38,7 +38,7 @@ class TestDisplayController {
 	}
 	
 	@Test
-	final void testSetServerCustomer() {
+	public void testSetServerCustomer() {
 		ArrayList<String> itemIds = new ArrayList<String>();
 		itemIds.add("HOT011");
 		itemIds.add("DES006");
@@ -48,7 +48,7 @@ class TestDisplayController {
 	}
 
 	@Test
-	final void testRemoveTopWaitingQueue() {
+	public void testRemoveTopWaitingQueue() {
 		ArrayList<String> itemIds = new ArrayList<String>();
 		itemIds.add("HOT011");
 		itemIds.add("DES006");
@@ -62,7 +62,7 @@ class TestDisplayController {
 	}
 	
 	@Test
-	final void testClearServer() {
+	public void testClearServer() {
 		ArrayList<String> itemIds = new ArrayList<String>();
 		itemIds.add("HOT011");
 		itemIds.add("DES006");
@@ -74,12 +74,12 @@ class TestDisplayController {
 	}
 
 	@Test
-	final void testIsEmpty() {
+	public void testIsEmpty() {
 		assertTrue(displayController.isWaitingQueueEmpty());
 	}
 
 	@Test
-	final void testAddWaitingQueue() {
+	public void testAddWaitingQueue() {
 		ArrayList<String> itemIds = new ArrayList<String>();
 		itemIds.add("HOT011");
 		itemIds.add("DES006");
@@ -91,7 +91,7 @@ class TestDisplayController {
 	}
 
 	@Test
-	final void testAddFirstWaitingQueue() {
+	public void testAddFirstWaitingQueue() {
 		ArrayList<String> itemIds = new ArrayList<String>();
 		itemIds.add("HOT011");
 		itemIds.add("DES006");
@@ -104,12 +104,12 @@ class TestDisplayController {
 	}
 
 	@Test
-	final void testUpdateView() {
+	public void testUpdateView() {
 		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
-	final void testAddCollectionQueue() {
+	public void testAddCollectionQueue() {
 		ArrayList<String> itemIds = new ArrayList<String>();
 		itemIds.add("HOT011");
 		itemIds.add("DES006");
@@ -121,7 +121,7 @@ class TestDisplayController {
 	}
 
 	@Test
-	final void testRemoveTopCollectionQueue() {
+	public void testRemoveTopCollectionQueue() {
 		ArrayList<String> itemIds = new ArrayList<String>();
 		itemIds.add("HOT011");
 		itemIds.add("DES006");
@@ -135,7 +135,7 @@ class TestDisplayController {
 	}
 
 	@Test
-	final void testEmptyCollectionQueue() {
+	public void testEmptyCollectionQueue() {
 		ArrayList<String> itemIds = new ArrayList<String>();
 		itemIds.add("HOT011");
 		itemIds.add("DES006");
