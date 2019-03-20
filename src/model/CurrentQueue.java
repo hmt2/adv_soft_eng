@@ -16,6 +16,11 @@ import coffeShop.Menu;
 
 public class CurrentQueue implements Subject {
 
+	/** waitingQueue and collectionQueue are Deque (Double-Ended Queue) 
+	 *  a Deque allows us to add Customers at the tail and at the head of the queue
+	 *  Adding a customer at the head is necessary for adding an order as a priority
+	 * 
+	 */
 	private Deque<Customer> waitingQueue;
 	private Deque<Customer> collectionQueue;
 	private Customer topQueue;
@@ -36,6 +41,10 @@ public class CurrentQueue implements Subject {
 		waitingQueue.add(cust);
 	}
 	
+	/** addFirstWaitingQueue : adds a customer in priority at the head of the waitingQueue
+	 * 
+	 * @param cust
+	 */
 	public void addFirstWaitingQueue(Customer cust) {
 		waitingQueue.addFirst(cust);
 	}

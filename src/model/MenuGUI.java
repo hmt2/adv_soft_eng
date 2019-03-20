@@ -142,9 +142,8 @@ public class MenuGUI extends JFrame implements ActionListener
 			switchMenu();
 		}
 
-		//where link to other classes!
-		//need to create customer
-		//need to create orders for each item with the newly created customer id
+		// if the button "buy" is selected, getPriority is called before placing the order
+		// getPriority is to see if the customer wants to have his order in priority
 		if(e.getSource() == buy) {
 			isStudentDiscount = false;
 			getPriority();
@@ -207,8 +206,6 @@ public class MenuGUI extends JFrame implements ActionListener
 		updateGUI();   
 	}
 
-
-
 	public void clearOrder() throws IdNotContainedException {
 		currentOrder.clear();
 
@@ -230,9 +227,6 @@ public class MenuGUI extends JFrame implements ActionListener
 
 		updateGUI();   
 	}
-
-
-
 
 	private void getQuantityGUI(String command) {
 		String val = null;
@@ -269,6 +263,11 @@ public class MenuGUI extends JFrame implements ActionListener
 		}
 	}
 
+	/** getPriority : opens an Option Dialog where the customer has to choose if he wants to have his order in priority
+	 *  if yes, the boolean priority is set as true
+	 *  if no, the boolean priority is set as false
+	 *  
+	 */
 	private void getPriority() {
 		  int val = -1;
 		  try {
@@ -277,28 +276,33 @@ public class MenuGUI extends JFrame implements ActionListener
 		  } catch (HeadlessException e) {
 			  e.printStackTrace();
 		  }
-			 
-		  //if val is null then cancel has been selected
+		  // if yes has been selected
 		  if(val == 0){
 			  priority = true;
 		  }
+		  // if no has been selected
 		  else if (val == 1){
 			  priority = false;
 		  }
-		  System.out.println(priority);
 	}
 	
-	//need to update quantities
+	/** placeOrder : calls the method placeOrder (CoffeShopInterface)
+	 * CoffeShopInterface.placeOrder(Map<String, Integer> currentOrder, boolean priority)
+	 * 
+	 * @param priority
+	 * @throws DuplicateIDException
+	 * @throws IdNotContainedException
+	 */
 	private void placeOrder(boolean priority) throws DuplicateIDException, IdNotContainedException {
 		try {
 	          interaction.placeOrder(currentOrder, priority);
 			  JOptionPane.showMessageDialog(this, "Order placed");
 
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				JOptionPane.showMessageDialog(this, "Internal error, retry");
 
 		  }
+		// clears the currentOrder before returning to the menu
 		currentOrder.clear();
 		switchMenu(); 
 	}
