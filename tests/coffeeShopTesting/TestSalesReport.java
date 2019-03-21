@@ -1,6 +1,8 @@
 package coffeeShopTesting;
 
-import coffeShop.*;
+import ordering.Menu;
+import output.SalesReport;
+import preparing.*;
 
 import static org.junit.Assert.*;
 
@@ -8,9 +10,6 @@ import java.io.File;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import coffeShop.Menu;
-import coffeShop.SalesReport;
 
 public class TestSalesReport {
 	private Menu menu;

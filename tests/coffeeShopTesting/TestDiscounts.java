@@ -11,7 +11,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import coffeShop.*;
+import discounts.Discount;
+import preparing.*;
 
 public class TestDiscounts {
 	Discount ds;
