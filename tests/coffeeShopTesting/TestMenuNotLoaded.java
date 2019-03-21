@@ -1,7 +1,9 @@
 package coffeeShopTesting;
 
-import coffeShop.*;
 import exceptions.IdNotContainedException;
+import ordering.Item;
+import ordering.Menu;
+import preparing.*;
 
 import static org.junit.Assert.*;
 

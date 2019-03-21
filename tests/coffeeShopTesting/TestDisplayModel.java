@@ -9,29 +9,30 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import coffeShop.*;
 import interfaces.Observer;
-import model.CurrentQueue;
+import model.DisplayModel;
+import ordering.Customer;
+import preparing.*;
 import views.DisplayWaitingQueue; 
 
-public class TestCurrentQueue {
+public class TestDisplayModel {
 	
-	private CurrentQueue currentQueue;
+	private DisplayModel displayModel;
 	private Customer[] serverCust = new Customer[4];
 	
 	private List<Observer> registeredObservers;
 
 	@Before
 	public void setUp() throws Exception {
-		currentQueue = new CurrentQueue();
+		displayModel = new DisplayModel();
 		registeredObservers = new LinkedList<Observer>();
 	}
 
 	@Test
 	public void testCurrentQueue() {
 		int sizeWaitingQueue, sizeCollectionQueue = 0;
-		sizeWaitingQueue = currentQueue.getSizeWaitingQueue();
-		sizeCollectionQueue = currentQueue.getSizeCollectionQueue();
+		sizeWaitingQueue = displayModel.getSizeWaitingQueue();
+		sizeCollectionQueue = displayModel.getSizeCollectionQueue();
 		assertEquals(sizeWaitingQueue, 0);
 		assertEquals(sizeCollectionQueue, 0);
 	}
@@ -43,8 +44,8 @@ public class TestCurrentQueue {
 		itemIds.add("DES006");
 
 		Customer customer1 = new Customer(120, 25.6f, 22.4f,itemIds, false);
-		currentQueue.addWaitingQueue(customer1);
-		int sizeWaitingQueue = currentQueue.getSizeWaitingQueue();
+		displayModel.addWaitingQueue(customer1);
+		int sizeWaitingQueue = displayModel.getSizeWaitingQueue();
 		assertEquals(sizeWaitingQueue, 1);
 	}
 
@@ -55,10 +56,10 @@ public class TestCurrentQueue {
 		itemIds.add("DES006");
 
 		Customer customer1 = new Customer(120, 25.6f, 22.4f,itemIds, false);
-		currentQueue.addWaitingQueue(customer1);
+		displayModel.addWaitingQueue(customer1);
 		Customer customer2 = new Customer(121, 30.2f, 28.4f,itemIds, true);
-		currentQueue.addFirstWaitingQueue(customer2);
-		assertEquals(currentQueue.peekWaitingQueue(), customer2);
+		displayModel.addFirstWaitingQueue(customer2);
+		assertEquals(displayModel.peekWaitingQueue(), customer2);
 	}
 
 	@Test
@@ -68,8 +69,8 @@ public class TestCurrentQueue {
 		itemIds.add("DES006");
 
 		Customer customer1 = new Customer(120, 25.6f, 22.4f,itemIds, false);
-		currentQueue.addCollectionQueue(customer1);
-		int sizeCollectionQueue = currentQueue.getSizeCollectionQueue();
+		displayModel.addCollectionQueue(customer1);
+		int sizeCollectionQueue = displayModel.getSizeCollectionQueue();
 		assertEquals(sizeCollectionQueue, 1);
 	}
 
@@ -81,10 +82,10 @@ public class TestCurrentQueue {
 
 		Customer customer1 = new Customer(120, 25.6f, 22.4f,itemIds, false);
 		Customer customer2 = new Customer(121, 30.2f, 28.4f,itemIds, true);
-		currentQueue.addCollectionQueue(customer1);
-		currentQueue.addCollectionQueue(customer2);
-		currentQueue.removeTopCollectionQueue();
-		assertEquals(currentQueue.peekCollectionQueue(), customer2);
+		displayModel.addCollectionQueue(customer1);
+		displayModel.addCollectionQueue(customer2);
+		displayModel.removeTopCollectionQueue();
+		assertEquals(displayModel.peekCollectionQueue(), customer2);
 	}
 
 	@Test
@@ -93,8 +94,8 @@ public class TestCurrentQueue {
 		itemIds.add("HOT011");
 		itemIds.add("DES006");
 		Customer customer1 = new Customer(120, 25.6f, 22.4f,itemIds, false);
-		currentQueue.setServerCustomer(2, customer1);
-		assertEquals(currentQueue.getServerCustomer(2), customer1);
+		displayModel.setServerCustomer(2, customer1);
+		assertEquals(displayModel.getServerCustomer(2), customer1);
 	}
 	@Test
 	public void testEmptyCollectionQueue() {
@@ -104,12 +105,12 @@ public class TestCurrentQueue {
 
 		Customer customer1 = new Customer(120, 25.6f, 22.4f,itemIds, false);
 		Customer customer2 = new Customer(121, 30.2f, 28.4f,itemIds, true);
-		currentQueue.addCollectionQueue(customer1);
-		currentQueue.addCollectionQueue(customer2);
-		int sizeCollectionQueue = currentQueue.getSizeCollectionQueue();
+		displayModel.addCollectionQueue(customer1);
+		displayModel.addCollectionQueue(customer2);
+		int sizeCollectionQueue = displayModel.getSizeCollectionQueue();
 		assertEquals(sizeCollectionQueue, 2);
-		currentQueue.emptyCollectionQueue();
-		sizeCollectionQueue = currentQueue.getSizeCollectionQueue();
+		displayModel.emptyCollectionQueue();
+		sizeCollectionQueue = displayModel.getSizeCollectionQueue();
 		assertEquals(sizeCollectionQueue, 0);
 	} 
 
@@ -121,10 +122,10 @@ public class TestCurrentQueue {
 
 		Customer customer1 = new Customer(120, 25.6f, 22.4f,itemIds, false);
 		Customer customer2 = new Customer(121, 30.2f, 28.4f,itemIds, true);
-		currentQueue.addWaitingQueue(customer1);
-		currentQueue.addWaitingQueue(customer2);
-		currentQueue.removeTopWaitingQueue();
-		assertEquals(currentQueue.peekWaitingQueue(), customer2);
+		displayModel.addWaitingQueue(customer1);
+		displayModel.addWaitingQueue(customer2);
+		displayModel.removeTopWaitingQueue();
+		assertEquals(displayModel.peekWaitingQueue(), customer2);
 	}
 
 	@Test
@@ -135,14 +136,14 @@ public class TestCurrentQueue {
 
 		Customer customer1 = new Customer(120, 25.6f, 22.4f,itemIds, false);
 		Customer customer2 = new Customer(121, 30.2f, 28.4f,itemIds, true);
-		currentQueue.addWaitingQueue(customer1);
-		currentQueue.addWaitingQueue(customer2);
-		assertEquals(currentQueue.getTopOfWaitingQueue(), currentQueue.peekWaitingQueue());
+		displayModel.addWaitingQueue(customer1);
+		displayModel.addWaitingQueue(customer2);
+		assertEquals(displayModel.getTopOfWaitingQueue(), displayModel.peekWaitingQueue());
 	}
 
 	@Test
 	public void testIsWaitingQueueEmpty() {
-		assertTrue(currentQueue.isWaitingQueueEmpty());
+		assertTrue(displayModel.isWaitingQueueEmpty());
 	}
 
 	@Test
@@ -152,9 +153,9 @@ public class TestCurrentQueue {
 		itemIds.add("DES006");
 
 		Customer customer1 = new Customer(120, 25.6f, 22.4f,itemIds, false);
-		currentQueue.addWaitingQueue(customer1);
+		displayModel.addWaitingQueue(customer1);
 		String expected = "Customer id: 120\n";
-		assertEquals(expected, currentQueue.printWaitingQueue());
+		assertEquals(expected, displayModel.printWaitingQueue());
 	}
 
 	@Test
@@ -164,9 +165,9 @@ public class TestCurrentQueue {
 		itemIds.add("DES006");
 
 		Customer customer1 = new Customer(120, 25.6f, 22.4f,itemIds, false);
-		currentQueue.addCollectionQueue(customer1);
+		displayModel.addCollectionQueue(customer1);
 		String expected = "Customer id: 120\n";
-		assertEquals(expected, currentQueue.printCollectionQueue());
+		assertEquals(expected, displayModel.printCollectionQueue());
 	}
 
 	@Test
@@ -175,10 +176,10 @@ public class TestCurrentQueue {
 		itemIds.add("HOT011");
 		itemIds.add("DES006");
 		Customer customer1 = new Customer(120, 25.6f, 22.4f,itemIds, false);
-		currentQueue.setServerCustomer(2, customer1);
-		assertEquals(currentQueue.getServerCustomer(2), customer1);
-		currentQueue.clearServer(2);
-		assertEquals(currentQueue.getServerCustomer(2), null);
+		displayModel.setServerCustomer(2, customer1);
+		assertEquals(displayModel.getServerCustomer(2), customer1);
+		displayModel.clearServer(2);
+		assertEquals(displayModel.getServerCustomer(2), null);
 	}
 
 	@Test
@@ -197,18 +198,18 @@ public class TestCurrentQueue {
 		Customer customer8 = new Customer(127, 25.6f, 22.4f, itemIds, false);
 		Customer customer9 = new Customer(128, 25.6f, 22.4f, itemIds, false);
 		Customer customer10 = new Customer(129, 25.6f, 22.4f, itemIds, false);
-		currentQueue.addWaitingQueue(customer1);
-		currentQueue.addWaitingQueue(customer2);
-		currentQueue.addWaitingQueue(customer3);
-		currentQueue.addWaitingQueue(customer4);
-		currentQueue.addWaitingQueue(customer5);
-		currentQueue.addWaitingQueue(customer6);
-		currentQueue.addWaitingQueue(customer7);
-		currentQueue.addWaitingQueue(customer8);
-		currentQueue.addWaitingQueue(customer9);
-		currentQueue.addWaitingQueue(customer10);
+		displayModel.addWaitingQueue(customer1);
+		displayModel.addWaitingQueue(customer2);
+		displayModel.addWaitingQueue(customer3);
+		displayModel.addWaitingQueue(customer4);
+		displayModel.addWaitingQueue(customer5);
+		displayModel.addWaitingQueue(customer6);
+		displayModel.addWaitingQueue(customer7);
+		displayModel.addWaitingQueue(customer8);
+		displayModel.addWaitingQueue(customer9);
+		displayModel.addWaitingQueue(customer10);
 		String expected = "Customer id: 120\nCustomer id: 121\nCustomer id: 122\nCustomer id: 123\nCustomer id: 124\nCustomer id: 125\nCustomer id: 126\nCustomer id: 127\n";
-		assertEquals(expected, currentQueue.printQueue(currentQueue.getWaitingQueue()));
+		assertEquals(expected, displayModel.printQueue(displayModel.getWaitingQueue()));
 	}
 
 	@Test
@@ -227,18 +228,18 @@ public class TestCurrentQueue {
 		Customer customer8 = new Customer(127, 25.6f, 22.4f, itemIds, false);
 		Customer customer9 = new Customer(128, 25.6f, 22.4f, itemIds, false);
 		Customer customer10 = new Customer(129, 25.6f, 22.4f, itemIds, false);
-		currentQueue.addCollectionQueue(customer1);
-		currentQueue.addCollectionQueue(customer2);
-		currentQueue.addCollectionQueue(customer3);
-		currentQueue.addCollectionQueue(customer4);
-		currentQueue.addCollectionQueue(customer5);
-		currentQueue.addCollectionQueue(customer6);
-		currentQueue.addCollectionQueue(customer7);
-		currentQueue.addCollectionQueue(customer8);
-		currentQueue.addCollectionQueue(customer9);
-		currentQueue.addCollectionQueue(customer10);
+		displayModel.addCollectionQueue(customer1);
+		displayModel.addCollectionQueue(customer2);
+		displayModel.addCollectionQueue(customer3);
+		displayModel.addCollectionQueue(customer4);
+		displayModel.addCollectionQueue(customer5);
+		displayModel.addCollectionQueue(customer6);
+		displayModel.addCollectionQueue(customer7);
+		displayModel.addCollectionQueue(customer8);
+		displayModel.addCollectionQueue(customer9);
+		displayModel.addCollectionQueue(customer10);
 		String expected = "Customer id: 120\nCustomer id: 121\nCustomer id: 122\nCustomer id: 123\nCustomer id: 124\nCustomer id: 125\nCustomer id: 126\nCustomer id: 127\n";
-		assertEquals(expected, currentQueue.printQueue(currentQueue.getCollectionQueue()));
+		assertEquals(expected, displayModel.printQueue(displayModel.getCollectionQueue()));
 	}
 	
 	@Test
@@ -248,10 +249,10 @@ public class TestCurrentQueue {
 		itemIds.add("DES006");
 
 		Customer customer1 = new Customer(120, 25.6f, 22.4f, itemIds, false);
-		currentQueue.addWaitingQueue(customer1);
+		displayModel.addWaitingQueue(customer1);
 		String expected = "id: 120\nitems: Lrg Mocha\nBlueberry Muffin" + "\n\n\n" + " total before discount: £25.6\n total after discount: £22.4\n";
-		System.out.println(currentQueue.showCustomer(customer1));
-		assertEquals(expected, currentQueue.showCustomer(customer1));
+		System.out.println(displayModel.showCustomer(customer1));
+		assertEquals(expected, displayModel.showCustomer(customer1));
 	}
 
 	@Test

@@ -6,9 +6,10 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-
-import coffeShop.*;
 import exceptions.DuplicateIDException;
+import ordering.Customer;
+import ordering.CustomerList;
+import preparing.*;
 
 public class CustomerListTest {
 
@@ -38,7 +39,7 @@ public class CustomerListTest {
 		ArrayList<String> itemIds = new ArrayList<String>();
 		itemIds.add("HOT011");
 		itemIds.add("COL012");
-		coffeShop.Customer customer1 = new Customer(120, 25.6f, 25.6f,itemIds, false) ;
+		ordering.Customer customer1 = new Customer(120, 25.6f, 25.6f,itemIds, false) ;
 		CustomerList customerList = new CustomerList() ;
 		customer1.setDiscount(false);
 		customerList.displayBill(customer1);
@@ -50,7 +51,7 @@ public class CustomerListTest {
 		ArrayList<String> itemIds = new ArrayList<String>();
 		itemIds.add("HOT011");
 		itemIds.add("DES006");
-		coffeShop.Customer customer1 = new Customer(120, 25.6f, 22.4f,itemIds, false) ;
+		ordering.Customer customer1 = new Customer(120, 25.6f, 22.4f,itemIds, false) ;
 		CustomerList customerList = new CustomerList() ;
 		customerList.displayBill(customer1);
 
@@ -105,7 +106,7 @@ public class CustomerListTest {
 		ArrayList<String> itemIds = new ArrayList<String>();
 		itemIds.add("HOT011");
 		itemIds.add("DES006");
-		coffeShop.Customer customer1 = new Customer(120, 25.6f, 22.4f,itemIds, false) ;
+		ordering.Customer customer1 = new Customer(120, 25.6f, 22.4f,itemIds, false) ;
 		CustomerList customerList = new CustomerList() ;
 		customerList.findCustomerId(121);
 

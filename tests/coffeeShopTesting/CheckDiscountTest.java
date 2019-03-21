@@ -11,24 +11,27 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import coffeShop.*;
 import discounts.AllDiscounts;
 import discounts.Discount;
 import discounts.DiscountCheck;
 import exceptions.DuplicateIDException;
 import exceptions.IdNotContainedException;
+import ordering.ProcessOrder;
+import ordering.Item;
+import ordering.Menu;
+import preparing.*;
 
 public class CheckDiscountTest {
 	private AllDiscounts allDiscounts;
 	private DiscountCheck discountCheck;
 	private Menu menu;
-	CoffeShopInterface coffeShopInterface;
+	ProcessOrder coffeShopInterface;
 	@Before
 	public void setUp() throws DuplicateIDException, IdNotContainedException { //this is to make sure that the test can add well! What to put in the setup method? one setup for all tests?
 		allDiscounts = new AllDiscounts();
 	    discountCheck = new DiscountCheck(allDiscounts.loadDiscounts());
 	    menu = new Menu();
-	    coffeShopInterface = new CoffeShopInterface(menu); 
+	    coffeShopInterface = new ProcessOrder(menu); 
 	}
 	
 	@Test

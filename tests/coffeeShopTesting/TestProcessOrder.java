@@ -17,24 +17,16 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-
-
-
-
-
-
-
-
-
-
-
-
-import coffeShop.*;
 import exceptions.DuplicateIDException;
 import exceptions.IdNotContainedException;
+import ordering.AllOrders;
+import ordering.ProcessOrder;
+import ordering.CustomerList;
+import ordering.Menu;
+import preparing.*;
 
-public class TestInterface {
-	private CoffeShopInterface shop;
+public class TestProcessOrder {
+	private ProcessOrder processOrder;
 	private Menu menu;
 	AllOrders allorders;
 	private Map<String, Integer> currentOrder;
@@ -42,13 +34,12 @@ public class TestInterface {
 
 	@Before
 	public void setUp() throws DuplicateIDException, IdNotContainedException { //this is to make sure that the test can add well! What to put in the setup method? one setup for all tests?
-		shop = new CoffeShopInterface(new Menu());
-		customerList = shop.getCustomerList();
-		allorders = shop.getAllOrders();
-		menu = shop.getMenu();
+		processOrder = new ProcessOrder(new Menu());
+		customerList = processOrder.getCustomerList();
+		allorders = processOrder.getAllOrders();
+		menu = processOrder.getMenu();
 		currentOrder = new LinkedHashMap<String, Integer>();
 		currentOrder.put("DES006", 2);
-
 	}
 	
 	//Test that the right number of customers is created when adding the previous orders
@@ -67,10 +58,10 @@ public class TestInterface {
 	public void testPlaceOrder() throws DuplicateIDException, IdNotContainedException {  
 
 		currentOrder.put("DES001", 1);
-		shop.displayBill(currentOrder, false); //required in order to calculate the bills within the class CoffeShopInterface
+		processOrder.displayBill(currentOrder, false); //required in order to calculate the bills within the class CoffeShopInterface
 		int initialOrders= allorders.getNumOrders(); //initial size of allOrders
 		int inCustSize = customerList.size(); //initial customer size
-		shop.placeOrder(currentOrder, false);
+		processOrder.placeOrder(currentOrder, false);
 		int finCustSize = customerList.size(); //sizes of customerList and allorders after placing a new order
 		int finalOrders = allorders.getNumOrders();
 		int nOrdersExpected = 0;
@@ -89,7 +80,7 @@ public class TestInterface {
 	public void testUpdateQuantity() throws IdNotContainedException  { 
 		int initialQuantity = menu.findItemId("DES006").getQuantity();
 	    int expectedQuantity = 2;
-	    shop.updateItemQuantity(currentOrder);
+	    processOrder.updateItemQuantity(currentOrder);
 	    int actualQuantity = menu.findItemId("DES006").getQuantity();
 	    String message ="Value updated succesfully";
 		assertEquals(message, actualQuantity, expectedQuantity ); 
@@ -100,7 +91,7 @@ public class TestInterface {
 	
 	@After
 	public void tearDown() throws DuplicateIDException, IdNotContainedException {
-		shop = new CoffeShopInterface(new Menu());
+		processOrder = new ProcessOrder(new Menu());
 	}
 	
 	

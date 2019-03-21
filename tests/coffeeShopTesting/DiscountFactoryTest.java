@@ -11,9 +11,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import coffeShop.*;
 import discounts.Discount;
 import discounts.DiscountFactory;
+import preparing.*;
 
 public class DiscountFactoryTest {
 	String seconItem1 = "ION01";
