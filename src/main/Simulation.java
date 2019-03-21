@@ -91,7 +91,6 @@ public class Simulation {
 		WaitingQueue.getInstance().setOnOff(true);
 		System.out.println("Cafeteria is closed");
 		
-		
 	
 	}
 
@@ -102,11 +101,6 @@ public class Simulation {
 		AllDiscounts allDiscounts = new AllDiscounts();
 		final DiscountCheck discountCheck = new DiscountCheck(allDiscounts.loadDiscounts());
 
-		try {
-			WaitingQueue.getInstance().addPreviousOrders(discountCheck, true);
-		} catch (DuplicateIDException | IdNotContainedException e) {
-			e.printStackTrace();
-		}
 		int numServer = 4;
 		try {
 			showInterface();

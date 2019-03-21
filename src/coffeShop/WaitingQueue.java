@@ -73,7 +73,6 @@ public class WaitingQueue extends CustomerList{
 				} 
 			}
 		}
-
 	}
 
 	//add new customer to the queue
