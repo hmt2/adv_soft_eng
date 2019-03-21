@@ -28,7 +28,7 @@ public class WaitingQueue extends CustomerList{
 	private static Map<Customer, Boolean> completedOrder = new HashMap<Customer,Boolean>();
 
 	private static Object lock;
-
+    private AllOrders allorders  = new AllOrders();
 	//create lock to apply in methods to make them thread safe
 	private WaitingQueue(){
 		super();
@@ -53,7 +53,7 @@ public class WaitingQueue extends CustomerList{
 	//method to gradually add previous orders from orders.txt to the main queue
 	public void addPreviousOrders(DiscountCheck discountCheck, boolean isStudentDiscount) throws DuplicateIDException, IdNotContainedException{
 		synchronized (lock) { // to make it thread safe
-			TreeMap<Integer,ArrayList<String>> cust = AllOrders.loadOrders();
+			TreeMap<Integer,ArrayList<String>> cust = allorders.loadOrders();
 			Set<Integer> keys = cust.keySet();
 			for(Integer key: keys){
 				float totalBeforeDiscount = discountCheck.calcBillBeforeDiscount(cust.get(key));

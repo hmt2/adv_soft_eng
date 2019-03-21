@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -38,7 +40,7 @@ public class AllOrders {
 	 *  it returns a TreeMap of customers
 	 *  @return TreeMap<Integer, ArrayList<String>>
 	 */
-	public static TreeMap<Integer,ArrayList<String>> loadOrders() {
+	public  TreeMap<Integer,ArrayList<String>> loadOrders() {
 		// initialization : customers as a TreeMap and orders as a LinkedHashMap
 		TreeMap<Integer,ArrayList<String>> customers = new TreeMap<Integer,ArrayList<String>>();
 		LinkedHashMap<Integer, Order> entries = new LinkedHashMap<Integer, Order>();
@@ -46,7 +48,10 @@ public class AllOrders {
 		String data [] = new String[4];
 		try {
 			// try to open the file orders.txt
-			buff = new BufferedReader(new FileReader("orders.txt"));
+		    InputStream is = getClass().getResourceAsStream("orders.txt");
+		    InputStreamReader isr = new InputStreamReader(is);
+			buff = new BufferedReader(isr);
+	
 			String inputLine = null;
 
 			inputLine = buff.readLine();
