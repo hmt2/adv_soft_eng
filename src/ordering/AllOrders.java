@@ -2,13 +2,11 @@ package ordering;
 
 import java.io.*;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Map.Entry;
 
 import exceptions.InvalidIdException;
-
-import java.util.Set;
-import java.util.TreeMap;
 
 public class AllOrders {
 
@@ -35,7 +33,8 @@ public class AllOrders {
 		String data [] = new String[4];
 		try {
 			// try to open the file orders.txt
-			buff = new BufferedReader(new FileReader("src/ordering/orders.txt"));
+			
+			buff = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("orders.txt")));
 	
 			String inputLine = null;
 
@@ -114,15 +113,15 @@ public class AllOrders {
 		return allOrders.containsKey(orderId);
 	}
 
-	/** addOrder : adds a new Order in the orders.txt 
-	 *  it also loads the allOrders LinkedHashMap again (it adds the new order to the LinkedHashMap)
+	/** addOrder : adds a new Order and adds it in the LinkedHashMap allOrders
 	 *  as stated in the requirements, if a customer has ordered more than one item, it is divided in different orders
 	 * 
 	 * @param CustomerId
 	 * @param currentOrder
+	 * @throws InvalidIdException 
 	 */
 	@SuppressWarnings("null")
-	public void addOrder(Integer CustomerId, ArrayList<String> currentOrder) {
+	public void addOrder(Integer CustomerId, ArrayList<String> currentOrder) throws InvalidIdException {
 		int nb_orders = currentOrder.size();
 		boolean check;
 		int orderIds[] = new int[nb_orders];
@@ -142,22 +141,16 @@ public class AllOrders {
 		// we get the timestamp
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-		// we try to open the orders.txt file
-		try {
-			DataOutputStream stream = new DataOutputStream(new FileOutputStream("src/coffeShop/orders.txt", true));
-			for (int l = 0; l < nb_orders; l++) {
-				// Order object (orderId, customerId, itemId, timestamp)
-				Integer orderId = orderIds[l];
-				Integer customerId = CustomerId;
-				String itemId = currentOrder.get(l).trim();
-				// we add a line in the orders.txt
-				String data = "\n" + orderId.toString() + ", " + customerId.toString() + ", " + itemId.toString() + ", " + timestamp.toString();
-				stream.writeBytes(data);
-			}
-		} catch (IOException e) {
+		for (int l = 0; l < nb_orders; l++) {
+			// Order object (orderId, customerId, itemId, timestamp)
+			Integer orderId = orderIds[l];
+			Integer customerId = CustomerId;
+			String itemId = currentOrder.get(l).trim();
+			String data = "\n" + orderId.toString() + ", " + customerId.toString() + ", " + itemId.toString() + ", " + timestamp.toString();
+			Order o = new Order(orderId, customerId, itemId, timestamp);
+			allOrders.put(orderId, o);
+			
 		}
-		allOrders.clear();
-		loadOrders();
 	}
 
 	/** findOrderId : finds an order when we are given an Id
