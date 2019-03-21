@@ -25,6 +25,7 @@ public class DisplayWaitingQueue extends JPanel implements Observer {
 		update();
 	}
 
+	//Print the current waiting queue
 	public void update() {
 		String text = "Waiting Queue: \n\r" + modeldata.printWaitingQueue();
 		queueText.setText(text);

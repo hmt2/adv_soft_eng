@@ -11,18 +11,16 @@ public class DisplayGUI extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
 
-		// add queue display in the middle
+		// The display classes below do need to know about the model data.
+		//The waiting queue is displayed at the top
 		add(new DisplayWaitingQueue(model), BorderLayout.NORTH);
+		//The collection queue is displayed at the bottom
 		add(new DisplayCollectionQueue(model), BorderLayout.SOUTH);
-		// add server display at the bottom
+		//The servers are displayed in the centre
 		add(BorderLayout.CENTER, new DisplayServer(model));
 
 		setSize(1500, 1000);
 		setVisible(true);
 	}
 
-	// add listener to update button
-	public void addSetListener(ActionListener al) {
-
-	}
 }

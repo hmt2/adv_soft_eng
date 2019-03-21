@@ -23,6 +23,7 @@ public class WaitingQueue extends CustomerList{
 
 	private DisplayController controller = new DisplayController(view, model);
 
+	//the Log is placed inside the WaitingQueue which is a Singleton so that there is only ever 1 instance
 	private Log log = new Log();
 	private Deque<Integer> mainQueue = new LinkedList<>();
 	private static Map<Customer, Boolean> completedOrder = new HashMap<Customer,Boolean>();
@@ -32,7 +33,6 @@ public class WaitingQueue extends CustomerList{
 	private WaitingQueue(){
 		super();
 		lock = new Object();
-
 	}
 	
 	public void clearServer(int i) {
@@ -148,64 +148,50 @@ public class WaitingQueue extends CustomerList{
 		}
 	}
 
-
 	@Override
 	public void deleteCustomer(int customerId) {
-		// TODO Auto-generated method stub
 		synchronized (lock) { // to make it thread safe
 			super.deleteCustomer(customerId);
 		}
 	}
 
-
 	@Override
 	public Customer findCustomerId(int customerId) {
-		// TODO Auto-generated method stub
 		synchronized (lock) { // to make it thread safe
 			return super.findCustomerId(customerId);
 		}
 	}
 
-
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
 		synchronized (lock) { // to make it thread safe
 			return super.size();
 		}
 	}
 
-
 	@Override
 	public Map listByCustomerId() {
-		// TODO Auto-generated method stub
 		synchronized (lock) { // to make it thread safe
 			return super.listByCustomerId();
 		}
 	}
 
-
 	@Override
 	public void displayBill(Customer c) {
-		// TODO Auto-generated method stub
 		synchronized (lock) { // to make it thread safe
 			super.displayBill(c);
 		}
 	}
 
-
 	@Override
 	public void loadCustomers() {
-		// TODO Auto-generated method stub
 		synchronized (lock) { // to make it thread safe
 			super.loadCustomers();
 		}
 	}
 
-
 	@Override
 	public HashMap<Integer, Customer> customers() {
-		// TODO Auto-generated method stub
 		synchronized (lock) { // to make it thread safe
 			return super.customers();
 		}
@@ -246,8 +232,7 @@ public class WaitingQueue extends CustomerList{
 	}
 
 	public void emptyCollectionQueue() {
-		controller.emptyCollectionQueue();
-		
+		controller.emptyCollectionQueue();	
 	}
 }
 

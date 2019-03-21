@@ -16,17 +16,30 @@ import views.DisplayGUI;
 
 
 public class DisplayController {
-
+	/**
+	 * model displays the waiting queue, which customers are being served and the collection queue
+	 **/
 	private DisplayGUI view; 
-
+	/**
+	 * model stores info about which customers are in the waiting queue, which customers are being served and 
+	which customers are in the collection queue
+	 **/
 	private CurrentQueue model; 
 
-	public DisplayController(DisplayGUI vieww, CurrentQueue model) {
+	public DisplayController(DisplayGUI view, CurrentQueue model) {
 		this.model = model;
-		this.view = vieww;
-		// specify the listener for the view
+		this.view = view;
 	}
 
+	/**
+	 * The below methods control the model. The updateView method (which notifies observers) is only 
+	 * called in certain methods. This is so the GUI is updated slowly enough that the wanted 
+	 * information is displayed for long enough.
+	 **/
+	public void updateView(){				
+		model.notifyObservers();
+	}
+	
 	public Customer getTopOfWaitingQueue(){
 		return model.getTopOfWaitingQueue();
 	}
@@ -36,7 +49,6 @@ public class DisplayController {
 		updateView();
 	}
 	
-
 	public void removeTopWaitingQueue(){
 		model.removeTopWaitingQueue();
 	}
@@ -57,10 +69,6 @@ public class DisplayController {
 	public void addFirstWaitingQueue(Customer cust) {
 		model.addFirstWaitingQueue(cust);
 	}
-
-	public void updateView(){				
-		model.notifyObservers();
-	}
 	
 	public void addCollectionQueue(Customer cust) {
 		model.addCollectionQueue(cust);
@@ -76,9 +84,6 @@ public class DisplayController {
 
 	public void emptyCollectionQueue() {
 		model.emptyCollectionQueue();
-		model.notifyObservers();
-		
+		updateView();
 	}
-
-
 }
