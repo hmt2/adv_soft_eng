@@ -25,8 +25,8 @@ public class CurrentQueue implements Subject {
 	//topQueue is used to keep track of the Customer which was just removed from the waitingQueue 
 	private Customer topQueue;
 	//serverCust is used to store what customer each server is currently serving 
-	Customer[] serverCust = new Customer[4];
-	
+	private Customer[] serverCust = new Customer[4];
+	private boolean off = false;
 	private Menu menu;
 
 	public CurrentQueue() {
@@ -41,6 +41,14 @@ public class CurrentQueue implements Subject {
 			topQueue = cust;
 		}
 		waitingQueue.add(cust);
+	}
+	
+	public void setOnOff(boolean offSet) {
+		off = offSet;
+	}
+	
+	public boolean getOff() {
+		return off;
 	}
 	
 	/** addFirstWaitingQueue : adds a customer in priority at the head of the waitingQueue

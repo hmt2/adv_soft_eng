@@ -227,6 +227,10 @@ public class WaitingQueue extends CustomerList{
 		controller.setServerCustomer(i, cust);
 	}
 	
+	public void setOnOff(boolean off) {
+		controller.setOnOff(off);
+	}
+	
 	public int getSizeCollectionQueue() {
 		return controller.getSizeCollectionQueue();
 	}
