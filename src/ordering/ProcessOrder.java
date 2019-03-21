@@ -99,8 +99,9 @@ public class ProcessOrder {
 	 * @param priority
 	 * @throws DuplicateIDException
 	 * @throws IdNotContainedException
+	 * @throws InvalidIdException 
 	 */
-	public void placeOrder(Map<String, Integer> currentOrder, boolean priority) throws DuplicateIDException, IdNotContainedException {
+	public void placeOrder(Map<String, Integer> currentOrder, boolean priority) throws DuplicateIDException, IdNotContainedException, InvalidIdException {
 		updateItemQuantity(currentOrder);
 		int custId;
 		totalAllItemsBeforeDiscount += totalBeforeDiscount;
