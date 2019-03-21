@@ -1,12 +1,17 @@
 package main;
 
-import coffeShop.*;
-import model.CurrentQueue;
+import model.DisplayModel;
 import discounts.AllDiscounts;
 import discounts.DiscountCheck;
 import exceptions.DuplicateIDException;
 import exceptions.IdNotContainedException;
 import model.MenuGUI;
+import ordering.AllOrders;
+import ordering.ProcessOrder;
+import ordering.Customer;
+import ordering.CustomerList;
+import ordering.Menu;
+import preparing.*;
 
 import java.awt.ItemSelectable;
 import java.awt.event.ActionEvent;
@@ -15,18 +20,18 @@ import java.io.IOException;
 import java.util.*;
 
 
-public class Simulation {
-	private static CoffeShopInterface interaction;
+public class OrderingPreparing {
+	private static ProcessOrder interaction;
 	private static MenuGUI gui;
 	public static Menu menu;
 	public static Machine hob;
 	public static Machine drinkDispenser;
 	public static Machine toaster;
 	public static Machine coffeeMachine;
-	private CurrentQueue modeldata;
+	private DisplayModel modeldata;
 
 	public static void showInterface() throws DuplicateIDException, IdNotContainedException {
-		interaction = new CoffeShopInterface(menu);
+		interaction = new ProcessOrder(menu);
 	}
 	public static void showGUI() throws DuplicateIDException, IdNotContainedException {
 		gui = new MenuGUI(menu, interaction);
@@ -55,9 +60,9 @@ public class Simulation {
 		//that are free, assign them a new customer and initiate a thread
 		while(true) {
 
-			if(!servers.isEmpty() && !WaitingQueue.getInstance().isEmpty()) {
+			if(!servers.isEmpty() && !PreparationSingleton.getInstance().isEmpty()) {
 				Server s = servers.poll();
-				Customer c = WaitingQueue.getInstance().dequeue(); //get the first customer in the queue
+				Customer c = PreparationSingleton.getInstance().dequeue(); //get the first customer in the queue
 				if(c != null && s != null) {
 					s.serveCustomer(c);
 					Thread t = new Thread(s);
@@ -80,15 +85,15 @@ public class Simulation {
 				}
 			}
 			pause(500); 
-			if(WaitingQueue.getInstance().isEmpty() && busy.isEmpty()){
+			if(PreparationSingleton.getInstance().isEmpty() && busy.isEmpty()){
                 break;
 			
 			}
 		}
 		
 		  
-		WaitingQueue.getInstance().emptyCollectionQueue();
-		WaitingQueue.getInstance().setOnOff(true);
+		PreparationSingleton.getInstance().emptyCollectionQueue();
+		PreparationSingleton.getInstance().setOnOff(true);
 		System.out.println("Cafeteria is closed");
 		
 	

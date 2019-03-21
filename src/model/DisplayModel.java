@@ -3,13 +3,12 @@ package model;
 
 import interfaces.Observer;
 import interfaces.Subject;
+import ordering.Customer;
+import ordering.Menu;
 
 import java.util.*;
 
-import coffeShop.Customer;
-import coffeShop.Menu;
-
-public class CurrentQueue implements Subject {
+public class DisplayModel implements Subject {
 
 	/**
 	 * Within the display model there are 2 queues which are the waitingQueue (represents customers waiting 
@@ -29,7 +28,7 @@ public class CurrentQueue implements Subject {
 	private boolean off = false;
 	private Menu menu;
 
-	public CurrentQueue() {
+	public DisplayModel() {
 		waitingQueue = new LinkedList<>(); 
 		collectionQueue = new LinkedList<>();
 		menu = new Menu();

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 
-import coffeShop.Menu;
 import exceptions.IdNotContainedException;
+import ordering.Menu;
 
 public class DiscountCheck{
 

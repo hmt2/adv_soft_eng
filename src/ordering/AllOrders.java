@@ -1,4 +1,4 @@
-package coffeShop;
+package ordering;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -50,7 +50,7 @@ public class AllOrders {
 		String data [] = new String[4];
 		try {
 			// try to open the file orders.txt
-			buff = new BufferedReader(new FileReader("src/coffeShop/orders.txt"));
+			buff = new BufferedReader(new FileReader("src/ordering/orders.txt"));
 	
 			String inputLine = null;
 

@@ -7,8 +7,8 @@ import java.awt.event.WindowEvent;
 import java.util.Deque;
 import java.util.function.BooleanSupplier;
 
-import coffeShop.Customer;
-import model.CurrentQueue;
+import model.DisplayModel;
+import ordering.Customer;
 import views.DisplayGUI;
 
 
@@ -21,9 +21,9 @@ public class DisplayController {
 	 * model stores info about which customers are in the waiting queue, which customers are being served and 
 	which customers are in the collection queue
 	 **/
-	private CurrentQueue model; 
+	private DisplayModel model; 
 
-	public DisplayController(DisplayGUI vieww, CurrentQueue model) {
+	public DisplayController(DisplayGUI vieww, DisplayModel model) {
 		this.model = model;
 		this.view = vieww;
 		// specify the listener for the view

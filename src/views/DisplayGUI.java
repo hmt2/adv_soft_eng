@@ -5,12 +5,12 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import interfaces.Observer;
-import model.CurrentQueue;
+import model.DisplayModel;
 
 public class DisplayGUI extends JFrame implements Observer{
-	private CurrentQueue modeldata;
+	private DisplayModel modeldata;
 	
-	public DisplayGUI(CurrentQueue model) {
+	public DisplayGUI(DisplayModel model) {
 		this.modeldata = model;
 		model.registerObserver(this);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);

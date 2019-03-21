@@ -8,10 +8,10 @@ import java.util.Map;
 import java.util.Set;
 import javax.swing.*;
 
-import coffeShop.CoffeShopInterface;
-import coffeShop.Menu;
 import exceptions.DuplicateIDException;
 import exceptions.IdNotContainedException;
+import ordering.ProcessOrder;
+import ordering.Menu;
 
 /**
  * Simple GUI for StaffList application
@@ -19,7 +19,7 @@ import exceptions.IdNotContainedException;
 public class MenuGUI extends JFrame implements ActionListener
 {
 	private Menu menu;
-	private CoffeShopInterface interaction;
+	private ProcessOrder interaction;
 	private Map<String, Integer> currentOrder = new LinkedHashMap<String, Integer>();
 
 
@@ -42,7 +42,7 @@ public class MenuGUI extends JFrame implements ActionListener
 	JButton studentDiscount;
 
 
-	public MenuGUI( final Menu menu, final CoffeShopInterface interaction) throws DuplicateIDException, IdNotContainedException 
+	public MenuGUI( final Menu menu, final ProcessOrder interaction) throws DuplicateIDException, IdNotContainedException 
 	{
 		this.menu = menu;
 		this.interaction = interaction;

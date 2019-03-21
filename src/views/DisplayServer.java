@@ -5,18 +5,18 @@ import interfaces.Observer;
 import java.awt.*;
 import javax.swing.*;
 
-import model.CurrentQueue;
+import model.DisplayModel;
 
 //using observer pattern
 public class DisplayServer extends JPanel implements Observer {
-	private CurrentQueue modeldata;
+	private DisplayModel modeldata;
 	private JTextArea server1Text = new JTextArea("",15,20);
 	private JTextArea server2Text = new JTextArea("",15,20);
 	private JTextArea server3Text = new JTextArea("",15,20);
 	private JTextArea server4Text = new JTextArea("",15,20);
 	
 	// sets up general gui
-	public DisplayServer(CurrentQueue model) {
+	public DisplayServer(DisplayModel model) {
 		this.modeldata = model;
 		model.registerObserver(this);
 		Font serverFont = new Font("SansSerif", Font.BOLD, 14);
