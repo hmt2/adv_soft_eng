@@ -43,6 +43,10 @@ public class DisplayController {
 		updateView();
 	}
 	
+	public void setOnOff(boolean off){
+		model.setOnOff(off);
+		updateView();
+	}
 
 	public void removeTopWaitingQueue(){
 		model.removeTopWaitingQueue();
