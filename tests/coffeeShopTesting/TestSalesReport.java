@@ -1,7 +1,8 @@
 package coffeeShopTesting;
 
-import coffeShop.*;
+import ordering.Menu;
 import output.SalesReport;
+import preparing.*;
 
 import static org.junit.Assert.*;
 

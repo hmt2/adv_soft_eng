@@ -8,14 +8,15 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import coffeShop.*;
 import controllers.DisplayController;
-import model.CurrentQueue;
+import model.DisplayModel;
+import ordering.Customer;
+import preparing.*;
 import views.DisplayGUI; 
 
 public class TestDisplayController {
 	
-	private CurrentQueue model = new CurrentQueue(); 
+	private DisplayModel model = new DisplayModel(); 
 	private DisplayGUI view = new DisplayGUI(model); 
 	private DisplayController displayController;
 

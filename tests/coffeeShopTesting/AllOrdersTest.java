@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import coffeShop.*;
+import ordering.AllOrders;
+import ordering.Order;
+import preparing.*;
 
 
 public class AllOrdersTest {
@@ -24,7 +26,7 @@ public class AllOrdersTest {
 	@Before
 	public void setup() {
 		allOrders = new AllOrders();
-		AllOrders.loadOrders();
+		allOrders.loadOrders();
 	}
 	
 	@Test

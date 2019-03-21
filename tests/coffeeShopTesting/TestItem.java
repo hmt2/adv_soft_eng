@@ -4,8 +4,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import coffeShop.*;
 import exceptions.InvalidIdException;
+import ordering.Item;
+import preparing.*;
 
 import org.junit.Test;
 
