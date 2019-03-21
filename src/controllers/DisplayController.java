@@ -1,8 +1,3 @@
-/**
- * The MVC display example from the MVC lecture.
- * This class is the Controller, which responds to user interaction.
- */
-
 package controllers;
 
 import java.awt.event.ActionEvent;
@@ -18,9 +13,14 @@ import views.DisplayGUI;
 
 
 public class DisplayController {
-
+	/**
+	 * model displays the waiting queue, which customers are being served and the collection queue
+	 **/
 	private DisplayGUI view; 
-
+	/**
+	 * model stores info about which customers are in the waiting queue, which customers are being served and 
+	which customers are in the collection queue
+	 **/
 	private CurrentQueue model; 
 
 	public DisplayController(DisplayGUI vieww, CurrentQueue model) {
@@ -29,6 +29,11 @@ public class DisplayController {
 		// specify the listener for the view
 	}
 
+	/**
+	 * The below methods control the model. The updateView method (which notifies observers) is only 
+	 * called in certain methods. This is so the GUI is updated slowly enough that the wanted 
+	 * information is displayed for long enough.
+	 **/
 	public Customer getTopOfWaitingQueue(){
 		return model.getTopOfWaitingQueue();
 	}

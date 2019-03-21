@@ -23,6 +23,7 @@ public class WaitingQueue extends CustomerList{
 
 	private DisplayController controller = new DisplayController(view, model);
 
+	//the Log is placed inside the WaitingQueue which is a Singleton so that there is only ever 1 instance
 	private Log log = new Log();
 	private Deque<Integer> mainQueue = new LinkedList<>();
 	private static Map<Customer, Boolean> completedOrder = new HashMap<Customer,Boolean>();
