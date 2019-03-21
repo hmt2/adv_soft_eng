@@ -44,6 +44,7 @@ public class DisplayServer extends JPanel implements Observer {
 		update();
 	}
 
+	//Print which customers are being served by the 4 servers
 	public void update() {
 		String server1text = "Server 1: \n\r" + modeldata.showCustomer(modeldata.getServerCustomer(0));
 		server1Text.setText(server1text);

@@ -1,7 +1,3 @@
-/**
- * The MVC clock example from the MVC lecture.
- * This class is the Model, which holds the program's state.
- */
 
 package model;
 
@@ -15,14 +11,20 @@ import coffeShop.Menu;
 
 public class CurrentQueue implements Subject {
 
-	/** waitingQueue and collectionQueue are Deque (Double-Ended Queue) 
-	 *  a Deque allows us to add Customers at the tail and at the head of the queue
-	 *  Adding a customer at the head is necessary for adding an order as a priority
+	/**
+	 * Within the display model there are 2 queues which are the waitingQueue (represents customers waiting 
+	 * to be served) and the collectionQueue (represents customers whose orders have been completed).
 	 * 
-	 */
+	 *  Both waitingQueue and collectionQueue are Deque (Double-Ended Queue) so
+	 *  it's possible to add Customers to the tail and head of the queue. This allows a customer to be given
+	 *  priority by adding them to the head of waitingQueue.
+	 **/
 	private Deque<Customer> waitingQueue;
 	private Deque<Customer> collectionQueue;
+	
+	//topQueue is used to keep track of the Customer which was just removed from the waitingQueue 
 	private Customer topQueue;
+	//serverCust is used to store what customer each server is currently serving 
 	Customer[] serverCust = new Customer[4];
 	
 	private Menu menu;
@@ -33,6 +35,7 @@ public class CurrentQueue implements Subject {
 		menu = new Menu();
 	}
 
+	//Adds a customer to the waitingQueue
 	public void addWaitingQueue(Customer cust) {
 		if(waitingQueue.isEmpty()) {
 			topQueue = cust;
@@ -48,7 +51,7 @@ public class CurrentQueue implements Subject {
 		waitingQueue.addFirst(cust);
 	}
 	
-	
+	//Adds a customer to the collectionQueue
 	public void addCollectionQueue(Customer cust) {
 		collectionQueue.add(cust);
 	}
@@ -62,31 +65,36 @@ public class CurrentQueue implements Subject {
 		return waitingQueue.size();
 	}
 	
+	//Returns the size of the collectionQueue
 	public int getSizeCollectionQueue() {
 		return collectionQueue.size();
 	}
 	
+	//Removes the top element of the collectionQueue
 	public void removeTopCollectionQueue(){
 		if(!collectionQueue.isEmpty()) {
 			collectionQueue.remove();
 		}
 	}
 	
+	//Assigns a customer to a server
 	public void setServerCustomer(int i, Customer cust) {
 		serverCust[i] = cust;
 	}
 	
+	//Return the Customer being served by a specific server
 	public Customer getServerCustomer(int i) {
 		return serverCust[i];
 	}
 	
-	
+	//Empty the collectionQueue
 	public void emptyCollectionQueue(){
 		while(!collectionQueue.isEmpty()) {
 			collectionQueue.remove(); 
 		}
 	}
 	
+	//Remove the top element of the waitingQueue
 	public void removeTopWaitingQueue(){
 		if(!waitingQueue.isEmpty()) {
 			Customer cust = waitingQueue.remove();
@@ -94,14 +102,17 @@ public class CurrentQueue implements Subject {
 		}
 	}
 
+	//return the value which is top of Queue
 	public Customer getTopOfWaitingQueue(){
 		return topQueue;
 	}
 
+	//Check if waitingQueue is empty
 	public boolean isWaitingQueueEmpty(){
 		return waitingQueue.isEmpty();
 	}
 	
+	//Print respective queues
 	public String printWaitingQueue() {
 		return printQueue(waitingQueue);
 	}
@@ -110,6 +121,7 @@ public class CurrentQueue implements Subject {
 		return printQueue(collectionQueue);
 	}
 	
+	//Remove customer from a specific server
 	public void clearServer(int i) {
 		serverCust[i] = null;
 	}
@@ -130,6 +142,7 @@ public class CurrentQueue implements Subject {
 		return text;
 	}
 
+	//Get Customer info in a set format
 	public String showCustomer(Customer custPres) {
 		String custString = "";
 		if(!waitingQueue.isEmpty()) {

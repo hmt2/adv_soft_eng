@@ -25,6 +25,7 @@ public class DisplayCollectionQueue extends JPanel implements Observer {
 		update();
 	}
 
+	//Print the current collection queue
 	public void update() {
 		String text = "Collection Queue: \n\r" + modeldata.printCollectionQueue();
 		queueText.setText(text);
