@@ -6,16 +6,9 @@ import discounts.DiscountCheck;
 import exceptions.DuplicateIDException;
 import exceptions.IdNotContainedException;
 import model.MenuGUI;
-import ordering.AllOrders;
-import ordering.ProcessOrder;
-import ordering.Customer;
-import ordering.CustomerList;
-import ordering.Menu;
+import ordering.*;
 import preparing.*;
 
-import java.awt.ItemSelectable;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.*;
 

@@ -1,20 +1,12 @@
 package preparing;
 
 
-import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.Semaphore;
-
 import controllers.DisplayController;
-import discounts.Discount;
-import discounts.DiscountCheck;
-import exceptions.DuplicateIDException;
-import exceptions.IdNotContainedException;
+import discounts.*;
+import exceptions.*;
 import model.DisplayModel;
-import ordering.AllOrders;
-import ordering.Customer;
-import ordering.CustomerList;
+import ordering.*;
 import output.Log;
 import views.DisplayGUI;
 

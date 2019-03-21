@@ -1,12 +1,6 @@
 package controllers;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.Deque;
-import java.util.function.BooleanSupplier;
-
 import model.DisplayModel;
 import ordering.Customer;
 import views.DisplayGUI;
@@ -16,6 +10,7 @@ public class DisplayController {
 	/**
 	 * model displays the waiting queue, which customers are being served and the collection queue
 	 **/
+	@SuppressWarnings("unused")
 	private DisplayGUI view; 
 	/**
 	 * model stores info about which customers are in the waiting queue, which customers are being served and 

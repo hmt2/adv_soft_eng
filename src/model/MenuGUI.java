@@ -16,6 +16,7 @@ import ordering.Menu;
 /**
  * Simple GUI for StaffList application
  */
+@SuppressWarnings("serial")
 public class MenuGUI extends JFrame implements ActionListener
 {
 	private Menu menu;
