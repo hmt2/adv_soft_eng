@@ -47,21 +47,10 @@ public class CoffeShopInterface {
 
 	}
 	public void addPreviousOrders() throws DuplicateIDException, IdNotContainedException{
-		TreeMap<Integer,ArrayList<String>> cust = allorders.loadOrders();
-		Set<Integer> keys = cust.keySet();
-		for(Integer key: keys){
-			float totalBeforeDiscount = discountCheck.calcBillBeforeDiscount(cust.get(key));
-			float totalAfterDiscount = totalBeforeDiscount;
-			Discount ds = discountCheck.getDiscount(cust.get(key));
-			if(ds != null)
-				totalAfterDiscount = (float) discountCheck.calcAfterDiscount(cust.get(key),isStudentDiscount); //assume for the previous cases student is false
-				try {
-					customerList.addCustomer(cust.get(key), totalBeforeDiscount, totalAfterDiscount);
-				} catch (DuplicateIDException | IllegalArgumentException e1) {
-					// TODO Auto-generated catch block
-					continue; //continue to process the next customer
-
-				}
+		try {
+			WaitingQueue.getInstance().addPreviousOrders(discountCheck, true);
+		} catch (DuplicateIDException | IdNotContainedException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -121,16 +110,16 @@ public class CoffeShopInterface {
 	 */
 	public void placeOrder(Map<String, Integer> currentOrder, boolean priority) throws DuplicateIDException, IdNotContainedException {
 		updateItemQuantity(currentOrder);
-		int custId = customerList.addCustomer(discountCheck.toArrayList(currentOrder),totalBeforeDiscount,(float)totalAfterDiscount);
+		int custId;
 		totalAllItemsBeforeDiscount += totalBeforeDiscount;
 		totalAllItemsAfterDiscount += (float)totalAfterDiscount;
-		allorders.addOrder(custId, discountCheck.toArrayList(currentOrder));
         if(priority == false) {
-      	  WaitingQueue.getInstance().addCustomer(discountCheck.toArrayList(currentOrder), (float)totalBeforeDiscount, (float)totalAfterDiscount);
+        	custId = WaitingQueue.getInstance().addCustomer(discountCheck.toArrayList(currentOrder), (float)totalBeforeDiscount, (float)totalAfterDiscount);
         }
         else {
-      	  WaitingQueue.getInstance().addFirstCustomer(discountCheck.toArrayList(currentOrder), (float)totalBeforeDiscount, (float)totalAfterDiscount);
+        	custId = WaitingQueue.getInstance().addFirstCustomer(discountCheck.toArrayList(currentOrder), (float)totalBeforeDiscount, (float)totalAfterDiscount);
         }
+        allorders.addOrder(custId, discountCheck.toArrayList(currentOrder));
 	}
 
 	public void updateItemQuantity(Map<String, Integer> order) throws IdNotContainedException {

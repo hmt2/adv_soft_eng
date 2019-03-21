@@ -73,7 +73,6 @@ public class WaitingQueue extends CustomerList{
 				} 
 			}
 		}
-
 	}
 
 	//add new customer to the queue
@@ -225,10 +224,6 @@ public class WaitingQueue extends CustomerList{
 	
 	public void setServer(int i, Customer cust) {
 		controller.setServerCustomer(i, cust);
-	}
-	
-	public void setOnOff(boolean off) {
-		controller.setOnOff(off);
 	}
 	
 	public int getSizeCollectionQueue() {

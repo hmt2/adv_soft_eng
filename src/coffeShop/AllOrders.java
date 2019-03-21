@@ -2,7 +2,9 @@ package coffeShop;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -40,7 +42,7 @@ public class AllOrders {
 	 *  it returns a TreeMap of customers
 	 *  @return TreeMap<Integer, ArrayList<String>>
 	 */
-	public  TreeMap<Integer,ArrayList<String>> loadOrders() {
+	public TreeMap<Integer,ArrayList<String>> loadOrders() {
 		// initialization : customers as a TreeMap and orders as a LinkedHashMap
 		TreeMap<Integer,ArrayList<String>> customers = new TreeMap<Integer,ArrayList<String>>();
 		LinkedHashMap<Integer, Order> entries = new LinkedHashMap<Integer, Order>();
@@ -48,9 +50,7 @@ public class AllOrders {
 		String data [] = new String[4];
 		try {
 			// try to open the file orders.txt
-		    InputStream is = getClass().getResourceAsStream("orders.txt");
-		    InputStreamReader isr = new InputStreamReader(is);
-			buff = new BufferedReader(isr);
+			buff = new BufferedReader(new FileReader("src/coffeShop/orders.txt"));
 	
 			String inputLine = null;
 
@@ -138,7 +138,6 @@ public class AllOrders {
 	 */
 	@SuppressWarnings("null")
 	public void addOrder(Integer CustomerId, ArrayList<String> currentOrder) {
-		loadOrders();
 		int nb_orders = currentOrder.size();
 		boolean check;
 		int orderIds[] = new int[nb_orders];
@@ -147,6 +146,7 @@ public class AllOrders {
 		check = checkOrderId(i);
 		while(check) {
 			i += 1;
+			check = checkOrderId(i);
 		}
 		if (check == false) {
 			orderIds[0] = allOrders.size() + 1;
@@ -158,20 +158,20 @@ public class AllOrders {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
 		// we try to open the orders.txt file
-		try(FileWriter fw = new FileWriter("orders.txt", true);
-				BufferedWriter bw = new BufferedWriter(fw);
-				PrintWriter out = new PrintWriter(bw))
-		{
+		try {
+			DataOutputStream stream = new DataOutputStream(new FileOutputStream("src/coffeShop/orders.txt", true));
 			for (int l = 0; l < nb_orders; l++) {
 				// Order object (orderId, customerId, itemId, timestamp)
 				Integer orderId = orderIds[l];
 				Integer customerId = CustomerId;
 				String itemId = currentOrder.get(l).trim();
 				// we add a line in the orders.txt
-				out.append("\n" + orderId.toString() + ", " + customerId.toString() + ", " + itemId.toString() + ", " + timestamp.toString());
+				String data = "\n" + orderId.toString() + ", " + customerId.toString() + ", " + itemId.toString() + ", " + timestamp.toString();
+				stream.writeBytes(data);
 			}
 		} catch (IOException e) {
 		}
+		allOrders.clear();
 		loadOrders();
 	}
 
