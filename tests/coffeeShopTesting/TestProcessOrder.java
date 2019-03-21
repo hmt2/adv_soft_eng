@@ -42,39 +42,8 @@ public class TestProcessOrder {
 		currentOrder.put("DES006", 2);
 	}
 	
-	//Test that the right number of customers is created when adding the previous orders
-	@Test
-	public void testAddPreviousOrders() { 
-	    int expectedSize = allorders.loadOrders().size(); //The number of expected customers
-	    int actualSize = customerList.size(); //actual number of customers created
-	    String message ="Customers added succesfully";
-		assertEquals(message, expectedSize, actualSize);
-
-
-	}
 	
-	//Test that one new customer is added and the expected number of orders in allorders is increased when placing an order
-	@Test
-	public void testPlaceOrder() throws DuplicateIDException, IdNotContainedException {  
-
-		currentOrder.put("DES001", 1);
-		processOrder.displayBill(currentOrder, false); //required in order to calculate the bills within the class CoffeShopInterface
-		int initialOrders= allorders.getNumOrders(); //initial size of allOrders
-		int inCustSize = customerList.size(); //initial customer size
-		processOrder.placeOrder(currentOrder, false);
-		int finCustSize = customerList.size(); //sizes of customerList and allorders after placing a new order
-		int finalOrders = allorders.getNumOrders();
-		int nOrdersExpected = 0;
-		for(String key: currentOrder.keySet()){ 
-			nOrdersExpected+=currentOrder.get(key);
-		}
-		int nOrdersActual = finalOrders-initialOrders;
-		String message ="Orders added succesfully";
-		assertEquals(message, 1, finCustSize-inCustSize ); //make sure that the number of customers has increased by one
-		assertEquals(message, nOrdersActual, nOrdersExpected);
-
-
-	}
+	
 	//Test that quantity of the item is updated correctly when an order is placed
 	@Test
 	public void testUpdateQuantity() throws IdNotContainedException  { 
