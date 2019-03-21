@@ -1,4 +1,4 @@
-package coffeShop;
+package ordering;
 
 
 import java.util.LinkedHashMap;

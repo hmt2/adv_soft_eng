@@ -1,4 +1,4 @@
-package coffeShop;
+package ordering;
 
 import exceptions.InvalidIdException;
 

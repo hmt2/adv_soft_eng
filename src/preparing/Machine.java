@@ -1,4 +1,4 @@
-package coffeShop;
+package preparing;
 
 
 import java.io.IOException;
@@ -6,7 +6,8 @@ import java.util.*;
 
 import output.Log;
 import exceptions.IdNotContainedException;
-import main.Simulation;
+import main.OrderingPreparing;
+import ordering.Item;
 
 public class Machine {
 	public final String name;

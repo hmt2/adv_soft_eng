@@ -1,4 +1,4 @@
-package coffeShop;
+package preparing;
 
 
 import java.io.IOException;
@@ -11,13 +11,16 @@ import discounts.Discount;
 import discounts.DiscountCheck;
 import exceptions.DuplicateIDException;
 import exceptions.IdNotContainedException;
-import model.CurrentQueue;
+import model.DisplayModel;
+import ordering.AllOrders;
+import ordering.Customer;
+import ordering.CustomerList;
 import output.Log;
 import views.DisplayGUI;
 
-public class WaitingQueue extends CustomerList{
+public class PreparationSingleton extends CustomerList{
 
-	private static CurrentQueue model = new CurrentQueue();
+	private static DisplayModel model = new DisplayModel();
 
 	private static DisplayGUI view = new DisplayGUI(model);
 
@@ -31,7 +34,7 @@ public class WaitingQueue extends CustomerList{
 	private static Object lock;
     private AllOrders allorders  = new AllOrders();
 	//create lock to apply in methods to make them thread safe
-	private WaitingQueue(){
+	private PreparationSingleton(){
 		super();
 		lock = new Object();
 
@@ -43,11 +46,11 @@ public class WaitingQueue extends CustomerList{
 
 	//create instance of class with singleton design pattern
 	private static class SingletonHelper{
-		private static final WaitingQueue INSTANCE = new WaitingQueue();
+		private static final PreparationSingleton INSTANCE = new PreparationSingleton();
 	}
 
 	//instance of class to be called, to make sure only one instance can exist at one time
-	public static WaitingQueue getInstance(){
+	public static PreparationSingleton getInstance(){
 		return SingletonHelper.INSTANCE;
 	}
 

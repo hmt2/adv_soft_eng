@@ -1,4 +1,4 @@
-package coffeShop;
+package ordering;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -15,9 +15,10 @@ import discounts.DiscountCheck;
 import exceptions.DuplicateIDException;
 import exceptions.IdNotContainedException;
 import output.SalesReport;
+import preparing.PreparationSingleton;
 
 
-public class CoffeShopInterface {
+public class ProcessOrder {
 	private Menu menu;
 	private Map<String, Integer> currentOrder = new LinkedHashMap<String, Integer>();
 	CustomerList customerList;
@@ -27,12 +28,12 @@ public class CoffeShopInterface {
 	private float totalBeforeDiscount = 0;
 	private double totalAfterDiscount = 0;
 	boolean isStudentDiscount;
-	WaitingQueue waitingQueue;
+	PreparationSingleton waitingQueue;
 
 	private float totalAllItemsBeforeDiscount = 0;
 	private float totalAllItemsAfterDiscount = 0;
 
-	public CoffeShopInterface(Menu menu) throws DuplicateIDException, IdNotContainedException{
+	public ProcessOrder(Menu menu) throws DuplicateIDException, IdNotContainedException{
 
 		this.menu = menu;
 		allorders = new AllOrders();
@@ -48,7 +49,7 @@ public class CoffeShopInterface {
 	}
 	public void addPreviousOrders() throws DuplicateIDException, IdNotContainedException{
 		try {
-			WaitingQueue.getInstance().addPreviousOrders(discountCheck, true);
+			PreparationSingleton.getInstance().addPreviousOrders(discountCheck, true);
 		} catch (DuplicateIDException | IdNotContainedException e) {
 			e.printStackTrace();
 		}
@@ -114,10 +115,10 @@ public class CoffeShopInterface {
 		totalAllItemsBeforeDiscount += totalBeforeDiscount;
 		totalAllItemsAfterDiscount += (float)totalAfterDiscount;
         if(priority == false) {
-        	custId = WaitingQueue.getInstance().addCustomer(discountCheck.toArrayList(currentOrder), (float)totalBeforeDiscount, (float)totalAfterDiscount);
+        	custId = PreparationSingleton.getInstance().addCustomer(discountCheck.toArrayList(currentOrder), (float)totalBeforeDiscount, (float)totalAfterDiscount);
         }
         else {
-        	custId = WaitingQueue.getInstance().addFirstCustomer(discountCheck.toArrayList(currentOrder), (float)totalBeforeDiscount, (float)totalAfterDiscount);
+        	custId = PreparationSingleton.getInstance().addFirstCustomer(discountCheck.toArrayList(currentOrder), (float)totalBeforeDiscount, (float)totalAfterDiscount);
         }
         allorders.addOrder(custId, discountCheck.toArrayList(currentOrder));
 	}
