@@ -88,6 +88,7 @@ public class Simulation {
 		
 		  
 		WaitingQueue.getInstance().emptyCollectionQueue();
+		WaitingQueue.getInstance().setOnOff(true);
 		System.out.println("Cafeteria is closed");
 		
 	
