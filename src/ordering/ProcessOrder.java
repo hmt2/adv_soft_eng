@@ -1,19 +1,10 @@
 package ordering;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 
-import javax.swing.JOptionPane;
-
-import discounts.AllDiscounts;
-import discounts.Discount;
+import discounts.*;
 import discounts.DiscountCheck;
-import exceptions.DuplicateIDException;
-import exceptions.IdNotContainedException;
+import exceptions.*;
 import output.SalesReport;
 import preparing.PreparationSingleton;
 

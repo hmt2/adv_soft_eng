@@ -1,23 +1,10 @@
 package ordering;
 
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.*;
 import java.util.Map.Entry;
-import java.io.InputStream;
-
-import exceptions.IdNotContainedException;
-import exceptions.InvalidIdException;
+import java.io.*;
+import exceptions.*;
 
 public class Menu {
 	private LinkedHashMap<String, Item> menu;

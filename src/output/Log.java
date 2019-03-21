@@ -1,16 +1,9 @@
 package output;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-import ordering.Customer;
 
 public class Log {
 	private static String filepath;
