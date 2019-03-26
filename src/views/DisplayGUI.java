@@ -31,6 +31,6 @@ public class DisplayGUI extends JFrame implements Observer{
 	// add listener to update button
 	public void update() {
 		if(modeldata.getOff())
-			System.exit(0);
+			this.dispose();
 	}
 }
